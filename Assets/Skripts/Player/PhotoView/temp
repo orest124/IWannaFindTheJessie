@@ -1,0 +1,149 @@
+
+
+// void Update()
+//     {
+//         if(StopGame) return;
+//         if (Input.GetKeyUp(KeyCode.R)) Death();
+//         spr.ShedowAudit();
+//         spr.ChengSprite(moveDir);
+
+//         if(spr.RedyToMove()) {
+//             NewDirection();
+//             SprintAudit();
+
+//         }
+
+//     }
+
+
+//     void FixedUpdate()
+//     {
+//         if (StopGame || isAction || moveDir == zero || !spr.RedyToMove()) return;
+
+//         Vector3 target = transform.position + moveDir;
+//         if(!_inLavel) Move(target,curentSpd);
+//         else MoveTo(moveDir);
+//         s.MoveSoundTimer();
+//     }
+// WaitForFixedUpdate fixedUpdate = new WaitForFixedUpdate();
+
+//     IEnumerator EMove(Vector3 target, float _spd, Action action = null)
+//     {
+//         isMove = true;
+        
+//         while (transform.position != target)
+//         {
+//             yield return fixedUpdate;
+//             Move(target, _spd);
+//         }
+//         isMove = false;
+//         if(_inLavel) PlaceControle();
+//         else if (!isAction) PlaceControle();
+//     }
+//         public void PlaceControle()
+//     {
+
+//         int x = (int)(transform.position.x + 0.5f);
+//         int y = (int)(transform.position.y + 0.5f);
+//         Vector3 myPoint = new Vector2(x, y);
+//         float ix = moveDir.x != 0? x : transform.position.x;
+//         float iy = moveDir.y != 0? y : transform.position.y;
+//         Vector3 noIdealMyPoint = new Vector2(ix, iy);
+//         Vector3 forwardPoint =  noIdealMyPoint + moveDir;
+
+//         bool _isIce = Physics2D.OverlapCircle(myPoint,0.2f, s.IceArea);
+//         bool _isDipth = Physics2D.OverlapCircle(myPoint, 0.2f, s.DipthArea) 
+//                 && !Physics2D.OverlapPoint(myPoint, s.PlatformMask);
+
+
+//         bool preAction = isAction;
+//         isAction = _isDipth || _isIce;
+//         if(!isAction && preAction) { curentSpd = spd; moveDir = zero; return; };
+//         if(isAction && !preAction) 
+//         {
+//             spr.Falling();
+//             MoveBlock = true;
+//         }
+
+//         if(_isDipth && !isPlace(myPoint)) StartCoroutine(EMove(myPoint,curentSpd));
+//         else if(_isDipth && isPlace(myPoint)) Death();
+        
+//         else if (_isIce) 
+//         {
+//             curentSpd = spd * 1.5f;
+//             StartCoroutine(EMove(forwardPoint, curentSpd));
+            
+//         }
+
+//     }
+
+
+
+    
+    
+
+    // public void Move(Vector3 target, float _spd)
+    // {
+    //     if(StopGame) return;
+    //     float newspd = Time.deltaTime * _spd;
+    //     Vector3 newPos = Vector2.MoveTowards(transform.position, target, newspd);
+    //     if(!_inLavel)
+    //     {
+            
+    //         Vector3 CheckPos = Vector2.MoveTowards(transform.position, target, newspd * 2);
+
+    //         var hit = Physics2D.OverlapCircle(CheckPos, castRadius, s.BaricadeArea);
+    //         if(hit != null && !hit.isTrigger) 
+    //         {
+    //             StopAllCoroutines();
+    //             if(Input.GetKeyDown(KeyCode.Space))
+    //             {
+    //                 Rock r;
+    //                 if(hit.TryGetComponent<Rock>(out r))
+    //                 {
+    //                     r.MoveTo(moveDir);
+    //                 }
+    //             }
+    //             isMove = false;
+    //             isAction = false; 
+    //             moveDir = Vector3.zero;
+    //             return; 
+    //         };
+
+    //         transform.position = newPos;
+    //         if(!isAction) PlaceControle();
+
+    //     }
+    //     else
+    //     {
+    //         transform.position = newPos;
+            
+    //     }
+    //     Cra.transform.position = new Vector3(newPos.x,newPos.y, Cra.transform.position.z);
+        
+        
+        
+    // }
+    // public void MoveTo(Vector3 dir, bool inToMove = false)
+    // {
+        
+    //     if(isMove || isAction) return;
+    //     // var hit = Physics2D.CircleCast(transform.position,0.2, dir, 0,BaricadeArea);
+    //     var hit = Physics2D.OverlapCircle(transform.position + dir, 0.3f,s.BaricadeArea);
+
+    //     if(hit != null && !hit.isTrigger && hit.name != gameObject.name)
+    //     {
+    //         Rock r;
+    //         if(hit.TryGetComponent<Rock>(out r))
+    //         {
+    //             r.MoveTo(dir,inToMove);
+    //         }
+    //         return;
+    //     }
+    //     else
+    //     {
+
+    //         Vector3 target = dir + transform.position;
+    //         StartCoroutine(EMove(target, curentSpd));
+    //     }
+    // }
