@@ -1,4 +1,3 @@
-
 using System.Collections;
 using UnityEngine;
 
@@ -13,11 +12,12 @@ public class Optimization : MonoBehaviour {
     [SerializeField] MusicThemeControler music;
 
     public bool inLavel;
-
+    [SerializeField] bool DontNidMatematic;
 
     private void Start() {
         mc = GetComponent<Movement>();
         ClosestLavel = Lavel0;
+        if(DontNidMatematic) return;
         StartCoroutine(CheckDist());
     }
     void Update()
@@ -124,19 +124,19 @@ public class Optimization : MonoBehaviour {
         }
     }
     WaitForSeconds timer = new WaitForSeconds(1);
-    public bool gizmo = false;
-    void OnDrawGizmos()
-    {
-        if(!gizmo) return;
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(Lavel0.position, 25);
-        Gizmos.DrawWireSphere(Lavel1.position, 25);
-        Gizmos.DrawWireSphere(Lavel2.position, 25);
-        Gizmos.DrawWireSphere(Lavel3.position, 25);
-        Gizmos.color = Color.magenta;
-        Gizmos.DrawWireSphere(Lavel0.position, 60);
+    // public bool gizmo = false;
+    // void OnDrawGizmos()
+    // {
+    //     if(!gizmo) return;
+    //     Gizmos.color = Color.red;
+    //     Gizmos.DrawWireSphere(Lavel0.position, 25);
+    //     Gizmos.DrawWireSphere(Lavel1.position, 25);
+    //     Gizmos.DrawWireSphere(Lavel2.position, 25);
+    //     Gizmos.DrawWireSphere(Lavel3.position, 25);
+    //     Gizmos.color = Color.magenta;
+    //     Gizmos.DrawWireSphere(Lavel0.position, 60);
 
-    }
+    // }
     [Header("NotFindeAbuse")]
     [SerializeField] Dore[] ClosestDore;
     [SerializeField] GameObject TriggerFish;
@@ -163,6 +163,7 @@ private void ControledFish()
 
     internal void ChengedMusic()
     {
+        if(DontNidMatematic) return;
         if(TheEnd) music.inNotMenyLavels();
         if(borderLeands) music.inBorderleands();
         else if(!inLavel)music.inAbuse();

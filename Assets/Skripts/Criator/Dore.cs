@@ -10,8 +10,8 @@ public class Dore : MonoBehaviour {
     [SerializeField] bool Prime;
     [SerializeField] bool EndDore;
 
-    [SerializeField] bool Vertical;
-    [SerializeField] bool Bihaend;
+    public bool Vertical;
+    public bool Bihaend;
 
     public bool Closed;
     [SerializeField] bool state;

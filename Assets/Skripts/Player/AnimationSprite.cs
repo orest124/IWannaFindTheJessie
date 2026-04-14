@@ -11,6 +11,7 @@ public class AnimationSprite : MonoBehaviour
     public Sprite[] animationSprite;
     public Sprite[] FallAnimationSprite;
     public float animationTime = 0.025f;
+    public float fallAnimationTime = 0.025f;
     private int animationFrame;
     public bool loop = true;
     public bool idle = true;
@@ -37,7 +38,7 @@ public class AnimationSprite : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(animationTime);
+            yield return new WaitForSeconds(fall?fallAnimationTime:animationTime);
             
             animationFrame++;
             if (loop && animationFrame >= animationSprite.Length)

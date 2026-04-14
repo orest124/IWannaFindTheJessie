@@ -1,7 +1,4 @@
 
-using System;
-using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 
@@ -27,7 +24,7 @@ public class Movement : MonoBehaviour
 
     [Header("LavelStates")] 
     public Dore curentDore;
-    private Vector3 StartPos;
+    public Vector3 StartPos;
 
     [Header("Keyboard")] 
     KeyCode up = KeyCode.W;
@@ -168,12 +165,10 @@ public class Movement : MonoBehaviour
         if(x != 0 && y != 0) moveDir.y = 0;
         _targetPoint = transform.position + moveDir;
         isMove = CheckEmpty(_targetPoint);
-        int tipe = CheckToFallen(_targetPoint);
-        if(tipe > 0) 
-        {
-            spr.Falling();
-        }
-        
+        int nomb = CheckToFallen(_targetPoint);
+        if(nomb > 0) curentSpd = spd * 1.3f;
+        else curentSpd = spd;
+            
     }
 
     public int CheckToFallen(Vector3 _point)
@@ -210,12 +205,18 @@ public class Movement : MonoBehaviour
         Vector3 myPoint = transform.position;
         int tipe = CheckToFallen(myPoint);
 
-        if      (tipe == 1) Death();
+        if      (tipe == 1) {Death();spr.Falling();}
         else if (tipe == 2) 
         {
             _targetPoint = moveDir + transform.position;
             isMove = CheckEmpty(_targetPoint, true);
-  
+            int nomb = CheckToFallen(_targetPoint);
+            if(nomb > 0) 
+            {
+                curentSpd = spd * 1.3f;
+                nomb = Random.Range(1,20);
+                if(nomb == 1)spr.Falling();
+            }
         }
         else isMove = false;
     }
@@ -253,32 +254,37 @@ public class Movement : MonoBehaviour
 
     public void lavelMode(Dore _dore = null, bool inLavel = true)
     {
-        _inLavel = inLavel;
-        if(!_inLavel)
+        if(!inLavel)
         {
+            _inLavel = false;
             curentDore = abuseDore;
             StartPos = curentDore.startPos.position;
-            notFromLavel = true;
+            optim.ChengedMusic();
+
         }
         else
         {
             if(curentDore == _dore) return;
             curentDore = _dore;
-            StartPos = _dore.startPos.position;
-            optim.ChengedMusic();
-            if(!notFromLavel)
+            StartPos = curentDore.startPos.position;
+            
+            if(!_inLavel)
             {
-                _targetPoint = StartPos;
+                int x = curentDore.Vertical? 1:0;
+                int y = !curentDore.Vertical? 1:0;
+                Vector3 cor = new Vector3(x,y) * (curentDore.Bihaend? -1:1);
+                
+                _inLavel = true;
+                optim.ChengedMusic();
+                _targetPoint = IdealPos() + cor;
                 isMove = true;
             }
         }
     }
-    public bool notFromLavel = false;
     public void Death()
     {
         isMove = false;
         moveDir = Vector2.zero;
-        if(isAction) spr.StendUp();
         transform.position = StartPos;
         Cra.transform.position = new Vector3(StartPos.x,StartPos.y, Cra.transform.position.z);
 
