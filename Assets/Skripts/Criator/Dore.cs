@@ -29,7 +29,8 @@ public class Dore : MonoBehaviour {
 
     public List<PhotoPictures> CurentPhoto = new();
     [SerializeField] List<Rock> DinamicObj = new();
-    [SerializeField] List<ButtonState> buttons = new();
+    [SerializeField] List<ButtonState_Pres> buttons = new();
+    [SerializeField] List<ButtonState_State> buttonsState = new();
     public List<Dore> ChildDore = new();
 
 
@@ -42,7 +43,7 @@ public class Dore : MonoBehaviour {
     {
         curentArt = GetComponent<SpriteRenderer>();
         coll = GetComponent<Collider2D>();
-        Count = buttons.Count;
+        Count = buttons.Count + buttonsState.Count;;
         if(Count != 0)
         {
             foreach (var b in buttons) 
@@ -69,6 +70,11 @@ public class Dore : MonoBehaviour {
         if(Closed) return;
         PressedButtons = 0;
         foreach (var b in buttons) 
+        {
+            if (b.isValid()) PressedButtons++; 
+            else continue;
+        }
+        foreach (var b in buttonsState) 
         {
             if (b.isValid()) PressedButtons++; 
             else continue;
@@ -141,18 +147,20 @@ public class Dore : MonoBehaviour {
 }
 
 [System.Serializable]
-public class ButtonState
+public class ButtonState_Pres
 {
     public Button button;
     public bool state;
-    public void ReturnState()
-    {
-        button.IsPressed = false;
-    }
-    public bool isValid()
-    {
-        return button.IsPressed == state;
-    }
+    public void ReturnState() => button.IsPressed = false;
+    public bool isValid() => button.IsPressed == state;
+}
+[System.Serializable]
+public class ButtonState_State
+{
+    public ButtonStates button;
+    public int state;
+    public void ReturnState() => button.RemoveState();
+    public bool isValid() => button.stateNomb == state;
 }
 [System.Serializable]
 public class DooreSprites

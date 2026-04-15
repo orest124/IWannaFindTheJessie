@@ -6,7 +6,6 @@ public class ZoneOptimizatoin : MonoBehaviour
     [SerializeField] ZoneOptimizatoin nextZone;
     private GameObject pZone;
     private GameObject nZone;
-    // "fjdsljlkfljfdf"
     public bool zero;
     private void Awake() {
         if(zero) return;

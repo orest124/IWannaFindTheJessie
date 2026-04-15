@@ -44,7 +44,6 @@ public class Optimization : MonoBehaviour {
     bool b = false;
     bool c = false;
     bool d = true;
-    bool i = true;
     public Transform ClosestLavel; 
     private void HasBorder()
     {

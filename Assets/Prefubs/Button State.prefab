@@ -9,10 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 747499946972729755}
-  - component: {fileID: 1671910672538690128}
+  - component: {fileID: 3491965634256624870}
   - component: {fileID: 8343845996015857234}
+  - component: {fileID: 3288902447297190239}
+  - component: {fileID: 2989169972663223545}
   m_Layer: 0
-  m_Name: Button
+  m_Name: Button State
   m_TagString: Untagged
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -33,7 +35,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1671910672538690128
+--- !u!114 &3491965634256624870
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42,18 +44,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 1232230906234835739}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
+  m_Script: {fileID: 11500000, guid: 7955a7837a321584e8d6c2b46c69ae4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dore:
-  - {fileID: 0}
+  dore: []
   HardestObj:
     serializedVersion: 2
-    m_Bits: 6656
-  radius: 0.5
-  OpenArt: {fileID: -4948438469318495077, guid: 13fbaa5c71978ab4fa96f3cdb0882660, type: 3}
-  ClousedArt: {fileID: -2895141558340963647, guid: 13fbaa5c71978ab4fa96f3cdb0882660, type: 3}
-  nideToPressed: 1
+    m_Bits: 2048
+  stateImage:
+  - {fileID: -4948438469318495077, guid: 13fbaa5c71978ab4fa96f3cdb0882660, type: 3}
+  - {fileID: -2895141558340963647, guid: 13fbaa5c71978ab4fa96f3cdb0882660, type: 3}
+  - {fileID: -6106212025343717799, guid: e627f36c28921b74899bad5a5fa72c8c, type: 3}
+  - {fileID: 1377204713036210872, guid: e627f36c28921b74899bad5a5fa72c8c, type: 3}
+  stateNomb: 0
 --- !u!212 &8343845996015857234
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -106,3 +109,66 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!50 &3288902447297190239
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1232230906234835739}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 0.0001
+  m_LinearDrag: 0
+  m_AngularDrag: 0
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!58 &2989169972663223545
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1232230906234835739}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_Radius: 0.5

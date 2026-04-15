@@ -54,7 +54,6 @@ public class Movement : MonoBehaviour
         spr.LStart();
         
         StartPos = curentDore.startPos.position;
-        // transform.position = StartPos;
         Cra.transform.position = new Vector3(transform.position.x,transform.position.y, Cra.transform.position.z);
         curentSpd = spd;
         
@@ -150,28 +149,31 @@ public class Movement : MonoBehaviour
         moveDir = new Vector2(x, y);
         spr.ChengSprite(moveDir);
 
-
-        if(moveDir == zero ) return;
-        
-        if(!spr.RedyToMove())
+        if(moveDir != zero )
         {
-            moveDir = zero;
-            spr.StendUp();
-            return;
+            if(!spr.RedyToMove())
+            {
+                moveDir = zero;
+                spr.StendUp();
+                return;
+            }
+
+            if(!_inLavel) return;
+
+            if(x != 0 && y != 0) moveDir.y = 0;
+            _targetPoint = transform.position + moveDir;
+            int nomb = ChageToFallen(_targetPoint);
+            
+            if(nomb == 2) curentSpd = spd * 1.2f;
+            else if(nomb == 1) {moveDir = zero; spr.ChengSprite(moveDir);return;}
+            else curentSpd = spd;
+            isMove = CheckEmpty(_targetPoint);
         }
 
-        if(!_inLavel) return;
-
-        if(x != 0 && y != 0) moveDir.y = 0;
-        _targetPoint = transform.position + moveDir;
-        isMove = CheckEmpty(_targetPoint);
-        int nomb = CheckToFallen(_targetPoint);
-        if(nomb > 0) curentSpd = spd * 1.3f;
-        else curentSpd = spd;
             
     }
 
-    public int CheckToFallen(Vector3 _point)
+    public int ChageToFallen(Vector3 _point)
     {
         bool _isIce = Physics2D.OverlapCircle(_point,0.2f, s.IceArea);
         bool _isDipth = Physics2D.OverlapCircle(_point, 0.2f, s.DipthArea) 
@@ -203,14 +205,14 @@ public class Movement : MonoBehaviour
     public void PlaceControle(Vector3 dir)
     {
         Vector3 myPoint = transform.position;
-        int tipe = CheckToFallen(myPoint);
+        int tipe = ChageToFallen(myPoint);
 
         if      (tipe == 1) {Death();spr.Falling();}
         else if (tipe == 2) 
         {
             _targetPoint = moveDir + transform.position;
             isMove = CheckEmpty(_targetPoint, true);
-            int nomb = CheckToFallen(_targetPoint);
+            int nomb = ChageToFallen(_targetPoint);
             if(nomb > 0) 
             {
                 curentSpd = spd * 1.3f;
