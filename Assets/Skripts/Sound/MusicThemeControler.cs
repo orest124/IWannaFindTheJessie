@@ -1,14 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Reflection.Emit;
-using UnityEngine;
-
 public class MusicThemeControler : Sounds
 {
-    private bool Controle = false;
     private void Start() {
         HasLoop();
-        in2Lavel();
     }
     public void inAbuse()
     {
