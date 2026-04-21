@@ -1,4 +1,5 @@
-using System.Collections;
+using UnityEngine.Events;
+using UnityEngine.Serialization;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,13 +14,14 @@ public class Button : MonoBehaviour
     [SerializeField] Sprite OpenArt;
     [SerializeField] Sprite ClousedArt;
 
+
     void Awake()
     {
         curentArt = GetComponent<SpriteRenderer>();
         
     }
     [SerializeField] bool nideToPressed;
-    private bool _isPressed;
+    [SerializeField] bool _isPressed;
     public bool IsPressed
     {
         get { return _isPressed; }
@@ -27,8 +29,13 @@ public class Button : MonoBehaviour
             _isPressed = value;
             curentArt.sprite = _isPressed? ClousedArt: OpenArt;
             foreach (var d in dore) d?.Check();
+            if(_isPressed == true)SpecialAction?.Invoke();
         }
     }
+    [System.Serializable]
+    public class PressedEvent : UnityEvent{}
+    [FormerlySerializedAs("Special Action")]
+    [SerializeField] private PressedEvent SpecialAction = new PressedEvent();
     
     void Update()
     {

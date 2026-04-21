@@ -1,21 +1,32 @@
+using System;
 using System.Collections;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Meny : MonoBehaviour
 {
+
     [SerializeField]Movement pl;
+    
+    [SerializeField] Image GlobalFone;
+    [SerializeField] GameObject MenyThem;
+    [SerializeField] GameObject PreMenyThem;
     [SerializeField] GameObject LoadingThem;
+
     [SerializeField] Image[] Thems;
     [SerializeField] TextMeshProUGUI[] texts;
-    [SerializeField] GameObject MenyThem;
     [SerializeField] GameObject OptionsThem;
     
     [SerializeField]MusicThemeControler music;
     [SerializeField]P_SoundAndPhoto player;
     [SerializeField] float spd;
-    
+    void Awake()
+    {
+        StartCoroutine(Loading(3,PreMenyThem, MenyThem));
+    }
+
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.Escape) && !pl.OptionsOpen)     InOptions(true);
@@ -23,7 +34,7 @@ public class Meny : MonoBehaviour
         
     }
     public void Play() {
-        StartCoroutine(Loading());
+        StartCoroutine(Loading(0, MenyThem, _action: () => pl.MenuMod(false)));
     }
     public void InOptions(bool state) {
         pl.SetStop(state);
@@ -42,57 +53,33 @@ public class Meny : MonoBehaviour
 
         StartCoroutine(ExitGame());
     }
-    IEnumerator Loading()
+    IEnumerator Loading(float timer, GameObject one = null, GameObject two = null, Action _action = null)
     {
-        LoadingThem.SetActive(true);
+        yield return new WaitForSeconds(timer);
+
         float t = 0;
         while (t < 1)
         {
             t += Time.fixedDeltaTime * spd*5f;
-            foreach (var i in texts)
-            {
-                Color c = i.color;
-                i.color = new Color(c.r,c.g,c.b,t);
-            }
-            foreach (var i in Thems)
-            {
-                Color c = i.color;
-                i.color = new Color(c.r,c.g,c.b,t);
-            }
+            Color c = GlobalFone.color;
+            GlobalFone.color = new Color(c.r,c.g,c.b,t);
             yield return null;
         }
-        MenyThem.SetActive(false);
+        one?.SetActive(false);
+        two?.SetActive(true);
         
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(1);
         t = 1;
         while (t > 0.02)
         {
             t -= Time.fixedDeltaTime * spd;
-            foreach (var i in texts)
-            {
-                Color c = i.color;
-                i.color = new Color(c.r,c.g,c.b,t);
-            }
-            foreach (var i in Thems)
-            {
-                Color c = i.color;
-                i.color = new Color(c.r,c.g,c.b,t);
-            }
+            
+            Color c = GlobalFone.color;
+            GlobalFone.color = new Color(c.r,c.g,c.b,t);
+            
             yield return null;
         }
-        LoadingThem.SetActive(false);
-        foreach (var i in texts)
-        {
-            Color c = i.color;
-            i.color = new Color(c.r,c.g,c.b,1);
-        }
-        foreach (var i in Thems)
-        {
-            Color c = i.color;
-            i.color = new Color(c.r,c.g,c.b,1);
-        }
-
-        pl.MenuMod(false);
+        _action?.Invoke();
     }
     [Header("Exit Theme")]
     [SerializeField] GameObject ExitThem;
