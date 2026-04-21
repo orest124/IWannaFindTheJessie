@@ -17,8 +17,13 @@ public class Optimization : MonoBehaviour {
     private void Start() {
         mc = GetComponent<Movement>();
         ClosestLavel = Lavel0;
-        if(DontNidMatematic) return;
-        StartCoroutine(CheckDist());
+        if(!DontNidMatematic)
+        {
+            StartCoroutine(CheckDist());
+            music.in2Lavel();
+        }
+        else music.in1Lavel();
+            
     }
     void Update()
     {
@@ -44,7 +49,6 @@ public class Optimization : MonoBehaviour {
     bool b = false;
     bool c = false;
     bool d = true;
-    bool i = true;
     public Transform ClosestLavel; 
     private void HasBorder()
     {

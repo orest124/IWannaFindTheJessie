@@ -3622,6 +3622,7 @@ MonoBehaviour:
     state: 1
   - button: {fileID: 1005440425}
     state: 1
+  buttonsState: []
   ChildDore: []
   sp:
     pl: {fileID: 2092886424}
@@ -8293,6 +8294,7 @@ MonoBehaviour:
   buttons:
   - button: {fileID: 1773656483}
     state: 1
+  buttonsState: []
   ChildDore: []
   sp:
     pl: {fileID: 2092886424}
@@ -14846,6 +14848,7 @@ MonoBehaviour:
     state: 1
   - button: {fileID: 1005440425}
     state: 1
+  buttonsState: []
   ChildDore: []
   sp:
     pl: {fileID: 2092886424}
@@ -46631,6 +46634,7 @@ MonoBehaviour:
     state: 1
   - button: {fileID: 1773656483}
     state: 1
+  buttonsState: []
   ChildDore:
   - {fileID: 116988505}
   - {fileID: 1803585860}
@@ -60120,6 +60124,7 @@ MonoBehaviour:
     state: 1
   - button: {fileID: 512529447}
     state: 1
+  buttonsState: []
   ChildDore:
   - {fileID: 1011640967}
   - {fileID: 1538934720}
@@ -60330,6 +60335,7 @@ MonoBehaviour:
     state: 1
   - button: {fileID: 3747259699345948405}
     state: 1
+  buttonsState: []
   ChildDore: []
   sp:
     pl: {fileID: 2092886424}
@@ -73963,6 +73969,7 @@ MonoBehaviour:
     state: 1
   - button: {fileID: 735219384}
     state: 1
+  buttonsState: []
   ChildDore:
   - {fileID: 1427248532}
   - {fileID: 1564358525}
@@ -74291,6 +74298,7 @@ MonoBehaviour:
   buttons:
   - button: {fileID: 1914202460}
     state: 1
+  buttonsState: []
   ChildDore:
   - {fileID: 1054229955}
   - {fileID: 2067488379}
@@ -75454,6 +75462,7 @@ MonoBehaviour:
     state: 1
   - button: {fileID: 512529447}
     state: 1
+  buttonsState: []
   ChildDore: []
   sp:
     pl: {fileID: 2092886424}
@@ -77201,6 +77210,7 @@ MonoBehaviour:
   buttons:
   - button: {fileID: 1914202460}
     state: 1
+  buttonsState: []
   ChildDore: []
   sp:
     pl: {fileID: 2092886424}
@@ -77400,6 +77410,7 @@ MonoBehaviour:
   CurentPhoto: []
   DinamicObj: []
   buttons: []
+  buttonsState: []
   ChildDore: []
   sp:
     pl: {fileID: 2092886424}
@@ -80136,6 +80147,7 @@ MonoBehaviour:
     state: 1
   - button: {fileID: 1619920004}
     state: 1
+  buttonsState: []
   ChildDore: []
   sp:
     pl: {fileID: 2092886424}
@@ -105418,6 +105430,7 @@ MonoBehaviour:
     state: 1
   - button: {fileID: 1619920004}
     state: 1
+  buttonsState: []
   ChildDore: []
   sp:
     pl: {fileID: 2092886424}
@@ -106643,6 +106656,7 @@ MonoBehaviour:
   buttons:
   - button: {fileID: 1031538488}
     state: 1
+  buttonsState: []
   ChildDore: []
   sp:
     pl: {fileID: 2092886424}
@@ -109338,6 +109352,7 @@ MonoBehaviour:
     state: 1
   - button: {fileID: 776015506}
     state: 1
+  buttonsState: []
   ChildDore: []
   sp:
     pl: {fileID: 2092886424}
@@ -111074,6 +111089,7 @@ MonoBehaviour:
     state: 1
   - button: {fileID: 512529447}
     state: 1
+  buttonsState: []
   ChildDore: []
   sp:
     pl: {fileID: 2092886424}
@@ -111674,6 +111690,7 @@ MonoBehaviour:
   buttons:
   - button: {fileID: 735219384}
     state: 1
+  buttonsState: []
   ChildDore: []
   sp:
     pl: {fileID: 2092886424}
@@ -116129,6 +116146,7 @@ MonoBehaviour:
   CurentPhoto: []
   DinamicObj: []
   buttons: []
+  buttonsState: []
   ChildDore: []
   sp:
     pl: {fileID: 2092886424}
@@ -118331,6 +118349,7 @@ MonoBehaviour:
     state: 1
   - button: {fileID: 1005440425}
     state: 1
+  buttonsState: []
   ChildDore: []
   sp:
     pl: {fileID: 2092886424}
@@ -118960,6 +118979,7 @@ MonoBehaviour:
     state: 0
   - button: {fileID: 735219384}
     state: 1
+  buttonsState: []
   ChildDore: []
   sp:
     pl: {fileID: 2092886424}
@@ -119721,6 +119741,7 @@ MonoBehaviour:
     state: 1
   - button: {fileID: 1619920004}
     state: 1
+  buttonsState: []
   ChildDore:
   - {fileID: 1143875773}
   - {fileID: 1394887820}
@@ -120766,7 +120787,7 @@ MonoBehaviour:
   Closed: 0
   state: 0
   curentState: 0
-  AllDone: 1
+  AllDone: 0
   myZone: {fileID: 2105432312}
   startPos: {fileID: 1755830249}
   CurentPhoto:
@@ -120782,6 +120803,7 @@ MonoBehaviour:
     state: 1
   - button: {fileID: 3747259699345948405}
     state: 1
+  buttonsState: []
   ChildDore:
   - {fileID: 842036425}
   sp:
@@ -132955,6 +132977,7 @@ MonoBehaviour:
   buttons:
   - button: {fileID: 1914202460}
     state: 1
+  buttonsState: []
   ChildDore: []
   sp:
     pl: {fileID: 2092886424}
@@ -133361,7 +133384,7 @@ BoxCollider2D:
     serializedVersion: 2
     m_Bits: 4294967295
   m_IsTrigger: 0
-  m_UsedByEffector: 1
+  m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: -0.03}
@@ -133535,6 +133558,7 @@ MonoBehaviour:
   Lavel3: {fileID: 13763238}
   music: {fileID: 627665317}
   inLavel: 1
+  DontNidMatematic: 0
   borderLeands: 0
   TheEnd: 0
   ActivDist: 625
@@ -133542,7 +133566,6 @@ MonoBehaviour:
   dist2: 0
   dist3: 0
   ClosestLavel: {fileID: 0}
-  gizmo: 0
   ClosestDore:
   - {fileID: 954195766}
   - {fileID: 1929706255}
@@ -138182,6 +138205,7 @@ MonoBehaviour:
   CurentPhoto: []
   DinamicObj: []
   buttons: []
+  buttonsState: []
   ChildDore: []
   sp:
     pl: {fileID: 2092886424}
