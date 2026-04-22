@@ -24,7 +24,7 @@ public class Meny : MonoBehaviour
     [SerializeField] float spd;
     void Awake()
     {
-        StartCoroutine(Loading(3,PreMenyThem, MenyThem));
+        // StartCoroutine(Loading(3,PreMenyThem, MenyThem));
     }
 
     void Update()

@@ -26,6 +26,7 @@ public class Button : MonoBehaviour
     {
         get { return _isPressed; }
         set { 
+            if(_isPressed == value) return;
             _isPressed = value;
             curentArt.sprite = _isPressed? ClousedArt: OpenArt;
             foreach (var d in dore) d?.Check();
