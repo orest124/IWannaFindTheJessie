@@ -21171,7 +21171,7 @@ MonoBehaviour:
   memory: {fileID: 0}
   abuseDore: {fileID: 1903408040}
   ReversArtefact: 1
-  curentDore: {fileID: 1914977455}
+  curentDore: {fileID: 1903408040}
   StartDore: {fileID: 1903408040}
   StartPos: {x: 0, y: 0, z: 0}
   NawGamePos: {x: 7, y: 10, z: 0}
@@ -21190,7 +21190,7 @@ Transform:
   m_GameObject: {fileID: 251843393}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6, y: 10, z: 0}
+  m_LocalPosition: {x: 8.06, y: 9.96, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -21398,6 +21398,7 @@ MonoBehaviour:
   dist2: 0
   dist3: 0
   ClosestLavel: {fileID: 0}
+  gizmo: 0
   ClosestDore:
   - {fileID: 0}
   - {fileID: 0}
@@ -70374,7 +70375,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1193127626
 RectTransform:
   m_ObjectHideFlags: 0
