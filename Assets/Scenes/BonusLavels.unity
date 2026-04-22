@@ -310,37 +310,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 219842a0f9d55bc4585c01707608ef3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  memory: {fileID: 0}
   PrimeDore: {fileID: 0}
-  FlappyDore: 0
-  EndDore: 0
-  stepCount: 0
+  startPos: {fileID: 1921175286}
+  myZone: {fileID: 1995450778}
+  Buttons:
+    Buttons:
+    - {fileID: 1470534236}
+    - {fileID: 1396291684}
+    - {fileID: 2080776033}
+    - {fileID: 1156712064}
+    SwitchButton: []
+    Set_StateButtons: []
+    Set_SwitchButton: []
+  Buttons_Extra:
+    StandartButtons: []
+    SwitchButtons: []
   Prime: 1
+  FlappyDore: 0
+  stepCount: 0
   Vertical: 0
   Bihaend: 1
   Closed: 0
   Opened: 0
   AllDone: 0
-  End: 0
-  state: 0
+  startState: 0
   curentState: 0
-  myZone: {fileID: 1995450778}
-  startPos: {fileID: 1921175286}
   CurentPhoto: []
-  DinamicObj:
-  - {fileID: 129151062}
-  - {fileID: 829277527}
-  - {fileID: 188488921}
-  - {fileID: 1620405550}
-  PressButtons:
-  - {fileID: 1470534235}
-  - {fileID: 1396291683}
-  - {fileID: 1300668905}
-  - {fileID: 421665748}
-  NotNidButtons:
-  - {fileID: 1795559561}
-  NotNidButtonsState: []
-  buttons: []
-  buttonsState: []
   ChildDore: []
   sp:
     pl: {fileID: 251843394}
@@ -349,9 +345,7 @@ MonoBehaviour:
     OpenArt_Ver: {fileID: -498122695, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     ClousedArt_Ver: {fileID: 179997455, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     clousedOrder: 125
-  size: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
-  memory: {fileID: 0}
+  _gizmos: 0
 --- !u!1 &11978052
 GameObject:
   m_ObjectHideFlags: 0
@@ -1488,17 +1482,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 28184877}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &28184879 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
-  m_PrefabInstance: {fileID: 28184877}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &30931795
 GameObject:
   m_ObjectHideFlags: 0
@@ -1676,17 +1659,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 1592386057}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &35192474 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
-  m_PrefabInstance: {fileID: 1592386057}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &41383353
 GameObject:
   m_ObjectHideFlags: 0
@@ -2661,17 +2633,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 1084265627}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &79166459 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
-  m_PrefabInstance: {fileID: 1084265627}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &82231268
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2971,17 +2932,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 94542630}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &94542632 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
-  m_PrefabInstance: {fileID: 94542630}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &98012585
 GameObject:
   m_ObjectHideFlags: 0
@@ -3213,17 +3163,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 104307897}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &104307899 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
-  m_PrefabInstance: {fileID: 104307897}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &104610827
 GameObject:
   m_ObjectHideFlags: 0
@@ -4301,17 +4240,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 404088979}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &158556878 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
-  m_PrefabInstance: {fileID: 404088979}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &167429918
 GameObject:
   m_ObjectHideFlags: 0
@@ -4955,34 +4883,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 219842a0f9d55bc4585c01707608ef3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  memory: {fileID: 0}
   PrimeDore: {fileID: 0}
-  FlappyDore: 0
-  EndDore: 1
-  stepCount: 0
+  startPos: {fileID: 0}
+  myZone: {fileID: 0}
+  Buttons:
+    Buttons:
+    - {fileID: 1514081093}
+    - {fileID: 1800843830}
+    - {fileID: 2050944730}
+    - {fileID: 1553819902}
+    SwitchButton: []
+    Set_StateButtons: []
+    Set_SwitchButton: []
+  Buttons_Extra:
+    StandartButtons: []
+    SwitchButtons: []
   Prime: 0
+  FlappyDore: 0
+  stepCount: 0
   Vertical: 1
   Bihaend: 1
   Closed: 0
   Opened: 0
   AllDone: 0
-  End: 0
-  state: 0
+  startState: 0
   curentState: 0
-  myZone: {fileID: 0}
-  startPos: {fileID: 0}
   CurentPhoto: []
-  DinamicObj: []
-  PressButtons:
-  - {fileID: 1514081093}
-  - {fileID: 1800843830}
-  - {fileID: 2050944730}
-  - {fileID: 1553819902}
-  NotNidButtons: []
-  NotNidButtonsState: []
-  buttons:
-  - button: {fileID: 158556878}
-    state: 1
-  buttonsState: []
   ChildDore: []
   sp:
     pl: {fileID: 251843394}
@@ -4991,9 +4918,7 @@ MonoBehaviour:
     OpenArt_Ver: {fileID: -498122695, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     ClousedArt_Ver: {fileID: 179997455, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     clousedOrder: 125
-  size: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
-  memory: {fileID: 0}
+  _gizmos: 0
 --- !u!1 &188488917
 GameObject:
   m_ObjectHideFlags: 0
@@ -5526,36 +5451,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 219842a0f9d55bc4585c01707608ef3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  memory: {fileID: 0}
   PrimeDore: {fileID: 0}
-  FlappyDore: 0
-  EndDore: 0
-  stepCount: 0
+  startPos: {fileID: 901373549}
+  myZone: {fileID: 1995450778}
+  Buttons:
+    Buttons:
+    - {fileID: 502261639}
+    - {fileID: 1080508581}
+    - {fileID: 244847964}
+    - {fileID: 655105896}
+    SwitchButton: []
+    Set_StateButtons: []
+    Set_SwitchButton: []
+  Buttons_Extra:
+    StandartButtons: []
+    SwitchButtons: []
   Prime: 1
+  FlappyDore: 0
+  stepCount: 0
   Vertical: 1
   Bihaend: 0
   Closed: 0
   Opened: 0
   AllDone: 0
-  End: 0
-  state: 0
+  startState: 0
   curentState: 0
-  myZone: {fileID: 1995450778}
-  startPos: {fileID: 901373549}
   CurentPhoto: []
-  DinamicObj:
-  - {fileID: 1492871527}
-  - {fileID: 1889457119}
-  - {fileID: 1474259398}
-  PressButtons:
-  - {fileID: 35192474}
-  - {fileID: 377392790}
-  - {fileID: 158556878}
-  - {fileID: 655105896}
-  NotNidButtons:
-  - {fileID: 1795559561}
-  NotNidButtonsState: []
-  buttons: []
-  buttonsState: []
   ChildDore:
   - {fileID: 908447227}
   - {fileID: 281354132}
@@ -5567,9 +5489,7 @@ MonoBehaviour:
     OpenArt_Ver: {fileID: -498122695, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     ClousedArt_Ver: {fileID: 179997455, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     clousedOrder: 125
-  size: {x: 1, y: 3, z: 0}
-  offset: {x: 1, y: 1, z: 0}
-  memory: {fileID: 0}
+  _gizmos: 0
 --- !u!1 &200778101
 GameObject:
   m_ObjectHideFlags: 0
@@ -7130,11 +7050,9 @@ CompositeCollider2D:
       - X: 220000000
         Y: -50000000
       - X: 220000000
-        Y: -134062496
-      - X: 211562496
-        Y: -134062496
+        Y: -140000000
       - X: 210000000
-        Y: -134375008
+        Y: -140000000
       - X: 210000000
         Y: -150000000
       - X: 240000000
@@ -8162,9 +8080,8 @@ CompositeCollider2D:
       - {x: 23, y: -3.0000293}
       - {x: 22.999971, y: -5}
       - {x: 22, y: -5.000029}
-      - {x: 21.999971, y: -13.40625}
-      - {x: 21.156248, y: -13.406251}
-      - {x: 21, y: -13.437523}
+      - {x: 21.999971, y: -14}
+      - {x: 21, y: -14.000029}
       - {x: 21.000029, y: -15}
     - - {x: 50.999973, y: 2}
       - {x: 50.999973, y: 3}
@@ -9602,16 +9519,6 @@ Tilemap:
       serializedVersion: 2
       m_TileIndex: 30
       m_TileSpriteIndex: 3
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 0
-      m_TileObjectToInstantiateIndex: 65535
-      dummyAlignment: 0
-      m_AllTileFlags: 1073741825
-  - first: {x: 21, y: -14, z: 0}
-    second:
-      serializedVersion: 2
-      m_TileIndex: 27
-      m_TileSpriteIndex: 27
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -19513,7 +19420,7 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: 9ae35f3cf386a3a4ca877f880a78fa51, type: 2}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 702f6db6f7017844b86d7df610fd0329, type: 2}
-  - m_RefCount: 2
+  - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 6f516f2aaacf36d4fb0fa924bd8f360d, type: 2}
   - m_RefCount: 0
     m_Data: {fileID: 0}
@@ -19594,7 +19501,7 @@ Tilemap:
     m_Data: {fileID: 2011105614, guid: a873d209e8c9e904f81e28f57cbe99e2, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: -1306163849, guid: 13246e88b44c87847a4c7d8cbf911625, type: 3}
-  - m_RefCount: 2
+  - m_RefCount: 1
     m_Data: {fileID: 540301290, guid: 08a38801de2f7c64cb967d770f986768, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 1963653999, guid: a873d209e8c9e904f81e28f57cbe99e2, type: 3}
@@ -19621,7 +19528,7 @@ Tilemap:
   - m_RefCount: 1
     m_Data: {fileID: 2066619970, guid: a873d209e8c9e904f81e28f57cbe99e2, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 1101
+  - m_RefCount: 1100
     m_Data:
       e00: 1
       e01: 0
@@ -19640,7 +19547,7 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 1101
+  - m_RefCount: 1100
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
@@ -20083,17 +19990,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 221424248}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &221424250 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
-  m_PrefabInstance: {fileID: 221424248}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &221677573
 GameObject:
   m_ObjectHideFlags: 0
@@ -20525,17 +20421,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 224510248}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &224998832 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
-  m_PrefabInstance: {fileID: 189333608}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &228353083
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20819,17 +20704,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 1796399164}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &231743499 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
-  m_PrefabInstance: {fileID: 1796399164}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &233865571
 GameObject:
   m_ObjectHideFlags: 0
@@ -21039,6 +20913,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 237585108}
   m_CullTransparentMesh: 1
+--- !u!114 &244847964 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
+  m_PrefabInstance: {fileID: 404088979}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &247473532
 GameObject:
   m_ObjectHideFlags: 0
@@ -21190,7 +21075,7 @@ Transform:
   m_GameObject: {fileID: 251843393}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6, y: 10, z: 0}
+  m_LocalPosition: {x: 12, y: 10, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -21389,7 +21274,7 @@ MonoBehaviour:
   Lavel2: {fileID: 0}
   Lavel3: {fileID: 0}
   music: {fileID: 1055104469}
-  inLavel: 0
+  inLavel: 1
   DontNidMatematic: 1
   borderLeands: 0
   TheEnd: 0
@@ -21398,6 +21283,7 @@ MonoBehaviour:
   dist2: 0
   dist3: 0
   ClosestLavel: {fileID: 0}
+  gizmo: 0
   ClosestDore:
   - {fileID: 0}
   - {fileID: 0}
@@ -21723,17 +21609,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 258689189}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &258689191 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
-  m_PrefabInstance: {fileID: 258689189}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &265209659
 GameObject:
   m_ObjectHideFlags: 0
@@ -22471,53 +22346,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 219842a0f9d55bc4585c01707608ef3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  memory: {fileID: 0}
   PrimeDore: {fileID: 0}
-  FlappyDore: 0
-  EndDore: 0
-  stepCount: 0
+  startPos: {fileID: 2062031886}
+  myZone: {fileID: 1995450778}
+  Buttons:
+    Buttons:
+    - {fileID: 873850361}
+    - {fileID: 1256197294}
+    - {fileID: 1997632278}
+    SwitchButton: []
+    Set_StateButtons: []
+    Set_SwitchButton: []
+  Buttons_Extra:
+    StandartButtons: []
+    SwitchButtons:
+    - {fileID: 1234193145}
+    - {fileID: 710969881}
+    - {fileID: 1300631099}
+    - {fileID: 1879246299}
+    - {fileID: 1169504759}
+    - {fileID: 1931663880}
+    - {fileID: 1755074093}
   Prime: 1
+  FlappyDore: 0
+  stepCount: 0
   Vertical: 1
   Bihaend: 0
   Closed: 0
   Opened: 0
   AllDone: 0
-  End: 0
-  state: 0
+  startState: 0
   curentState: 0
-  myZone: {fileID: 1995450778}
-  startPos: {fileID: 2062031886}
   CurentPhoto:
   - {fileID: 776770888}
-  DinamicObj:
-  - {fileID: 615302296}
-  - {fileID: 935283674}
-  - {fileID: 57686271}
-  - {fileID: 450633103}
-  - {fileID: 595084558}
-  - {fileID: 771372052}
-  - {fileID: 379104901}
-  - {fileID: 1335593906}
-  - {fileID: 406980494}
-  - {fileID: 1279450210}
-  - {fileID: 890710746}
-  - {fileID: 1028345682}
-  - {fileID: 1747045951}
-  PressButtons:
-  - {fileID: 873850361}
-  - {fileID: 1256197294}
-  - {fileID: 1348711819}
-  NotNidButtons:
-  - {fileID: 1795559561}
-  NotNidButtonsState:
-  - {fileID: 931784332}
-  - {fileID: 710969881}
-  - {fileID: 698282490}
-  - {fileID: 449742008}
-  - {fileID: 290263513}
-  - {fileID: 1931663880}
-  - {fileID: 1755074093}
-  buttons: []
-  buttonsState: []
   ChildDore:
   - {fileID: 1030624081}
   sp:
@@ -22527,9 +22389,7 @@ MonoBehaviour:
     OpenArt_Ver: {fileID: -498122695, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     ClousedArt_Ver: {fileID: 179997455, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     clousedOrder: 125
-  size: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
-  memory: {fileID: 0}
+  _gizmos: 0
 --- !u!1 &273164958
 GameObject:
   m_ObjectHideFlags: 0
@@ -22608,6 +22468,17 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &274320754 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
+  m_PrefabInstance: {fileID: 224510248}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &275427067
 GameObject:
   m_ObjectHideFlags: 0
@@ -22986,32 +22857,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 219842a0f9d55bc4585c01707608ef3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  memory: {fileID: 0}
   PrimeDore: {fileID: 0}
-  FlappyDore: 0
-  EndDore: 0
-  stepCount: 0
+  startPos: {fileID: 0}
+  myZone: {fileID: 1995450778}
+  Buttons:
+    Buttons:
+    - {fileID: 502261639}
+    - {fileID: 1080508581}
+    - {fileID: 244847964}
+    - {fileID: 655105896}
+    SwitchButton: []
+    Set_StateButtons: []
+    Set_SwitchButton: []
+  Buttons_Extra:
+    StandartButtons: []
+    SwitchButtons: []
   Prime: 0
+  FlappyDore: 0
+  stepCount: 0
   Vertical: 0
   Bihaend: 1
   Closed: 0
-  Opened: 0
+  Opened: 1
   AllDone: 0
-  End: 0
-  state: 0
+  startState: 0
   curentState: 0
-  myZone: {fileID: 1995450778}
-  startPos: {fileID: 0}
   CurentPhoto: []
-  DinamicObj: []
-  PressButtons:
-  - {fileID: 35192474}
-  - {fileID: 377392790}
-  - {fileID: 158556878}
-  - {fileID: 655105896}
-  NotNidButtons: []
-  NotNidButtonsState: []
-  buttons: []
-  buttonsState: []
   ChildDore: []
   sp:
     pl: {fileID: 251843394}
@@ -23020,9 +22892,7 @@ MonoBehaviour:
     OpenArt_Ver: {fileID: -498122695, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     ClousedArt_Ver: {fileID: 179997455, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     clousedOrder: 87
-  size: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
-  memory: {fileID: 0}
+  _gizmos: 0
 --- !u!1 &282529048
 GameObject:
   m_ObjectHideFlags: 0
@@ -23168,35 +23038,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 219842a0f9d55bc4585c01707608ef3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  memory: {fileID: 0}
   PrimeDore: {fileID: 0}
-  FlappyDore: 0
-  EndDore: 0
-  stepCount: 0
+  startPos: {fileID: 1092277120}
+  myZone: {fileID: 1995450778}
+  Buttons:
+    Buttons:
+    - {fileID: 1914412852}
+    - {fileID: 1356455931}
+    - {fileID: 1499202404}
+    SwitchButton: []
+    Set_StateButtons: []
+    Set_SwitchButton: []
+  Buttons_Extra:
+    StandartButtons: []
+    SwitchButtons: []
   Prime: 1
+  FlappyDore: 0
+  stepCount: 0
   Vertical: 1
   Bihaend: 1
   Closed: 0
   Opened: 0
   AllDone: 0
-  End: 0
-  state: 0
+  startState: 0
   curentState: 0
-  myZone: {fileID: 1995450778}
-  startPos: {fileID: 1092277120}
   CurentPhoto: []
-  DinamicObj:
-  - {fileID: 1385502420}
-  - {fileID: 977264051}
-  - {fileID: 1712619898}
-  PressButtons:
-  - {fileID: 94542632}
-  - {fileID: 1356455930}
-  - {fileID: 1499202403}
-  NotNidButtons:
-  - {fileID: 1795559561}
-  NotNidButtonsState: []
-  buttons: []
-  buttonsState: []
   ChildDore: []
   sp:
     pl: {fileID: 251843394}
@@ -23205,9 +23072,7 @@ MonoBehaviour:
     OpenArt_Ver: {fileID: -498122695, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     ClousedArt_Ver: {fileID: 179997455, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     clousedOrder: 125
-  size: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
-  memory: {fileID: 0}
+  _gizmos: 0
 --- !u!1 &286060038
 GameObject:
   m_ObjectHideFlags: 0
@@ -23358,17 +23223,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 6b107d89f56d8dc41858215745aa99f7, type: 3}
   m_PrefabInstance: {fileID: 725100847}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &290263513 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3491965634256624870, guid: 6b107d89f56d8dc41858215745aa99f7, type: 3}
-  m_PrefabInstance: {fileID: 725100847}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7955a7837a321584e8d6c2b46c69ae4b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &295567265
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23733,17 +23587,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 298500194}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &298500196 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
-  m_PrefabInstance: {fileID: 298500194}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &306480033
 GameObject:
   m_ObjectHideFlags: 0
@@ -23920,6 +23763,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 37f9299124cd90847afb537128d30d09, type: 3}
   m_PrefabInstance: {fileID: 308479837}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &310304425 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
+  m_PrefabInstance: {fileID: 104307897}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &310487775
 GameObject:
   m_ObjectHideFlags: 0
@@ -24047,6 +23901,17 @@ MonoBehaviour:
   previosliZone: {fileID: 0}
   nextZone: {fileID: 0}
   zero: 1
+--- !u!114 &316084422 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
+  m_PrefabInstance: {fileID: 221424248}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &317952040
 GameObject:
   m_ObjectHideFlags: 0
@@ -24482,17 +24347,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 323796344}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &323796346 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
-  m_PrefabInstance: {fileID: 323796344}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &326291325
 GameObject:
   m_ObjectHideFlags: 0
@@ -25687,17 +25541,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 587247799}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &377392790 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
-  m_PrefabInstance: {fileID: 587247799}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &378525502
 GameObject:
   m_ObjectHideFlags: 0
@@ -26962,29 +26805,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 219842a0f9d55bc4585c01707608ef3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  memory: {fileID: 0}
   PrimeDore: {fileID: 0}
-  FlappyDore: 0
-  EndDore: 0
-  stepCount: 0
+  startPos: {fileID: 0}
+  myZone: {fileID: 1995450778}
+  Buttons:
+    Buttons:
+    - {fileID: 1022560118}
+    SwitchButton: []
+    Set_StateButtons: []
+    Set_SwitchButton: []
+  Buttons_Extra:
+    StandartButtons: []
+    SwitchButtons: []
   Prime: 0
+  FlappyDore: 0
+  stepCount: 0
   Vertical: 0
   Bihaend: 0
   Closed: 0
   Opened: 0
   AllDone: 0
-  End: 0
-  state: 0
+  startState: 0
   curentState: 0
-  myZone: {fileID: 1995450778}
-  startPos: {fileID: 0}
   CurentPhoto: []
-  DinamicObj: []
-  PressButtons:
-  - {fileID: 1700015625}
-  NotNidButtons: []
-  NotNidButtonsState: []
-  buttons: []
-  buttonsState: []
   ChildDore: []
   sp:
     pl: {fileID: 251843394}
@@ -26993,9 +26837,7 @@ MonoBehaviour:
     OpenArt_Ver: {fileID: -498122695, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     ClousedArt_Ver: {fileID: 179997455, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     clousedOrder: 88
-  size: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
-  memory: {fileID: 0}
+  _gizmos: 0
 --- !u!1 &408330943
 GameObject:
   m_ObjectHideFlags: 0
@@ -27071,11 +26913,11 @@ Transform:
   - {fileID: 1708673796}
   - {fileID: 258689190}
   - {fileID: 823591802}
-  - {fileID: 802388861}
-  - {fileID: 1048001786}
   - {fileID: 104307898}
   - {fileID: 669612882}
   - {fileID: 1383958514}
+  - {fileID: 802388861}
+  - {fileID: 1048001786}
   m_Father: {fileID: 367087710}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &411145944
@@ -27628,17 +27470,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 421665746}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &421665748 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
-  m_PrefabInstance: {fileID: 421665746}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &425757169
 GameObject:
   m_ObjectHideFlags: 0
@@ -27670,8 +27501,6 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1475311523}
-  - {fileID: 2004335327}
-  - {fileID: 1764799628}
   - {fileID: 999587389}
   m_Father: {fileID: 1815641937}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -27973,17 +27802,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 440693605}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &440693607 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
-  m_PrefabInstance: {fileID: 440693605}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &441880807
 GameObject:
   m_ObjectHideFlags: 0
@@ -28018,7 +27836,6 @@ Transform:
   m_Children:
   - {fileID: 1230386000}
   - {fileID: 1236958395}
-  - {fileID: 1696155298}
   - {fileID: 1397644784}
   - {fileID: 1830988941}
   m_Father: {fileID: 1848518554}
@@ -28133,34 +27950,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 219842a0f9d55bc4585c01707608ef3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  memory: {fileID: 0}
   PrimeDore: {fileID: 0}
-  FlappyDore: 0
-  EndDore: 0
-  stepCount: 0
+  startPos: {fileID: 1230386000}
+  myZone: {fileID: 1995450778}
+  Buttons:
+    Buttons:
+    - {fileID: 1478547075}
+    - {fileID: 1369422911}
+    - {fileID: 1838003953}
+    SwitchButton: []
+    Set_StateButtons: []
+    Set_SwitchButton: []
+  Buttons_Extra:
+    StandartButtons: []
+    SwitchButtons: []
   Prime: 1
+  FlappyDore: 0
+  stepCount: 0
   Vertical: 0
   Bihaend: 0
   Closed: 0
   Opened: 0
   AllDone: 0
-  End: 0
-  state: 0
+  startState: 0
   curentState: 0
-  myZone: {fileID: 1995450778}
-  startPos: {fileID: 1230386000}
   CurentPhoto: []
-  DinamicObj:
-  - {fileID: 1812110471}
-  - {fileID: 505080115}
-  PressButtons:
-  - {fileID: 1478547075}
-  - {fileID: 1369422911}
-  - {fileID: 834140883}
-  NotNidButtons:
-  - {fileID: 1795559561}
-  NotNidButtonsState: []
-  buttons: []
-  buttonsState: []
   ChildDore:
   - {fileID: 1236958398}
   - {fileID: 1397644787}
@@ -28172,9 +27987,7 @@ MonoBehaviour:
     OpenArt_Ver: {fileID: -498122695, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     ClousedArt_Ver: {fileID: 179997455, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     clousedOrder: 88
-  size: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
-  memory: {fileID: 0}
+  _gizmos: 0
 --- !u!1 &442518035
 GameObject:
   m_ObjectHideFlags: 0
@@ -28424,17 +28237,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 6b107d89f56d8dc41858215745aa99f7, type: 3}
   m_PrefabInstance: {fileID: 1987223553}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &449742008 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3491965634256624870, guid: 6b107d89f56d8dc41858215745aa99f7, type: 3}
-  m_PrefabInstance: {fileID: 1987223553}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7955a7837a321584e8d6c2b46c69ae4b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &450633099
 GameObject:
   m_ObjectHideFlags: 0
@@ -29001,6 +28803,17 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &458264237 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
+  m_PrefabInstance: {fileID: 189333608}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &463061801
 GameObject:
   m_ObjectHideFlags: 0
@@ -29758,6 +29571,16 @@ Tilemap:
       serializedVersion: 2
       m_TileIndex: 7
       m_TileSpriteIndex: 4
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
+  - first: {x: 21, y: -14, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 2
+      m_TileSpriteIndex: 2
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -33909,7 +33732,7 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: c2b676e9ead9fbd4d93d1bb4ea7dd354, type: 2}
   - m_RefCount: 164
     m_Data: {fileID: 11400000, guid: c91167349122e2b49b4c7bdc3e0338ba, type: 2}
-  - m_RefCount: 58
+  - m_RefCount: 59
     m_Data: {fileID: 11400000, guid: 6f516f2aaacf36d4fb0fa924bd8f360d, type: 2}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 2dd76ed60a6863045bd5ba01a0c1896d, type: 2}
@@ -33974,7 +33797,7 @@ Tilemap:
     m_Data: {fileID: 495124969, guid: 08a38801de2f7c64cb967d770f986768, type: 3}
   - m_RefCount: 164
     m_Data: {fileID: -425222445, guid: 08a38801de2f7c64cb967d770f986768, type: 3}
-  - m_RefCount: 58
+  - m_RefCount: 59
     m_Data: {fileID: 540301290, guid: 08a38801de2f7c64cb967d770f986768, type: 3}
   - m_RefCount: 2
     m_Data: {fileID: -316686802, guid: 08a38801de2f7c64cb967d770f986768, type: 3}
@@ -34035,7 +33858,7 @@ Tilemap:
   - m_RefCount: 1
     m_Data: {fileID: 1083008081, guid: a873d209e8c9e904f81e28f57cbe99e2, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 431
+  - m_RefCount: 432
     m_Data:
       e00: 1
       e01: 0
@@ -34054,7 +33877,7 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 431
+  - m_RefCount: 432
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
@@ -35028,6 +34851,17 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &502261639 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
+  m_PrefabInstance: {fileID: 1592386057}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &502723843
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -35647,6 +35481,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1779350085}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &522923150 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
+  m_PrefabInstance: {fileID: 298500194}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &526894734
 GameObject:
   m_ObjectHideFlags: 0
@@ -35792,45 +35637,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 219842a0f9d55bc4585c01707608ef3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  memory: {fileID: 0}
   PrimeDore: {fileID: 0}
-  FlappyDore: 0
-  EndDore: 0
-  stepCount: 0
+  startPos: {fileID: 732213629}
+  myZone: {fileID: 1995450778}
+  Buttons:
+    Buttons:
+    - {fileID: 1489017999}
+    - {fileID: 2097015666}
+    - {fileID: 1997879364}
+    - {fileID: 1567506973}
+    - {fileID: 1013807156}
+    - {fileID: 545223902}
+    - {fileID: 316084422}
+    - {fileID: 274320754}
+    SwitchButton: []
+    Set_StateButtons: []
+    Set_SwitchButton: []
+  Buttons_Extra:
+    StandartButtons: []
+    SwitchButtons: []
   Prime: 1
+  FlappyDore: 0
+  stepCount: 0
   Vertical: 0
   Bihaend: 0
   Closed: 0
   Opened: 0
   AllDone: 0
-  End: 0
-  state: 0
+  startState: 0
   curentState: 0
-  myZone: {fileID: 1995450778}
-  startPos: {fileID: 732213629}
   CurentPhoto: []
-  DinamicObj:
-  - {fileID: 1285491991}
-  - {fileID: 1521380507}
-  - {fileID: 1713252522}
-  - {fileID: 401111621}
-  - {fileID: 1771822871}
-  - {fileID: 1323950587}
-  - {fileID: 1420302878}
-  - {fileID: 228586387}
-  PressButtons:
-  - {fileID: 730245171}
-  - {fileID: 2097015666}
-  - {fileID: 671062761}
-  - {fileID: 1253279522}
-  - {fileID: 1013807155}
-  - {fileID: 545223902}
-  - {fileID: 221424250}
-  - {fileID: 1251042898}
-  NotNidButtons:
-  - {fileID: 1795559561}
-  NotNidButtonsState: []
-  buttons: []
-  buttonsState: []
   ChildDore:
   - {fileID: 993122841}
   sp:
@@ -35840,9 +35677,7 @@ MonoBehaviour:
     OpenArt_Ver: {fileID: -498122695, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     ClousedArt_Ver: {fileID: 179997455, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     clousedOrder: 125
-  size: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
-  memory: {fileID: 0}
+  _gizmos: 0
 --- !u!1 &531304949
 GameObject:
   m_ObjectHideFlags: 0
@@ -36415,17 +36250,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 541367268}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &541367270 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
-  m_PrefabInstance: {fileID: 541367268}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &545157452
 GameObject:
   m_ObjectHideFlags: 0
@@ -36806,17 +36630,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 549362120}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &549362122 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
-  m_PrefabInstance: {fileID: 549362120}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &553504180
 GameObject:
   m_ObjectHideFlags: 0
@@ -36989,6 +36802,17 @@ MonoBehaviour:
   _isIce: 0
   _isDipth: 0
   castRadius: 0.85
+--- !u!114 &553849817 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
+  m_PrefabInstance: {fileID: 540783994}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &562910295
 GameObject:
   m_ObjectHideFlags: 0
@@ -37490,6 +37314,17 @@ Transform:
   - {fileID: 145633314}
   m_Father: {fileID: 838805075}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &572739044 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
+  m_PrefabInstance: {fileID: 549362120}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &576980684
 GameObject:
   m_ObjectHideFlags: 0
@@ -38060,7 +37895,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 589970369}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &589970371 stripped
+--- !u!114 &589970372 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 589970369}
@@ -39469,6 +39304,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1078771041}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &639433205 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
+  m_PrefabInstance: {fileID: 541367268}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &639820880
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -39547,17 +39393,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 639820880}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &639820882 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
-  m_PrefabInstance: {fileID: 639820880}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &646789845
 GameObject:
   m_ObjectHideFlags: 0
@@ -39808,7 +39643,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 647256739}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &647256741 stripped
+--- !u!114 &647256742 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 647256739}
@@ -40053,17 +39888,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 651448130}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &651448132 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
-  m_PrefabInstance: {fileID: 651448130}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &651591827
 GameObject:
   m_ObjectHideFlags: 0
@@ -40720,7 +40544,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 669612881}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &669612883 stripped
+--- !u!114 &669612884 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 669612881}
@@ -40809,17 +40633,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 671062759}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &671062761 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
-  m_PrefabInstance: {fileID: 671062759}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &671841835
 GameObject:
   m_ObjectHideFlags: 0
@@ -41716,17 +41529,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 6b107d89f56d8dc41858215745aa99f7, type: 3}
   m_PrefabInstance: {fileID: 1559662997}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &698282490 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3491965634256624870, guid: 6b107d89f56d8dc41858215745aa99f7, type: 3}
-  m_PrefabInstance: {fileID: 1559662997}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7955a7837a321584e8d6c2b46c69ae4b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &698351993
 GameObject:
   m_ObjectHideFlags: 0
@@ -42381,17 +42183,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 714077900}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &714077902 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
-  m_PrefabInstance: {fileID: 714077900}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &715138833
 GameObject:
   m_ObjectHideFlags: 0
@@ -43063,17 +42854,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 726490364}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &726490366 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
-  m_PrefabInstance: {fileID: 726490364}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &728339568
 GameObject:
   m_ObjectHideFlags: 0
@@ -43324,17 +43104,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 730245169}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &730245171 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
-  m_PrefabInstance: {fileID: 730245169}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &732213628
 GameObject:
   m_ObjectHideFlags: 0
@@ -45090,6 +44859,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 37f9299124cd90847afb537128d30d09, type: 3}
   m_PrefabInstance: {fileID: 788880843}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &790581929 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
+  m_PrefabInstance: {fileID: 323796344}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &802388860
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -45172,17 +44952,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 802388860}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &802388862 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
-  m_PrefabInstance: {fileID: 802388860}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &803665644
 GameObject:
   m_ObjectHideFlags: 0
@@ -45528,7 +45297,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 823591801}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &823591803 stripped
+--- !u!114 &823591804 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 823591801}
@@ -45825,17 +45594,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 1076885242}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &834140883 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
-  m_PrefabInstance: {fileID: 1076885242}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &836926418
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -45892,6 +45650,38 @@ PrefabInstance:
       propertyPath: nideToPressed
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
+      propertyPath: SpecialAction.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
+      propertyPath: SpecialAction.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
+      propertyPath: SpecialAction.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 317952040}
+    - target: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
+      propertyPath: SpecialAction.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
+      propertyPath: SpecialAction.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
+      propertyPath: SpecialAction.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UnityEngine.GameObject, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
+      propertyPath: SpecialAction.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
+      propertyPath: SpecialAction.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 8343845996015857234, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
       propertyPath: m_Color.b
       value: 1
@@ -45914,17 +45704,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 836926418}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &836926421 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
-  m_PrefabInstance: {fileID: 836926418}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &838805074
 GameObject:
   m_ObjectHideFlags: 0
@@ -46652,28 +46431,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 219842a0f9d55bc4585c01707608ef3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  memory: {fileID: 0}
   PrimeDore: {fileID: 0}
-  FlappyDore: 0
-  EndDore: 0
-  stepCount: 0
+  startPos: {fileID: 0}
+  myZone: {fileID: 0}
+  Buttons:
+    Buttons: []
+    SwitchButton: []
+    Set_StateButtons: []
+    Set_SwitchButton: []
+  Buttons_Extra:
+    StandartButtons: []
+    SwitchButtons: []
   Prime: 0
+  FlappyDore: 0
+  stepCount: 0
   Vertical: 1
   Bihaend: 1
   Closed: 0
   Opened: 1
   AllDone: 0
-  End: 0
-  state: 0
+  startState: 0
   curentState: 0
-  myZone: {fileID: 0}
-  startPos: {fileID: 0}
   CurentPhoto: []
-  DinamicObj: []
-  PressButtons: []
-  NotNidButtons: []
-  NotNidButtonsState: []
-  buttons: []
-  buttonsState: []
   ChildDore: []
   sp:
     pl: {fileID: 251843394}
@@ -46682,9 +46462,7 @@ MonoBehaviour:
     OpenArt_Ver: {fileID: -498122695, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     ClousedArt_Ver: {fileID: 179997455, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     clousedOrder: 125
-  size: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
-  memory: {fileID: 0}
+  _gizmos: 0
 --- !u!1 &864119866
 GameObject:
   m_ObjectHideFlags: 0
@@ -47455,36 +47233,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 219842a0f9d55bc4585c01707608ef3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  memory: {fileID: 0}
   PrimeDore: {fileID: 0}
-  FlappyDore: 0
-  EndDore: 0
-  stepCount: 0
+  startPos: {fileID: 1292782536}
+  myZone: {fileID: 1995450778}
+  Buttons:
+    Buttons:
+    - {fileID: 1936511438}
+    - {fileID: 984076341}
+    - {fileID: 1066906478}
+    - {fileID: 1949494423}
+    SwitchButton: []
+    Set_StateButtons: []
+    Set_SwitchButton: []
+  Buttons_Extra:
+    StandartButtons: []
+    SwitchButtons: []
   Prime: 1
+  FlappyDore: 0
+  stepCount: 0
   Vertical: 1
   Bihaend: 0
   Closed: 0
   Opened: 0
   AllDone: 0
-  End: 0
-  state: 0
+  startState: 0
   curentState: 0
-  myZone: {fileID: 1995450778}
-  startPos: {fileID: 1292782536}
   CurentPhoto: []
-  DinamicObj:
-  - {fileID: 1435048797}
-  - {fileID: 1008733471}
-  - {fileID: 326291329}
-  PressButtons:
-  - {fileID: 1796203343}
-  - {fileID: 79166459}
-  - {fileID: 231743499}
-  - {fileID: 1013520269}
-  NotNidButtons:
-  - {fileID: 1795559561}
-  NotNidButtonsState: []
-  buttons: []
-  buttonsState: []
   ChildDore:
   - {fileID: 1881540417}
   sp:
@@ -47494,9 +47269,7 @@ MonoBehaviour:
     OpenArt_Ver: {fileID: -498122695, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     ClousedArt_Ver: {fileID: 179997455, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     clousedOrder: 125
-  size: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
-  memory: {fileID: 0}
+  _gizmos: 0
 --- !u!1 &885494880
 GameObject:
   m_ObjectHideFlags: 0
@@ -47641,33 +47414,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 219842a0f9d55bc4585c01707608ef3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  memory: {fileID: 0}
   PrimeDore: {fileID: 0}
-  FlappyDore: 0
-  EndDore: 1
-  stepCount: 0
+  startPos: {fileID: 0}
+  myZone: {fileID: 0}
+  Buttons:
+    Buttons:
+    - {fileID: 1986522305}
+    - {fileID: 1950232958}
+    - {fileID: 1846849362}
+    - {fileID: 1938453368}
+    - {fileID: 1234790478}
+    SwitchButton: []
+    Set_StateButtons: []
+    Set_SwitchButton: []
+  Buttons_Extra:
+    StandartButtons: []
+    SwitchButtons: []
   Prime: 0
+  FlappyDore: 0
+  stepCount: 0
   Vertical: 1
   Bihaend: 1
   Closed: 0
   Opened: 0
   AllDone: 0
-  End: 0
-  state: 0
+  startState: 0
   curentState: 0
-  myZone: {fileID: 0}
-  startPos: {fileID: 0}
   CurentPhoto: []
-  DinamicObj: []
-  PressButtons:
-  - {fileID: 1301291362}
-  - {fileID: 1228593500}
-  - {fileID: 1882856183}
-  - {fileID: 1938453367}
-  - {fileID: 651448132}
-  NotNidButtons: []
-  NotNidButtonsState: []
-  buttons: []
-  buttonsState: []
   ChildDore: []
   sp:
     pl: {fileID: 251843394}
@@ -47676,9 +47450,7 @@ MonoBehaviour:
     OpenArt_Ver: {fileID: -498122695, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     ClousedArt_Ver: {fileID: 179997455, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     clousedOrder: 125
-  size: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
-  memory: {fileID: 0}
+  _gizmos: 0
 --- !u!1 &890710742
 GameObject:
   m_ObjectHideFlags: 0
@@ -48652,37 +48424,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 219842a0f9d55bc4585c01707608ef3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  memory: {fileID: 0}
   PrimeDore: {fileID: 0}
-  FlappyDore: 0
-  EndDore: 0
-  stepCount: 0
+  startPos: {fileID: 828499562}
+  myZone: {fileID: 1995450778}
+  Buttons:
+    Buttons:
+    - {fileID: 1924615110}
+    - {fileID: 1965043983}
+    - {fileID: 1490090940}
+    - {fileID: 458264237}
+    SwitchButton: []
+    Set_StateButtons: []
+    Set_SwitchButton: []
+  Buttons_Extra:
+    StandartButtons: []
+    SwitchButtons: []
   Prime: 1
+  FlappyDore: 0
+  stepCount: 0
   Vertical: 1
-  Bihaend: 0
+  Bihaend: 1
   Closed: 0
   Opened: 0
   AllDone: 0
-  End: 0
-  state: 0
+  startState: 0
   curentState: 0
-  myZone: {fileID: 1995450778}
-  startPos: {fileID: 828499562}
   CurentPhoto: []
-  DinamicObj:
-  - {fileID: 1517656388}
-  - {fileID: 446062873}
-  - {fileID: 2125625251}
-  - {fileID: 317952044}
-  PressButtons:
-  - {fileID: 1622866139}
-  - {fileID: 1591703704}
-  - {fileID: 836926421}
-  - {fileID: 224998832}
-  NotNidButtons:
-  - {fileID: 1795559561}
-  NotNidButtonsState: []
-  buttons: []
-  buttonsState: []
   ChildDore: []
   sp:
     pl: {fileID: 251843394}
@@ -48691,9 +48459,7 @@ MonoBehaviour:
     OpenArt_Ver: {fileID: -498122695, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     ClousedArt_Ver: {fileID: 179997455, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     clousedOrder: 125
-  size: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
-  memory: {fileID: 0}
+  _gizmos: 0
 --- !u!1 &908447223
 GameObject:
   m_ObjectHideFlags: 0
@@ -48838,32 +48604,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 219842a0f9d55bc4585c01707608ef3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  memory: {fileID: 0}
   PrimeDore: {fileID: 0}
-  FlappyDore: 0
-  EndDore: 1
-  stepCount: 0
+  startPos: {fileID: 0}
+  myZone: {fileID: 0}
+  Buttons:
+    Buttons:
+    - {fileID: 502261639}
+    - {fileID: 1080508581}
+    - {fileID: 244847964}
+    - {fileID: 655105896}
+    SwitchButton: []
+    Set_StateButtons: []
+    Set_SwitchButton: []
+  Buttons_Extra:
+    StandartButtons: []
+    SwitchButtons: []
   Prime: 0
+  FlappyDore: 0
+  stepCount: 0
   Vertical: 1
   Bihaend: 1
   Closed: 0
-  Opened: 0
+  Opened: 1
   AllDone: 0
-  End: 0
-  state: 0
+  startState: 0
   curentState: 0
-  myZone: {fileID: 0}
-  startPos: {fileID: 0}
   CurentPhoto: []
-  DinamicObj: []
-  PressButtons:
-  - {fileID: 35192474}
-  - {fileID: 377392790}
-  - {fileID: 158556878}
-  - {fileID: 655105896}
-  NotNidButtons: []
-  NotNidButtonsState: []
-  buttons: []
-  buttonsState: []
   ChildDore: []
   sp:
     pl: {fileID: 251843394}
@@ -48872,9 +48639,7 @@ MonoBehaviour:
     OpenArt_Ver: {fileID: -498122695, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     ClousedArt_Ver: {fileID: 179997455, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     clousedOrder: 125
-  size: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
-  memory: {fileID: 0}
+  _gizmos: 0
 --- !u!1 &916761586
 GameObject:
   m_ObjectHideFlags: 0
@@ -49159,17 +48924,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 6b107d89f56d8dc41858215745aa99f7, type: 3}
   m_PrefabInstance: {fileID: 2139790890}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &931784332 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3491965634256624870, guid: 6b107d89f56d8dc41858215745aa99f7, type: 3}
-  m_PrefabInstance: {fileID: 2139790890}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7955a7837a321584e8d6c2b46c69ae4b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &935106942
 GameObject:
   m_ObjectHideFlags: 0
@@ -49314,34 +49068,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 219842a0f9d55bc4585c01707608ef3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  memory: {fileID: 0}
   PrimeDore: {fileID: 0}
-  FlappyDore: 0
-  EndDore: 1
-  stepCount: 0
+  startPos: {fileID: 0}
+  myZone: {fileID: 0}
+  Buttons:
+    Buttons:
+    - {fileID: 1514081093}
+    - {fileID: 1800843830}
+    - {fileID: 2050944730}
+    - {fileID: 1553819902}
+    SwitchButton: []
+    Set_StateButtons: []
+    Set_SwitchButton: []
+  Buttons_Extra:
+    StandartButtons: []
+    SwitchButtons: []
   Prime: 0
+  FlappyDore: 0
+  stepCount: 0
   Vertical: 1
   Bihaend: 1
   Closed: 0
   Opened: 0
   AllDone: 0
-  End: 0
-  state: 0
+  startState: 0
   curentState: 0
-  myZone: {fileID: 0}
-  startPos: {fileID: 0}
   CurentPhoto: []
-  DinamicObj: []
-  PressButtons:
-  - {fileID: 1514081093}
-  - {fileID: 1800843830}
-  - {fileID: 2050944730}
-  - {fileID: 1553819902}
-  NotNidButtons: []
-  NotNidButtonsState: []
-  buttons:
-  - button: {fileID: 158556878}
-    state: 1
-  buttonsState: []
   ChildDore: []
   sp:
     pl: {fileID: 251843394}
@@ -49350,9 +49103,7 @@ MonoBehaviour:
     OpenArt_Ver: {fileID: -498122695, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     ClousedArt_Ver: {fileID: 179997455, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     clousedOrder: 125
-  size: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
-  memory: {fileID: 0}
+  _gizmos: 0
 --- !u!1 &935283670
 GameObject:
   m_ObjectHideFlags: 0
@@ -49753,6 +49504,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 944159301}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &944159304 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
+  m_PrefabInstance: {fileID: 944159301}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &945067013
 GameObject:
   m_ObjectHideFlags: 0
@@ -51293,17 +51055,6 @@ MonoBehaviour:
   _isIce: 0
   _isDipth: 0
   castRadius: 0.85
---- !u!114 &972216674 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
-  m_PrefabInstance: {fileID: 452737943}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &977058359
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -51549,6 +51300,17 @@ MonoBehaviour:
   _isIce: 0
   _isDipth: 0
   castRadius: 0.85
+--- !u!114 &984076341 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
+  m_PrefabInstance: {fileID: 1084265627}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &985685540
 GameObject:
   m_ObjectHideFlags: 0
@@ -51864,36 +51626,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 219842a0f9d55bc4585c01707608ef3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  memory: {fileID: 0}
   PrimeDore: {fileID: 0}
-  FlappyDore: 0
-  EndDore: 1
-  stepCount: 0
+  startPos: {fileID: 0}
+  myZone: {fileID: 0}
+  Buttons:
+    Buttons:
+    - {fileID: 1489017999}
+    - {fileID: 2097015666}
+    - {fileID: 1997879364}
+    - {fileID: 1567506973}
+    - {fileID: 1013807156}
+    - {fileID: 545223902}
+    - {fileID: 316084422}
+    - {fileID: 274320754}
+    SwitchButton: []
+    Set_StateButtons: []
+    Set_SwitchButton: []
+  Buttons_Extra:
+    StandartButtons: []
+    SwitchButtons: []
   Prime: 0
+  FlappyDore: 0
+  stepCount: 0
   Vertical: 1
   Bihaend: 1
   Closed: 0
   Opened: 0
   AllDone: 0
-  End: 0
-  state: 0
+  startState: 0
   curentState: 0
-  myZone: {fileID: 0}
-  startPos: {fileID: 0}
   CurentPhoto: []
-  DinamicObj: []
-  PressButtons: []
-  NotNidButtons: []
-  NotNidButtonsState: []
-  buttons:
-  - button: {fileID: 2029530244}
-    state: 1
-  - button: {fileID: 1141345182}
-    state: 1
-  - button: {fileID: 1410170255}
-    state: 1
-  - button: {fileID: 1385985460}
-    state: 1
-  buttonsState: []
   ChildDore: []
   sp:
     pl: {fileID: 251843394}
@@ -51902,9 +51665,18 @@ MonoBehaviour:
     OpenArt_Ver: {fileID: -498122695, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     ClousedArt_Ver: {fileID: 179997455, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     clousedOrder: 125
-  size: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
-  memory: {fileID: 0}
+  _gizmos: 0
+--- !u!114 &994848531 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
+  m_PrefabInstance: {fileID: 802388860}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &999587388
 GameObject:
   m_ObjectHideFlags: 0
@@ -52498,17 +52270,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 1039721000}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1013520269 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
-  m_PrefabInstance: {fileID: 1039721000}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1013807153
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -52587,7 +52348,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 1013807153}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1013807155 stripped
+--- !u!114 &1013807156 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 1013807153}
@@ -52810,6 +52571,17 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1022560118 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 37f9299124cd90847afb537128d30d09, type: 3}
+  m_PrefabInstance: {fileID: 943603833}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1023906967
 GameObject:
   m_ObjectHideFlags: 0
@@ -53211,42 +52983,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 219842a0f9d55bc4585c01707608ef3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  memory: {fileID: 0}
   PrimeDore: {fileID: 0}
-  FlappyDore: 0
-  EndDore: 0
-  stepCount: 0
+  startPos: {fileID: 0}
+  myZone: {fileID: 1995450778}
+  Buttons:
+    Buttons: []
+    SwitchButton:
+    - {fileID: 1234193145}
+    - {fileID: 710969881}
+    - {fileID: 1300631099}
+    - {fileID: 1879246299}
+    - {fileID: 1169504759}
+    - {fileID: 1931663880}
+    - {fileID: 1755074093}
+    Set_StateButtons: []
+    Set_SwitchButton: []
+  Buttons_Extra:
+    StandartButtons: []
+    SwitchButtons: []
   Prime: 0
+  FlappyDore: 1
+  stepCount: 0
   Vertical: 0
-  Bihaend: 0
+  Bihaend: 1
   Closed: 0
   Opened: 0
   AllDone: 0
-  End: 0
-  state: 0
+  startState: 0
   curentState: 0
-  myZone: {fileID: 1995450778}
-  startPos: {fileID: 0}
   CurentPhoto: []
-  DinamicObj: []
-  PressButtons: []
-  NotNidButtons: []
-  NotNidButtonsState: []
-  buttons: []
-  buttonsState:
-  - button: {fileID: 931784332}
-    state: 2
-  - button: {fileID: 710969881}
-    state: 2
-  - button: {fileID: 698282490}
-    state: 2
-  - button: {fileID: 449742008}
-    state: 2
-  - button: {fileID: 290263513}
-    state: 2
-  - button: {fileID: 1931663880}
-    state: 2
-  - button: {fileID: 1755074093}
-    state: 2
   ChildDore: []
   sp:
     pl: {fileID: 251843394}
@@ -53255,9 +53021,7 @@ MonoBehaviour:
     OpenArt_Ver: {fileID: -498122695, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     ClousedArt_Ver: {fileID: 179997455, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     clousedOrder: 87
-  size: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
-  memory: {fileID: 0}
+  _gizmos: 0
 --- !u!4 &1030624082
 Transform:
   m_ObjectHideFlags: 0
@@ -53516,37 +53280,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 219842a0f9d55bc4585c01707608ef3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  memory: {fileID: 0}
   PrimeDore: {fileID: 0}
-  FlappyDore: 0
-  EndDore: 0
-  stepCount: 0
+  startPos: {fileID: 68314254}
+  myZone: {fileID: 1995450778}
+  Buttons:
+    Buttons:
+    - {fileID: 1990523814}
+    - {fileID: 1769510067}
+    - {fileID: 2076715835}
+    - {fileID: 553849817}
+    SwitchButton: []
+    Set_StateButtons: []
+    Set_SwitchButton: []
+  Buttons_Extra:
+    StandartButtons: []
+    SwitchButtons: []
   Prime: 1
+  FlappyDore: 0
+  stepCount: 0
   Vertical: 1
   Bihaend: 0
   Closed: 0
   Opened: 0
   AllDone: 0
-  End: 0
-  state: 0
+  startState: 0
   curentState: 0
-  myZone: {fileID: 1995450778}
-  startPos: {fileID: 68314254}
   CurentPhoto: []
-  DinamicObj:
-  - {fileID: 566809232}
-  - {fileID: 52203874}
-  - {fileID: 902916736}
-  - {fileID: 30931799}
-  PressButtons:
-  - {fileID: 1990523814}
-  - {fileID: 1753027008}
-  - {fileID: 2076715835}
-  - {fileID: 1519509694}
-  NotNidButtons:
-  - {fileID: 1795559561}
-  NotNidButtonsState: []
-  buttons: []
-  buttonsState: []
   ChildDore: []
   sp:
     pl: {fileID: 251843394}
@@ -53555,9 +53315,7 @@ MonoBehaviour:
     OpenArt_Ver: {fileID: -498122695, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     ClousedArt_Ver: {fileID: 179997455, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     clousedOrder: 125
-  size: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
-  memory: {fileID: 0}
+  _gizmos: 0
 --- !u!1 &1036147796
 GameObject:
   m_ObjectHideFlags: 0
@@ -53761,31 +53519,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 219842a0f9d55bc4585c01707608ef3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  memory: {fileID: 0}
   PrimeDore: {fileID: 0}
-  FlappyDore: 0
-  EndDore: 0
-  stepCount: 0
+  startPos: {fileID: 0}
+  myZone: {fileID: 0}
+  Buttons:
+    Buttons:
+    - {fileID: 2072326108}
+    - {fileID: 823591804}
+    - {fileID: 1997632278}
+    SwitchButton: []
+    Set_StateButtons: []
+    Set_SwitchButton: []
+  Buttons_Extra:
+    StandartButtons: []
+    SwitchButtons: []
   Prime: 0
+  FlappyDore: 0
+  stepCount: 0
   Vertical: 1
   Bihaend: 0
   Closed: 0
   Opened: 0
   AllDone: 0
-  End: 0
-  state: 0
+  startState: 0
   curentState: 0
-  myZone: {fileID: 0}
-  startPos: {fileID: 0}
   CurentPhoto: []
-  DinamicObj: []
-  PressButtons:
-  - {fileID: 2072326108}
-  - {fileID: 823591803}
-  - {fileID: 1348711819}
-  NotNidButtons: []
-  NotNidButtonsState: []
-  buttons: []
-  buttonsState: []
   ChildDore: []
   sp:
     pl: {fileID: 251843394}
@@ -53794,9 +53553,7 @@ MonoBehaviour:
     OpenArt_Ver: {fileID: -498122695, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     ClousedArt_Ver: {fileID: 179997455, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     clousedOrder: 125
-  size: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
-  memory: {fileID: 0}
+  _gizmos: 0
 --- !u!4 &1036299940
 Transform:
   m_ObjectHideFlags: 0
@@ -54237,17 +53994,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 1048001785}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1048001787 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
-  m_PrefabInstance: {fileID: 1048001785}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1055104467
 GameObject:
   m_ObjectHideFlags: 0
@@ -54506,6 +54252,17 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1066906478 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
+  m_PrefabInstance: {fileID: 1796399164}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1067864700
 GameObject:
   m_ObjectHideFlags: 0
@@ -55556,6 +55313,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1232230906234835739, guid: 37f9299124cd90847afb537128d30d09, type: 3}
   m_PrefabInstance: {fileID: 1078887432}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1080508581 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
+  m_PrefabInstance: {fileID: 587247799}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1082548960
 GameObject:
   m_ObjectHideFlags: 0
@@ -70030,6 +69798,17 @@ MonoBehaviour:
   previosliZone: {fileID: 0}
   nextZone: {fileID: 0}
   zero: 1
+--- !u!114 &1156712064 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
+  m_PrefabInstance: {fileID: 421665746}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1164619120
 GameObject:
   m_ObjectHideFlags: 0
@@ -70280,6 +70059,17 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1169504759 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3491965634256624870, guid: 6b107d89f56d8dc41858215745aa99f7, type: 3}
+  m_PrefabInstance: {fileID: 725100847}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7955a7837a321584e8d6c2b46c69ae4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1189813983
 GameObject:
   m_ObjectHideFlags: 0
@@ -70367,14 +70157,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1193127626}
-  - component: {fileID: 1193127627}
   m_Layer: 5
   m_Name: Interface
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1193127626
 RectTransform:
   m_ObjectHideFlags: 0
@@ -70395,23 +70184,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1193127627
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1193127625}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f4126d7220829f45b1496d46d924caf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dores: []
-  pl: {fileID: 0}
-  _score: {fileID: 417854165}
-  mousePos: {x: 0, y: 0, z: 0}
-  _gizmo: 0
 --- !u!1001 &1193384078
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -70686,29 +70458,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 219842a0f9d55bc4585c01707608ef3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  memory: {fileID: 0}
   PrimeDore: {fileID: 0}
-  FlappyDore: 0
-  EndDore: 0
-  stepCount: 0
+  startPos: {fileID: 0}
+  myZone: {fileID: 1995450778}
+  Buttons:
+    Buttons:
+    - {fileID: 1839325823}
+    SwitchButton: []
+    Set_StateButtons: []
+    Set_SwitchButton: []
+  Buttons_Extra:
+    StandartButtons: []
+    SwitchButtons: []
   Prime: 0
+  FlappyDore: 0
+  stepCount: 0
   Vertical: 0
   Bihaend: 1
   Closed: 0
   Opened: 0
   AllDone: 0
-  End: 0
-  state: 0
+  startState: 0
   curentState: 0
-  myZone: {fileID: 1995450778}
-  startPos: {fileID: 0}
   CurentPhoto: []
-  DinamicObj: []
-  PressButtons:
-  - {fileID: 1839325822}
-  NotNidButtons: []
-  NotNidButtonsState: []
-  buttons: []
-  buttonsState: []
   ChildDore: []
   sp:
     pl: {fileID: 251843394}
@@ -70717,9 +70490,7 @@ MonoBehaviour:
     OpenArt_Ver: {fileID: -498122695, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     ClousedArt_Ver: {fileID: 179997455, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     clousedOrder: 125
-  size: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
-  memory: {fileID: 0}
+  _gizmos: 0
 --- !u!1 &1196587827
 GameObject:
   m_ObjectHideFlags: 0
@@ -71349,17 +71120,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 1228593498}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1228593500 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
-  m_PrefabInstance: {fileID: 1228593498}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1229058324
 GameObject:
   m_ObjectHideFlags: 0
@@ -71506,40 +71266,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 219842a0f9d55bc4585c01707608ef3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  memory: {fileID: 0}
   PrimeDore: {fileID: 0}
-  FlappyDore: 0
-  EndDore: 0
-  stepCount: 0
+  startPos: {fileID: 612870335}
+  myZone: {fileID: 1995450778}
+  Buttons:
+    Buttons:
+    - {fileID: 639433205}
+    - {fileID: 1928169866}
+    - {fileID: 572739044}
+    - {fileID: 1869721515}
+    - {fileID: 2072326108}
+    SwitchButton: []
+    Set_StateButtons: []
+    Set_SwitchButton: []
+  Buttons_Extra:
+    StandartButtons: []
+    SwitchButtons: []
   Prime: 1
+  FlappyDore: 0
+  stepCount: 0
   Vertical: 0
   Bihaend: 1
   Closed: 0
   Opened: 0
   AllDone: 0
-  End: 0
-  state: 0
+  startState: 0
   curentState: 0
-  myZone: {fileID: 1995450778}
-  startPos: {fileID: 612870335}
   CurentPhoto:
   - {fileID: 869722420}
-  DinamicObj:
-  - {fileID: 1419646901}
-  - {fileID: 1436963490}
-  - {fileID: 546192273}
-  - {fileID: 1554897665}
-  - {fileID: 776632069}
-  PressButtons:
-  - {fileID: 541367270}
-  - {fileID: 1928169865}
-  - {fileID: 549362122}
-  - {fileID: 440693607}
-  - {fileID: 2072326108}
-  NotNidButtons:
-  - {fileID: 1795559561}
-  NotNidButtonsState: []
-  buttons: []
-  buttonsState: []
   ChildDore: []
   sp:
     pl: {fileID: 251843394}
@@ -71548,9 +71303,7 @@ MonoBehaviour:
     OpenArt_Ver: {fileID: -498122695, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     ClousedArt_Ver: {fileID: 179997455, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     clousedOrder: 125
-  size: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
-  memory: {fileID: 0}
+  _gizmos: 0
 --- !u!1 &1230385999
 GameObject:
   m_ObjectHideFlags: 0
@@ -71688,6 +71441,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 37f9299124cd90847afb537128d30d09, type: 3}
   m_PrefabInstance: {fileID: 1231648237}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1234193145 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3491965634256624870, guid: 6b107d89f56d8dc41858215745aa99f7, type: 3}
+  m_PrefabInstance: {fileID: 2139790890}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7955a7837a321584e8d6c2b46c69ae4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1234745684
 GameObject:
   m_ObjectHideFlags: 0
@@ -71832,29 +71596,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 219842a0f9d55bc4585c01707608ef3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  memory: {fileID: 0}
   PrimeDore: {fileID: 0}
-  FlappyDore: 0
-  EndDore: 0
-  stepCount: 0
+  startPos: {fileID: 0}
+  myZone: {fileID: 1995450778}
+  Buttons:
+    Buttons:
+    - {fileID: 1953096888}
+    SwitchButton: []
+    Set_StateButtons: []
+    Set_SwitchButton: []
+  Buttons_Extra:
+    StandartButtons: []
+    SwitchButtons: []
   Prime: 0
+  FlappyDore: 0
+  stepCount: 0
   Vertical: 0
   Bihaend: 1
   Closed: 0
   Opened: 0
   AllDone: 0
-  End: 0
-  state: 0
+  startState: 0
   curentState: 0
-  myZone: {fileID: 1995450778}
-  startPos: {fileID: 0}
   CurentPhoto: []
-  DinamicObj: []
-  PressButtons:
-  - {fileID: 2001016001}
-  NotNidButtons: []
-  NotNidButtonsState: []
-  buttons: []
-  buttonsState: []
   ChildDore: []
   sp:
     pl: {fileID: 251843394}
@@ -71863,9 +71628,18 @@ MonoBehaviour:
     OpenArt_Ver: {fileID: -498122695, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     ClousedArt_Ver: {fileID: 179997455, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     clousedOrder: 125
-  size: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
-  memory: {fileID: 0}
+  _gizmos: 0
+--- !u!114 &1234790478 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
+  m_PrefabInstance: {fileID: 651448130}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1236958394
 GameObject:
   m_ObjectHideFlags: 0
@@ -72010,31 +71784,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 219842a0f9d55bc4585c01707608ef3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  memory: {fileID: 0}
   PrimeDore: {fileID: 0}
-  FlappyDore: 0
-  EndDore: 1
-  stepCount: 0
+  startPos: {fileID: 0}
+  myZone: {fileID: 0}
+  Buttons:
+    Buttons:
+    - {fileID: 1478547075}
+    - {fileID: 1369422911}
+    - {fileID: 1838003953}
+    SwitchButton: []
+    Set_StateButtons: []
+    Set_SwitchButton: []
+  Buttons_Extra:
+    StandartButtons: []
+    SwitchButtons: []
   Prime: 0
+  FlappyDore: 0
+  stepCount: 0
   Vertical: 1
   Bihaend: 1
   Closed: 0
   Opened: 0
   AllDone: 0
-  End: 0
-  state: 0
+  startState: 0
   curentState: 0
-  myZone: {fileID: 0}
-  startPos: {fileID: 0}
   CurentPhoto: []
-  DinamicObj: []
-  PressButtons:
-  - {fileID: 1478547075}
-  - {fileID: 1369422911}
-  - {fileID: 834140883}
-  NotNidButtons: []
-  NotNidButtonsState: []
-  buttons: []
-  buttonsState: []
   ChildDore: []
   sp:
     pl: {fileID: 251843394}
@@ -72043,9 +71818,7 @@ MonoBehaviour:
     OpenArt_Ver: {fileID: -498122695, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     ClousedArt_Ver: {fileID: 179997455, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     clousedOrder: 125
-  size: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
-  memory: {fileID: 0}
+  _gizmos: 0
 --- !u!1 &1240468278
 GameObject:
   m_ObjectHideFlags: 0
@@ -72683,17 +72456,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1249772312}
   m_CullTransparentMesh: 1
---- !u!114 &1251042898 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
-  m_PrefabInstance: {fileID: 224510248}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1251748724
 GameObject:
   m_ObjectHideFlags: 0
@@ -72906,17 +72668,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1252735509}
   m_CullTransparentMesh: 1
---- !u!114 &1253279522 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
-  m_PrefabInstance: {fileID: 1057392149}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1253461794
 GameObject:
   m_ObjectHideFlags: 0
@@ -72948,29 +72699,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 219842a0f9d55bc4585c01707608ef3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  memory: {fileID: 0}
   PrimeDore: {fileID: 0}
-  FlappyDore: 0
-  EndDore: 0
-  stepCount: 0
+  startPos: {fileID: 0}
+  myZone: {fileID: 0}
+  Buttons:
+    Buttons:
+    - {fileID: 1022560118}
+    SwitchButton: []
+    Set_StateButtons: []
+    Set_SwitchButton: []
+  Buttons_Extra:
+    StandartButtons: []
+    SwitchButtons: []
   Prime: 0
+  FlappyDore: 0
+  stepCount: 0
   Vertical: 1
   Bihaend: 1
   Closed: 0
   Opened: 0
   AllDone: 0
-  End: 0
-  state: 0
+  startState: 0
   curentState: 0
-  myZone: {fileID: 0}
-  startPos: {fileID: 0}
   CurentPhoto: []
-  DinamicObj: []
-  PressButtons:
-  - {fileID: 1700015625}
-  NotNidButtons: []
-  NotNidButtonsState: []
-  buttons: []
-  buttonsState: []
   ChildDore: []
   sp:
     pl: {fileID: 251843394}
@@ -72979,9 +72731,7 @@ MonoBehaviour:
     OpenArt_Ver: {fileID: -498122695, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     ClousedArt_Ver: {fileID: 179997455, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     clousedOrder: 125
-  size: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
-  memory: {fileID: 0}
+  _gizmos: 0
 --- !u!61 &1253461796
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -73798,6 +73548,17 @@ MonoBehaviour:
   _isIce: 0
   _isDipth: 0
   castRadius: 0.85
+--- !u!114 &1282067279 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
+  m_PrefabInstance: {fileID: 726490364}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1285491987
 GameObject:
   m_ObjectHideFlags: 0
@@ -74306,6 +74067,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1000
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &1300631099 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3491965634256624870, guid: 6b107d89f56d8dc41858215745aa99f7, type: 3}
+  m_PrefabInstance: {fileID: 1559662997}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7955a7837a321584e8d6c2b46c69ae4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1300668903
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -74384,17 +74156,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 1300668903}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1300668905 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
-  m_PrefabInstance: {fileID: 1300668903}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1301291360
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -74473,17 +74234,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 1301291360}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1301291362 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
-  m_PrefabInstance: {fileID: 1301291360}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1302066468
 GameObject:
   m_ObjectHideFlags: 0
@@ -75279,32 +75029,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 219842a0f9d55bc4585c01707608ef3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  memory: {fileID: 0}
   PrimeDore: {fileID: 0}
-  FlappyDore: 0
-  EndDore: 0
-  stepCount: 0
+  startPos: {fileID: 0}
+  myZone: {fileID: 1995450778}
+  Buttons:
+    Buttons:
+    - {fileID: 502261639}
+    - {fileID: 1080508581}
+    - {fileID: 244847964}
+    - {fileID: 655105896}
+    SwitchButton: []
+    Set_StateButtons: []
+    Set_SwitchButton: []
+  Buttons_Extra:
+    StandartButtons: []
+    SwitchButtons: []
   Prime: 0
+  FlappyDore: 0
+  stepCount: 0
   Vertical: 0
   Bihaend: 0
   Closed: 0
-  Opened: 0
+  Opened: 1
   AllDone: 0
-  End: 0
-  state: 0
+  startState: 0
   curentState: 0
-  myZone: {fileID: 1995450778}
-  startPos: {fileID: 0}
   CurentPhoto: []
-  DinamicObj: []
-  PressButtons:
-  - {fileID: 35192474}
-  - {fileID: 377392790}
-  - {fileID: 158556878}
-  - {fileID: 655105896}
-  NotNidButtons: []
-  NotNidButtonsState: []
-  buttons: []
-  buttonsState: []
   ChildDore: []
   sp:
     pl: {fileID: 251843394}
@@ -75313,9 +75064,7 @@ MonoBehaviour:
     OpenArt_Ver: {fileID: -498122695, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     ClousedArt_Ver: {fileID: 179997455, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     clousedOrder: 87
-  size: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
-  memory: {fileID: 0}
+  _gizmos: 0
 --- !u!1001 &1348711816
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -75398,17 +75147,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 1348711816}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1348711819 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
-  m_PrefabInstance: {fileID: 1348711816}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1351692773
 GameObject:
   m_ObjectHideFlags: 0
@@ -76752,7 +76490,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 1356455928}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1356455930 stripped
+--- !u!114 &1356455931 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 1356455928}
@@ -76988,42 +76726,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 219842a0f9d55bc4585c01707608ef3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  memory: {fileID: 0}
   PrimeDore: {fileID: 0}
-  FlappyDore: 0
-  EndDore: 0
-  stepCount: 0
+  startPos: {fileID: 442518036}
+  myZone: {fileID: 1995450778}
+  Buttons:
+    Buttons:
+    - {fileID: 1425267485}
+    - {fileID: 823591804}
+    - {fileID: 310304425}
+    - {fileID: 669612884}
+    - {fileID: 1383958516}
+    SwitchButton: []
+    Set_StateButtons: []
+    Set_SwitchButton: []
+  Buttons_Extra:
+    StandartButtons: []
+    SwitchButtons: []
   Prime: 1
+  FlappyDore: 0
+  stepCount: 0
   Vertical: 0
   Bihaend: 1
   Closed: 0
   Opened: 0
   AllDone: 0
-  End: 0
-  state: 0
+  startState: 0
   curentState: 0
-  myZone: {fileID: 1995450778}
-  startPos: {fileID: 442518036}
   CurentPhoto:
   - {fileID: 1642506511}
-  DinamicObj:
-  - {fileID: 900604396}
-  - {fileID: 741725731}
-  - {fileID: 411145948}
-  - {fileID: 1196587831}
-  - {fileID: 1708673799}
-  PressButtons:
-  - {fileID: 258689191}
-  - {fileID: 823591803}
-  - {fileID: 104307899}
-  - {fileID: 669612883}
-  - {fileID: 1383958515}
-  NotNidButtons:
-  - {fileID: 1795559561}
-  - {fileID: 1048001787}
-  - {fileID: 802388862}
-  NotNidButtonsState: []
-  buttons: []
-  buttonsState: []
   ChildDore:
   - {fileID: 1714888364}
   sp:
@@ -77033,9 +76764,7 @@ MonoBehaviour:
     OpenArt_Ver: {fileID: -498122695, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     ClousedArt_Ver: {fileID: 179997455, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     clousedOrder: 125
-  size: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
-  memory: {fileID: 0}
+  _gizmos: 0
 --- !u!1 &1368248247
 GameObject:
   m_ObjectHideFlags: 0
@@ -77463,7 +77192,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 1383958513}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1383958515 stripped
+--- !u!114 &1383958516 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 1383958513}
@@ -78049,7 +77778,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 1396291681}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1396291683 stripped
+--- !u!114 &1396291684 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 1396291681}
@@ -78240,31 +77969,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 219842a0f9d55bc4585c01707608ef3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  memory: {fileID: 0}
   PrimeDore: {fileID: 0}
-  FlappyDore: 0
-  EndDore: 1
-  stepCount: 0
+  startPos: {fileID: 0}
+  myZone: {fileID: 0}
+  Buttons:
+    Buttons:
+    - {fileID: 1478547075}
+    - {fileID: 1369422911}
+    - {fileID: 1838003953}
+    SwitchButton: []
+    Set_StateButtons: []
+    Set_SwitchButton: []
+  Buttons_Extra:
+    StandartButtons: []
+    SwitchButtons: []
   Prime: 0
+  FlappyDore: 0
+  stepCount: 0
   Vertical: 1
-  Bihaend: 1
+  Bihaend: 0
   Closed: 0
   Opened: 0
   AllDone: 0
-  End: 0
-  state: 0
+  startState: 0
   curentState: 0
-  myZone: {fileID: 0}
-  startPos: {fileID: 0}
   CurentPhoto: []
-  DinamicObj: []
-  PressButtons:
-  - {fileID: 1478547075}
-  - {fileID: 1369422911}
-  - {fileID: 834140883}
-  NotNidButtons: []
-  NotNidButtonsState: []
-  buttons: []
-  buttonsState: []
   ChildDore: []
   sp:
     pl: {fileID: 251843394}
@@ -78273,9 +78003,7 @@ MonoBehaviour:
     OpenArt_Ver: {fileID: -498122695, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     ClousedArt_Ver: {fileID: 179997455, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     clousedOrder: 125
-  size: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
-  memory: {fileID: 0}
+  _gizmos: 0
 --- !u!1 &1397747714
 GameObject:
   m_ObjectHideFlags: 0
@@ -78763,10 +78491,21 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 1413660226}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1413660228 stripped
+--- !u!114 &1413660229 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 1413660226}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1418513302 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
+  m_PrefabInstance: {fileID: 639820880}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
@@ -79202,6 +78941,17 @@ MonoBehaviour:
   _isIce: 0
   _isDipth: 0
   castRadius: 0.85
+--- !u!114 &1425267485 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
+  m_PrefabInstance: {fileID: 258689189}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1426790860
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -79807,6 +79557,17 @@ MonoBehaviour:
   _isIce: 0
   _isDipth: 0
   castRadius: 0.85
+--- !u!114 &1439309359 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
+  m_PrefabInstance: {fileID: 714077900}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1440014584
 GameObject:
   m_ObjectHideFlags: 0
@@ -80355,7 +80116,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 1470534233}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1470534235 stripped
+--- !u!114 &1470534236 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 1470534233}
@@ -80444,7 +80205,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 1472331813}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1472331815 stripped
+--- !u!114 &1472331816 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 1472331813}
@@ -80483,7 +80244,7 @@ Transform:
   m_GameObject: {fileID: 1474259394}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 11, y: 2, z: 0}
+  m_LocalPosition: {x: 11, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -80660,6 +80421,8 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1795781192}
+  - {fileID: 2004335327}
+  - {fileID: 1764799628}
   m_Father: {fileID: 425757170}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1475311524
@@ -80772,39 +80535,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 219842a0f9d55bc4585c01707608ef3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  memory: {fileID: 0}
   PrimeDore: {fileID: 0}
-  FlappyDore: 0
-  EndDore: 0
-  stepCount: 0
+  startPos: {fileID: 1795781192}
+  myZone: {fileID: 1995450778}
+  Buttons:
+    Buttons:
+    - {fileID: 1932056765}
+    - {fileID: 522923150}
+    - {fileID: 1439309359}
+    - {fileID: 589970372}
+    - {fileID: 1664387565}
+    SwitchButton: []
+    Set_StateButtons: []
+    Set_SwitchButton: []
+  Buttons_Extra:
+    StandartButtons: []
+    SwitchButtons: []
   Prime: 1
+  FlappyDore: 0
+  stepCount: 0
   Vertical: 0
   Bihaend: 1
   Closed: 0
   Opened: 0
   AllDone: 0
-  End: 0
-  state: 0
+  startState: 0
   curentState: 0
-  myZone: {fileID: 1995450778}
-  startPos: {fileID: 1795781192}
   CurentPhoto: []
-  DinamicObj:
-  - {fileID: 27917583}
-  - {fileID: 759148131}
-  - {fileID: 1086484185}
-  - {fileID: 1688716051}
-  - {fileID: 706237134}
-  PressButtons:
-  - {fileID: 1932056764}
-  - {fileID: 298500196}
-  - {fileID: 714077902}
-  - {fileID: 589970371}
-  - {fileID: 1664387564}
-  NotNidButtons:
-  - {fileID: 1795559561}
-  NotNidButtonsState: []
-  buttons: []
-  buttonsState: []
   ChildDore:
   - {fileID: 2004335330}
   sp:
@@ -80814,9 +80572,7 @@ MonoBehaviour:
     OpenArt_Ver: {fileID: -498122695, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     ClousedArt_Ver: {fileID: 179997455, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     clousedOrder: 125
-  size: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
-  memory: {fileID: 0}
+  _gizmos: 0
 --- !u!4 &1475425083 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 37f9299124cd90847afb537128d30d09, type: 3}
@@ -80955,6 +80711,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1476189226}
   m_CullTransparentMesh: 1
+--- !u!114 &1477248526 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
+  m_PrefabInstance: {fileID: 28184877}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1478547073 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
@@ -81275,32 +81042,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 219842a0f9d55bc4585c01707608ef3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  memory: {fileID: 0}
   PrimeDore: {fileID: 0}
-  FlappyDore: 0
-  EndDore: 0
-  stepCount: 0
+  startPos: {fileID: 0}
+  myZone: {fileID: 1995450778}
+  Buttons:
+    Buttons:
+    - {fileID: 1022560118}
+    - {fileID: 1839325823}
+    - {fileID: 1953096888}
+    - {fileID: 1795559561}
+    SwitchButton: []
+    Set_StateButtons: []
+    Set_SwitchButton: []
+  Buttons_Extra:
+    StandartButtons: []
+    SwitchButtons: []
   Prime: 0
+  FlappyDore: 0
+  stepCount: 0
   Vertical: 0
   Bihaend: 0
   Closed: 0
   Opened: 0
   AllDone: 0
-  End: 0
-  state: 0
+  startState: 0
   curentState: 0
-  myZone: {fileID: 1995450778}
-  startPos: {fileID: 0}
   CurentPhoto: []
-  DinamicObj: []
-  PressButtons:
-  - {fileID: 1700015625}
-  - {fileID: 2001016001}
-  - {fileID: 1795559561}
-  - {fileID: 1839325822}
-  NotNidButtons: []
-  NotNidButtonsState: []
-  buttons: []
-  buttonsState: []
   ChildDore: []
   sp:
     pl: {fileID: 251843394}
@@ -81309,9 +81077,7 @@ MonoBehaviour:
     OpenArt_Ver: {fileID: -498122695, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     ClousedArt_Ver: {fileID: 179997455, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     clousedOrder: 88
-  size: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
-  memory: {fileID: 0}
+  _gizmos: 0
 --- !u!1 &1486558013
 GameObject:
   m_ObjectHideFlags: 0
@@ -81484,6 +81250,28 @@ Transform:
   - {fileID: 267976936}
   m_Father: {fileID: 145633314}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1489017999 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
+  m_PrefabInstance: {fileID: 730245169}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1490090940 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
+  m_PrefabInstance: {fileID: 836926418}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1492871523
 GameObject:
   m_ObjectHideFlags: 0
@@ -81512,7 +81300,7 @@ Transform:
   m_GameObject: {fileID: 1492871523}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 10, y: 0, z: 0}
+  m_LocalPosition: {x: 10, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -81892,7 +81680,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 1499202401}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1499202403 stripped
+--- !u!114 &1499202404 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 1499202401}
@@ -82547,17 +82335,6 @@ MonoBehaviour:
   _isIce: 0
   _isDipth: 0
   castRadius: 0.85
---- !u!114 &1519509694 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
-  m_PrefabInstance: {fileID: 540783994}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1521380503
 GameObject:
   m_ObjectHideFlags: 0
@@ -83146,7 +82923,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 1527894862}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1527894864 stripped
+--- !u!114 &1527894865 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 1527894862}
@@ -84776,29 +84553,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 219842a0f9d55bc4585c01707608ef3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  memory: {fileID: 0}
   PrimeDore: {fileID: 0}
-  FlappyDore: 0
-  EndDore: 1
-  stepCount: 0
+  startPos: {fileID: 0}
+  myZone: {fileID: 0}
+  Buttons:
+    Buttons:
+    - {fileID: 1867262915}
+    SwitchButton: []
+    Set_StateButtons: []
+    Set_SwitchButton: []
+  Buttons_Extra:
+    StandartButtons: []
+    SwitchButtons: []
   Prime: 0
+  FlappyDore: 0
+  stepCount: 0
   Vertical: 1
   Bihaend: 1
   Closed: 0
   Opened: 0
   AllDone: 0
-  End: 0
-  state: 0
+  startState: 0
   curentState: 0
-  myZone: {fileID: 0}
-  startPos: {fileID: 0}
   CurentPhoto: []
-  DinamicObj: []
-  PressButtons:
-  - {fileID: 1048001787}
-  NotNidButtons: []
-  NotNidButtonsState: []
-  buttons: []
-  buttonsState: []
   ChildDore: []
   sp:
     pl: {fileID: 251843394}
@@ -84807,9 +84585,18 @@ MonoBehaviour:
     OpenArt_Ver: {fileID: -498122695, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     ClousedArt_Ver: {fileID: 179997455, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     clousedOrder: 127
-  size: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
-  memory: {fileID: 0}
+  _gizmos: 0
+--- !u!114 &1567506973 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
+  m_PrefabInstance: {fileID: 1057392149}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1568779587
 GameObject:
   m_ObjectHideFlags: 0
@@ -84888,17 +84675,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &1571024896 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
-  m_PrefabInstance: {fileID: 944159301}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1571375886
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -85472,6 +85248,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 1590947828}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1590947831 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
+  m_PrefabInstance: {fileID: 1590947828}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1591138882
 GameObject:
   m_ObjectHideFlags: 0
@@ -85644,17 +85431,6 @@ MonoBehaviour:
   _isIce: 0
   _isDipth: 0
   castRadius: 0.85
---- !u!114 &1591703704 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
-  m_PrefabInstance: {fileID: 831681706}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1591798721
 GameObject:
   m_ObjectHideFlags: 0
@@ -85858,17 +85634,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 37f9299124cd90847afb537128d30d09, type: 3}
   m_PrefabInstance: {fileID: 1594237680}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1595912054 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
-  m_PrefabInstance: {fileID: 1590947828}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1597423641
 GameObject:
   m_ObjectHideFlags: 0
@@ -86016,41 +85781,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 219842a0f9d55bc4585c01707608ef3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  memory: {fileID: 0}
   PrimeDore: {fileID: 0}
-  FlappyDore: 0
-  EndDore: 0
-  stepCount: 0
+  startPos: {fileID: 1465530887}
+  myZone: {fileID: 1995450778}
+  Buttons:
+    Buttons:
+    - {fileID: 1282067279}
+    - {fileID: 2114482037}
+    - {fileID: 1527894865}
+    - {fileID: 944159304}
+    - {fileID: 1418513302}
+    - {fileID: 1590947831}
+    SwitchButton: []
+    Set_StateButtons: []
+    Set_SwitchButton: []
+  Buttons_Extra:
+    StandartButtons: []
+    SwitchButtons: []
   Prime: 1
+  FlappyDore: 0
+  stepCount: 0
   Vertical: 1
   Bihaend: 0
   Closed: 0
   Opened: 0
   AllDone: 0
-  End: 0
-  state: 0
+  startState: 0
   curentState: 0
-  myZone: {fileID: 1995450778}
-  startPos: {fileID: 1465530887}
   CurentPhoto: []
-  DinamicObj:
-  - {fileID: 1428834811}
-  - {fileID: 1536610932}
-  - {fileID: 1121156419}
-  - {fileID: 200778105}
-  - {fileID: 1591138886}
-  - {fileID: 2105683991}
-  PressButtons:
-  - {fileID: 726490366}
-  - {fileID: 972216674}
-  - {fileID: 1527894864}
-  - {fileID: 1571024896}
-  - {fileID: 639820882}
-  - {fileID: 1595912054}
-  NotNidButtons:
-  - {fileID: 1795559561}
-  NotNidButtonsState: []
-  buttons: []
-  buttonsState: []
   ChildDore:
   - {fileID: 1880172679}
   - {fileID: 2012459647}
@@ -86061,9 +85820,7 @@ MonoBehaviour:
     OpenArt_Ver: {fileID: -498122695, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     ClousedArt_Ver: {fileID: 179997455, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     clousedOrder: 125
-  size: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
-  memory: {fileID: 0}
+  _gizmos: 0
 --- !u!1 &1597947607
 GameObject:
   m_ObjectHideFlags: 0
@@ -100012,17 +99769,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 1622866136}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1622866139 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
-  m_PrefabInstance: {fileID: 1622866136}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1630545905
 GameObject:
   m_ObjectHideFlags: 0
@@ -101245,7 +100991,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 1664387562}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1664387564 stripped
+--- !u!114 &1664387565 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 1664387562}
@@ -102810,41 +102556,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 219842a0f9d55bc4585c01707608ef3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  memory: {fileID: 0}
   PrimeDore: {fileID: 0}
-  FlappyDore: 0
-  EndDore: 0
-  stepCount: 0
+  startPos: {fileID: 694410216}
+  myZone: {fileID: 1995450778}
+  Buttons:
+    Buttons:
+    - {fileID: 1986522305}
+    - {fileID: 1950232958}
+    - {fileID: 1846849362}
+    - {fileID: 1938453368}
+    - {fileID: 1234790478}
+    SwitchButton: []
+    Set_StateButtons: []
+    Set_SwitchButton: []
+  Buttons_Extra:
+    StandartButtons: []
+    SwitchButtons: []
   Prime: 1
+  FlappyDore: 0
+  stepCount: 0
   Vertical: 1
   Bihaend: 0
   Closed: 0
   Opened: 0
   AllDone: 0
-  End: 0
-  state: 0
+  startState: 0
   curentState: 0
-  myZone: {fileID: 1995450778}
-  startPos: {fileID: 694410216}
   CurentPhoto: []
-  DinamicObj:
-  - {fileID: 1681659522}
-  - {fileID: 389035541}
-  - {fileID: 697869849}
-  - {fileID: 971895073}
-  - {fileID: 591600698}
-  PressButtons:
-  - {fileID: 1301291362}
-  - {fileID: 1228593500}
-  - {fileID: 1882856183}
-  - {fileID: 1938453367}
-  - {fileID: 651448132}
-  - {fileID: 1928169865}
-  - {fileID: 1470534235}
-  NotNidButtons:
-  - {fileID: 1795559561}
-  NotNidButtonsState: []
-  buttons: []
-  buttonsState: []
   ChildDore: []
   sp:
     pl: {fileID: 251843394}
@@ -102853,9 +102592,7 @@ MonoBehaviour:
     OpenArt_Ver: {fileID: -498122695, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     ClousedArt_Ver: {fileID: 179997455, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     clousedOrder: 125
-  size: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
-  memory: {fileID: 0}
+  _gizmos: 0
 --- !u!1001 &1694260587
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -102929,197 +102666,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
---- !u!1 &1696155297
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1696155298}
-  - component: {fileID: 1696155301}
-  - component: {fileID: 1696155300}
-  - component: {fileID: 1696155299}
-  m_Layer: 13
-  m_Name: Door Ver (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1696155298
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1696155297}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3, y: 4, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 441880808}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &1696155299
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1696155297}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.4285}
-    oldSize: {x: 1, y: 3.5}
-    newSize: {x: 3, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 1, y: 3.04}
-  m_EdgeRadius: 0
---- !u!212 &1696155300
-SpriteRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1696155297}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 88
-  m_Sprite: {fileID: 179997455, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.69803923}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 3, y: 1}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
---- !u!114 &1696155301
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1696155297}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 219842a0f9d55bc4585c01707608ef3b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PrimeDore: {fileID: 0}
-  FlappyDore: 0
-  EndDore: 1
-  stepCount: 0
-  Prime: 0
-  Vertical: 1
-  Bihaend: 1
-  Closed: 0
-  Opened: 0
-  AllDone: 0
-  End: 0
-  state: 0
-  curentState: 0
-  myZone: {fileID: 0}
-  startPos: {fileID: 0}
-  CurentPhoto: []
-  DinamicObj: []
-  PressButtons:
-  - {fileID: 1478547075}
-  - {fileID: 1369422911}
-  - {fileID: 834140883}
-  NotNidButtons: []
-  NotNidButtonsState: []
-  buttons: []
-  buttonsState: []
-  ChildDore: []
-  sp:
-    pl: {fileID: 251843394}
-    OpenArt_Hor: {fileID: 1407373051, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
-    ClousedArt_Hor: {fileID: 1077463316, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
-    OpenArt_Ver: {fileID: -498122695, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
-    ClousedArt_Ver: {fileID: 179997455, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
-    clousedOrder: 125
-  size: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
-  memory: {fileID: 0}
---- !u!114 &1700015625 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 37f9299124cd90847afb537128d30d09, type: 3}
-  m_PrefabInstance: {fileID: 943603833}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1708673795
 GameObject:
   m_ObjectHideFlags: 0
@@ -104028,29 +103574,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 219842a0f9d55bc4585c01707608ef3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  memory: {fileID: 0}
   PrimeDore: {fileID: 0}
-  FlappyDore: 0
-  EndDore: 1
-  stepCount: 0
+  startPos: {fileID: 0}
+  myZone: {fileID: 0}
+  Buttons:
+    Buttons:
+    - {fileID: 994848531}
+    SwitchButton: []
+    Set_StateButtons: []
+    Set_SwitchButton: []
+  Buttons_Extra:
+    StandartButtons: []
+    SwitchButtons: []
   Prime: 0
+  FlappyDore: 0
+  stepCount: 0
   Vertical: 1
   Bihaend: 1
   Closed: 0
   Opened: 0
   AllDone: 0
-  End: 0
-  state: 0
+  startState: 0
   curentState: 0
-  myZone: {fileID: 0}
-  startPos: {fileID: 0}
   CurentPhoto: []
-  DinamicObj: []
-  PressButtons:
-  - {fileID: 802388862}
-  NotNidButtons: []
-  NotNidButtonsState: []
-  buttons: []
-  buttonsState: []
   ChildDore: []
   sp:
     pl: {fileID: 251843394}
@@ -104059,9 +103606,7 @@ MonoBehaviour:
     OpenArt_Ver: {fileID: -498122695, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     ClousedArt_Ver: {fileID: 179997455, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     clousedOrder: 125
-  size: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
-  memory: {fileID: 0}
+  _gizmos: 0
 --- !u!1 &1717728813
 GameObject:
   m_ObjectHideFlags: 0
@@ -104873,17 +104418,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 1753027005}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1753027008 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
-  m_PrefabInstance: {fileID: 1753027005}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1755074089 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 6b107d89f56d8dc41858215745aa99f7, type: 3}
@@ -105065,11 +104599,11 @@ Transform:
   m_GameObject: {fileID: 1764799627}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2, y: -6, z: 0}
+  m_LocalPosition: {x: -1, y: -8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 425757170}
+  m_Father: {fileID: 1475311523}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1764799629
 BoxCollider2D:
@@ -105181,35 +104715,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 219842a0f9d55bc4585c01707608ef3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  memory: {fileID: 0}
   PrimeDore: {fileID: 0}
-  FlappyDore: 0
-  EndDore: 1
-  stepCount: 0
+  startPos: {fileID: 0}
+  myZone: {fileID: 1995450778}
+  Buttons:
+    Buttons: []
+    SwitchButton: []
+    Set_StateButtons: []
+    Set_SwitchButton: []
+  Buttons_Extra:
+    StandartButtons: []
+    SwitchButtons: []
   Prime: 0
+  FlappyDore: 0
+  stepCount: 0
   Vertical: 0
   Bihaend: 0
   Closed: 0
   Opened: 0
   AllDone: 0
-  End: 0
-  state: 0
+  startState: 0
   curentState: 0
-  myZone: {fileID: 1995450778}
-  startPos: {fileID: 0}
   CurentPhoto: []
-  DinamicObj: []
-  PressButtons:
-  - {fileID: 1932056764}
-  - {fileID: 298500196}
-  - {fileID: 714077902}
-  - {fileID: 589970371}
-  - {fileID: 1664387564}
-  NotNidButtons: []
-  NotNidButtonsState: []
-  buttons:
-  - button: {fileID: 655105896}
-    state: 1
-  buttonsState: []
   ChildDore: []
   sp:
     pl: {fileID: 251843394}
@@ -105218,9 +104746,7 @@ MonoBehaviour:
     OpenArt_Ver: {fileID: -498122695, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     ClousedArt_Ver: {fileID: 179997455, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     clousedOrder: 87
-  size: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
-  memory: {fileID: 0}
+  _gizmos: 0
 --- !u!1001 &1766824700
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -105430,6 +104956,17 @@ MonoBehaviour:
   blecText: 0
   massag: 
   inInventory: 0
+--- !u!114 &1769510067 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
+  m_PrefabInstance: {fileID: 1753027005}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1771822867
 GameObject:
   m_ObjectHideFlags: 0
@@ -105746,36 +105283,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 219842a0f9d55bc4585c01707608ef3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  memory: {fileID: 0}
   PrimeDore: {fileID: 0}
-  FlappyDore: 0
-  EndDore: 1
-  stepCount: 0
+  startPos: {fileID: 0}
+  myZone: {fileID: 1995450778}
+  Buttons:
+    Buttons:
+    - {fileID: 1514081093}
+    - {fileID: 1800843830}
+    - {fileID: 2050944730}
+    - {fileID: 1553819902}
+    SwitchButton: []
+    Set_StateButtons: []
+    Set_SwitchButton: []
+  Buttons_Extra:
+    StandartButtons: []
+    SwitchButtons: []
   Prime: 0
+  FlappyDore: 0
+  stepCount: 0
   Vertical: 0
   Bihaend: 0
   Closed: 0
   Opened: 0
   AllDone: 0
-  End: 0
-  state: 0
+  startState: 0
   curentState: 0
-  myZone: {fileID: 1995450778}
-  startPos: {fileID: 0}
   CurentPhoto: []
-  DinamicObj: []
-  PressButtons:
-  - {fileID: 1514081093}
-  - {fileID: 1800843830}
-  - {fileID: 2050944730}
-  - {fileID: 1553819902}
-  - {fileID: 1472331815}
-  - {fileID: 1499202403}
-  NotNidButtons: []
-  NotNidButtonsState: []
-  buttons:
-  - button: {fileID: 655105896}
-    state: 1
-  buttonsState: []
   ChildDore: []
   sp:
     pl: {fileID: 251843394}
@@ -105784,9 +105318,7 @@ MonoBehaviour:
     OpenArt_Ver: {fileID: -498122695, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     ClousedArt_Ver: {fileID: 179997455, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     clousedOrder: 87
-  size: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
-  memory: {fileID: 0}
+  _gizmos: 0
 --- !u!1 &1779350084
 GameObject:
   m_ObjectHideFlags: 0
@@ -106289,17 +105821,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 977058359}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1796203343 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
-  m_PrefabInstance: {fileID: 977058359}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1796399164
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -106944,8 +106465,8 @@ Transform:
   - {fileID: 1848518554}
   - {fileID: 1078771041}
   - {fileID: 1512594687}
-  - {fileID: 1382791568}
   - {fileID: 98012586}
+  - {fileID: 1382791568}
   - {fileID: 692330074}
   - {fileID: 1616263620}
   - {fileID: 901562863}
@@ -107384,33 +106905,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 219842a0f9d55bc4585c01707608ef3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  memory: {fileID: 0}
   PrimeDore: {fileID: 0}
-  FlappyDore: 0
-  EndDore: 0
-  stepCount: 0
+  startPos: {fileID: 0}
+  myZone: {fileID: 1995450778}
+  Buttons:
+    Buttons:
+    - {fileID: 1478547075}
+    - {fileID: 1369422911}
+    - {fileID: 1838003953}
+    - {fileID: 2076715835}
+    - {fileID: 1490090940}
+    SwitchButton: []
+    Set_StateButtons: []
+    Set_SwitchButton: []
+  Buttons_Extra:
+    StandartButtons: []
+    SwitchButtons: []
   Prime: 0
+  FlappyDore: 0
+  stepCount: 0
   Vertical: 0
-  Bihaend: 0
+  Bihaend: 1
   Closed: 0
   Opened: 0
   AllDone: 0
-  End: 0
-  state: 0
+  startState: 0
   curentState: 0
-  myZone: {fileID: 1995450778}
-  startPos: {fileID: 0}
   CurentPhoto: []
-  DinamicObj: []
-  PressButtons:
-  - {fileID: 1478547075}
-  - {fileID: 1369422911}
-  - {fileID: 834140883}
-  - {fileID: 2076715835}
-  - {fileID: 836926421}
-  NotNidButtons: []
-  NotNidButtonsState: []
-  buttons: []
-  buttonsState: []
   ChildDore: []
   sp:
     pl: {fileID: 251843394}
@@ -107419,9 +106941,7 @@ MonoBehaviour:
     OpenArt_Ver: {fileID: -498122695, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     ClousedArt_Ver: {fileID: 179997455, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     clousedOrder: 87
-  size: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
-  memory: {fileID: 0}
+  _gizmos: 0
 --- !u!1 &1833325586
 GameObject:
   m_ObjectHideFlags: 0
@@ -107549,6 +107069,17 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1838003953 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
+  m_PrefabInstance: {fileID: 1076885242}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1839325820
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -107627,7 +107158,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 37f9299124cd90847afb537128d30d09, type: 3}
   m_PrefabInstance: {fileID: 1839325820}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1839325822 stripped
+--- !u!114 &1839325823 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 37f9299124cd90847afb537128d30d09, type: 3}
   m_PrefabInstance: {fileID: 1839325820}
@@ -107794,6 +107325,17 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1846849362 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
+  m_PrefabInstance: {fileID: 139582992}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1848518553
 GameObject:
   m_ObjectHideFlags: 0
@@ -108112,6 +107654,17 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1867262915 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
+  m_PrefabInstance: {fileID: 1048001785}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1867530250
 GameObject:
   m_ObjectHideFlags: 0
@@ -108148,6 +107701,17 @@ Transform:
   - {fileID: 42941491}
   m_Father: {fileID: 145633314}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1869721515 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
+  m_PrefabInstance: {fileID: 440693605}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1873174126
 GameObject:
   m_ObjectHideFlags: 0
@@ -108397,6 +107961,17 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1879246299 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3491965634256624870, guid: 6b107d89f56d8dc41858215745aa99f7, type: 3}
+  m_PrefabInstance: {fileID: 1987223553}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7955a7837a321584e8d6c2b46c69ae4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1880172675
 GameObject:
   m_ObjectHideFlags: 0
@@ -108541,34 +108116,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 219842a0f9d55bc4585c01707608ef3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  memory: {fileID: 0}
   PrimeDore: {fileID: 0}
-  FlappyDore: 0
-  EndDore: 0
-  stepCount: 0
+  startPos: {fileID: 0}
+  myZone: {fileID: 1995450778}
+  Buttons:
+    Buttons:
+    - {fileID: 2080776033}
+    SwitchButton: []
+    Set_StateButtons: []
+    Set_SwitchButton: []
+  Buttons_Extra:
+    StandartButtons: []
+    SwitchButtons: []
   Prime: 0
+  FlappyDore: 0
+  stepCount: 0
   Vertical: 0
   Bihaend: 1
   Closed: 0
   Opened: 0
   AllDone: 0
-  End: 0
-  state: 0
+  startState: 0
   curentState: 0
-  myZone: {fileID: 1995450778}
-  startPos: {fileID: 0}
   CurentPhoto: []
-  DinamicObj: []
-  PressButtons:
-  - {fileID: 726490366}
-  - {fileID: 972216674}
-  - {fileID: 1527894864}
-  - {fileID: 1571024896}
-  - {fileID: 639820882}
-  - {fileID: 1595912054}
-  NotNidButtons: []
-  NotNidButtonsState: []
-  buttons: []
-  buttonsState: []
   ChildDore: []
   sp:
     pl: {fileID: 251843394}
@@ -108577,9 +108148,7 @@ MonoBehaviour:
     OpenArt_Ver: {fileID: -498122695, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     ClousedArt_Ver: {fileID: 179997455, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     clousedOrder: 87
-  size: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
-  memory: {fileID: 0}
+  _gizmos: 0
 --- !u!1 &1880659408
 GameObject:
   m_ObjectHideFlags: 0
@@ -108802,32 +108371,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 219842a0f9d55bc4585c01707608ef3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  memory: {fileID: 0}
   PrimeDore: {fileID: 0}
-  FlappyDore: 0
-  EndDore: 1
-  stepCount: 0
+  startPos: {fileID: 0}
+  myZone: {fileID: 0}
+  Buttons:
+    Buttons:
+    - {fileID: 1936511438}
+    - {fileID: 984076341}
+    - {fileID: 1066906478}
+    - {fileID: 1949494423}
+    SwitchButton: []
+    Set_StateButtons: []
+    Set_SwitchButton: []
+  Buttons_Extra:
+    StandartButtons: []
+    SwitchButtons: []
   Prime: 0
+  FlappyDore: 0
+  stepCount: 0
   Vertical: 1
   Bihaend: 1
   Closed: 0
   Opened: 0
   AllDone: 0
-  End: 0
-  state: 0
+  startState: 0
   curentState: 0
-  myZone: {fileID: 0}
-  startPos: {fileID: 0}
   CurentPhoto: []
-  DinamicObj: []
-  PressButtons:
-  - {fileID: 1796203343}
-  - {fileID: 79166459}
-  - {fileID: 231743499}
-  - {fileID: 1013520269}
-  NotNidButtons: []
-  NotNidButtonsState: []
-  buttons: []
-  buttonsState: []
   ChildDore: []
   sp:
     pl: {fileID: 251843394}
@@ -108836,9 +108406,7 @@ MonoBehaviour:
     OpenArt_Ver: {fileID: -498122695, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     ClousedArt_Ver: {fileID: 179997455, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     clousedOrder: 125
-  size: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
-  memory: {fileID: 0}
+  _gizmos: 0
 --- !u!1 &1882717325
 GameObject:
   m_ObjectHideFlags: 0
@@ -109010,17 +108578,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1000
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &1882856183 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
-  m_PrefabInstance: {fileID: 139582992}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1889457115
 GameObject:
   m_ObjectHideFlags: 0
@@ -109049,7 +108606,7 @@ Transform:
   m_GameObject: {fileID: 1889457115}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 11, y: 0, z: 0}
+  m_LocalPosition: {x: 9, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -109602,6 +109159,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1903408041}
+  - component: {fileID: 1903408044}
   - component: {fileID: 1903408040}
   - component: {fileID: 1903408043}
   - component: {fileID: 1903408042}
@@ -109624,28 +109182,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 219842a0f9d55bc4585c01707608ef3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  memory: {fileID: 0}
   PrimeDore: {fileID: 0}
-  FlappyDore: 0
-  EndDore: 0
-  stepCount: 0
+  startPos: {fileID: 113659790}
+  myZone: {fileID: 0}
+  Buttons:
+    Buttons: []
+    SwitchButton: []
+    Set_StateButtons: []
+    Set_SwitchButton: []
+  Buttons_Extra:
+    StandartButtons: []
+    SwitchButtons: []
   Prime: 1
+  FlappyDore: 0
+  stepCount: 0
   Vertical: 1
   Bihaend: 1
   Closed: 0
   Opened: 0
   AllDone: 0
-  End: 0
-  state: 0
+  startState: 0
   curentState: 0
-  myZone: {fileID: 0}
-  startPos: {fileID: 113659790}
   CurentPhoto: []
-  DinamicObj: []
-  PressButtons: []
-  NotNidButtons: []
-  NotNidButtonsState: []
-  buttons: []
-  buttonsState: []
   ChildDore: []
   sp:
     pl: {fileID: 251843394}
@@ -109654,9 +109213,7 @@ MonoBehaviour:
     OpenArt_Ver: {fileID: -498122695, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     ClousedArt_Ver: {fileID: 179997455, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     clousedOrder: 125
-  size: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
-  memory: {fileID: 0}
+  _gizmos: 0
 --- !u!4 &1903408041
 Transform:
   m_ObjectHideFlags: 0
@@ -109771,6 +109328,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1903408044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1903408039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f4126d7220829f45b1496d46d924caf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dores: []
+  DinamicObj: []
+  pl: {fileID: 0}
+  HardModButton: {fileID: 1795559561}
+  stepCount: 0
+  maxStepMember: 10
+  maxStep: 0
+  _score: {fileID: 417854165}
+  mousePos: {x: 0, y: 0, z: 0}
+  _gizmo: 0
 --- !u!1 &1903872038
 GameObject:
   m_ObjectHideFlags: 0
@@ -109840,6 +109419,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1382791568}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1914412852 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
+  m_PrefabInstance: {fileID: 94542630}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1914977451
 GameObject:
   m_ObjectHideFlags: 0
@@ -109992,42 +109582,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 219842a0f9d55bc4585c01707608ef3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  memory: {fileID: 0}
   PrimeDore: {fileID: 0}
-  FlappyDore: 0
-  EndDore: 0
-  stepCount: 0
+  startPos: {fileID: 2125680523}
+  myZone: {fileID: 1995450778}
+  Buttons:
+    Buttons:
+    - {fileID: 2029530244}
+    - {fileID: 1141345182}
+    - {fileID: 1410170255}
+    - {fileID: 1385985460}
+    SwitchButton: []
+    Set_StateButtons: []
+    Set_SwitchButton: []
+  Buttons_Extra:
+    StandartButtons: []
+    SwitchButtons: []
   Prime: 1
+  FlappyDore: 0
+  stepCount: 0
   Vertical: 1
   Bihaend: 0
   Closed: 0
   Opened: 0
   AllDone: 0
-  End: 0
-  state: 0
+  startState: 0
   curentState: 0
-  myZone: {fileID: 1995450778}
-  startPos: {fileID: 2125680523}
   CurentPhoto:
   - {fileID: 224311502}
   - {fileID: 220570844}
   - {fileID: 1517630442}
   - {fileID: 1769346353}
-  DinamicObj:
-  - {fileID: 1440014585}
-  PressButtons: []
-  NotNidButtons:
-  - {fileID: 1795559561}
-  NotNidButtonsState: []
-  buttons:
-  - button: {fileID: 2029530244}
-    state: 1
-  - button: {fileID: 1141345182}
-    state: 1
-  - button: {fileID: 1410170255}
-    state: 1
-  - button: {fileID: 1385985460}
-    state: 1
-  buttonsState: []
   ChildDore:
   - {fileID: 1485765217}
   - {fileID: 407964041}
@@ -110044,9 +109629,7 @@ MonoBehaviour:
     OpenArt_Ver: {fileID: -498122695, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     ClousedArt_Ver: {fileID: 179997455, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     clousedOrder: 125
-  size: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
-  memory: {fileID: 0}
+  _gizmos: 0
 --- !u!1 &1921175285
 GameObject:
   m_ObjectHideFlags: 0
@@ -110167,6 +109750,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b107d89f56d8dc41858215745aa99f7, type: 3}
+--- !u!114 &1924615110 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
+  m_PrefabInstance: {fileID: 1622866136}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1927015724
 GameObject:
   m_ObjectHideFlags: 0
@@ -110285,7 +109879,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 1928169863}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1928169865 stripped
+--- !u!114 &1928169866 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 1928169863}
@@ -110562,7 +110156,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 1932056762}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1932056764 stripped
+--- !u!114 &1932056765 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 1932056762}
@@ -110730,6 +110324,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1936240493}
   m_CullTransparentMesh: 1
+--- !u!114 &1936511438 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
+  m_PrefabInstance: {fileID: 977058359}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1938453365
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -110808,7 +110413,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 1938453365}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1938453367 stripped
+--- !u!114 &1938453368 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
   m_PrefabInstance: {fileID: 1938453365}
@@ -111303,6 +110908,28 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 37f9299124cd90847afb537128d30d09, type: 3}
   m_PrefabInstance: {fileID: 1947512735}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1949494423 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
+  m_PrefabInstance: {fileID: 1039721000}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1950232958 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
+  m_PrefabInstance: {fileID: 1228593498}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1953096885
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -111409,6 +111036,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 37f9299124cd90847afb537128d30d09, type: 3}
   m_PrefabInstance: {fileID: 1953096885}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1953096888 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 37f9299124cd90847afb537128d30d09, type: 3}
+  m_PrefabInstance: {fileID: 1953096885}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1953596640
 GameObject:
   m_ObjectHideFlags: 0
@@ -111591,38 +111229,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 219842a0f9d55bc4585c01707608ef3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  memory: {fileID: 0}
   PrimeDore: {fileID: 0}
-  FlappyDore: 0
-  EndDore: 0
-  stepCount: 0
+  startPos: {fileID: 106630705}
+  myZone: {fileID: 1995450778}
+  Buttons:
+    Buttons:
+    - {fileID: 1472331816}
+    - {fileID: 647256742}
+    - {fileID: 790581929}
+    - {fileID: 1413660229}
+    - {fileID: 1477248526}
+    SwitchButton: []
+    Set_StateButtons: []
+    Set_SwitchButton: []
+  Buttons_Extra:
+    StandartButtons: []
+    SwitchButtons: []
   Prime: 1
+  FlappyDore: 0
+  stepCount: 0
   Vertical: 1
   Bihaend: 0
   Closed: 0
   Opened: 0
   AllDone: 0
-  End: 0
-  state: 0
+  startState: 0
   curentState: 0
-  myZone: {fileID: 1995450778}
-  startPos: {fileID: 106630705}
   CurentPhoto: []
-  DinamicObj:
-  - {fileID: 757315407}
-  - {fileID: 658139618}
-  - {fileID: 2048303876}
-  - {fileID: 223908260}
-  PressButtons:
-  - {fileID: 1472331815}
-  - {fileID: 647256741}
-  - {fileID: 323796346}
-  - {fileID: 1413660228}
-  - {fileID: 28184879}
-  NotNidButtons:
-  - {fileID: 1795559561}
-  NotNidButtonsState: []
-  buttons: []
-  buttonsState: []
   ChildDore: []
   sp:
     pl: {fileID: 251843394}
@@ -111631,9 +111265,7 @@ MonoBehaviour:
     OpenArt_Ver: {fileID: -498122695, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     ClousedArt_Ver: {fileID: 179997455, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     clousedOrder: 125
-  size: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
-  memory: {fileID: 0}
+  _gizmos: 0
 --- !u!1 &1957861173
 GameObject:
   m_ObjectHideFlags: 0
@@ -111944,6 +111576,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1962424268}
   m_CullTransparentMesh: 1
+--- !u!114 &1965043983 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
+  m_PrefabInstance: {fileID: 831681706}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1968838140
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -112144,6 +111787,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 747499946972729755, guid: 37f9299124cd90847afb537128d30d09, type: 3}
   m_PrefabInstance: {fileID: 1979196297}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1986522305 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
+  m_PrefabInstance: {fileID: 1301291360}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1987164349
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -112725,6 +112379,28 @@ MonoBehaviour:
   previosliZone: {fileID: 0}
   nextZone: {fileID: 0}
   zero: 1
+--- !u!114 &1997632278 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
+  m_PrefabInstance: {fileID: 1348711816}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1997879364 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
+  m_PrefabInstance: {fileID: 671062759}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2000434017
 GameObject:
   m_ObjectHideFlags: 0
@@ -112803,17 +112479,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &2001016001 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 37f9299124cd90847afb537128d30d09, type: 3}
-  m_PrefabInstance: {fileID: 1953096885}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2004335326
 GameObject:
   m_ObjectHideFlags: 0
@@ -112842,11 +112507,11 @@ Transform:
   m_GameObject: {fileID: 2004335326}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2, y: -6, z: 0}
+  m_LocalPosition: {x: -1, y: -8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 425757170}
+  m_Father: {fileID: 1475311523}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &2004335328
 BoxCollider2D:
@@ -112958,30 +112623,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 219842a0f9d55bc4585c01707608ef3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  memory: {fileID: 0}
   PrimeDore: {fileID: 0}
-  FlappyDore: 0
-  EndDore: 1
-  stepCount: 0
+  startPos: {fileID: 0}
+  myZone: {fileID: 1995450778}
+  Buttons:
+    Buttons:
+    - {fileID: 1932056765}
+    - {fileID: 522923150}
+    - {fileID: 1439309359}
+    - {fileID: 589970372}
+    - {fileID: 1664387565}
+    SwitchButton: []
+    Set_StateButtons: []
+    Set_SwitchButton: []
+  Buttons_Extra:
+    StandartButtons: []
+    SwitchButtons: []
   Prime: 0
+  FlappyDore: 0
+  stepCount: 0
   Vertical: 0
   Bihaend: 0
   Closed: 0
   Opened: 0
   AllDone: 0
-  End: 0
-  state: 0
+  startState: 0
   curentState: 0
-  myZone: {fileID: 1995450778}
-  startPos: {fileID: 0}
   CurentPhoto: []
-  DinamicObj: []
-  PressButtons: []
-  NotNidButtons: []
-  NotNidButtonsState: []
-  buttons:
-  - button: {fileID: 655105896}
-    state: 1
-  buttonsState: []
   ChildDore: []
   sp:
     pl: {fileID: 251843394}
@@ -112990,9 +112659,7 @@ MonoBehaviour:
     OpenArt_Ver: {fileID: -498122695, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     ClousedArt_Ver: {fileID: 179997455, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     clousedOrder: 87
-  size: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
-  memory: {fileID: 0}
+  _gizmos: 0
 --- !u!1 &2012459643
 GameObject:
   m_ObjectHideFlags: 0
@@ -113137,34 +112804,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 219842a0f9d55bc4585c01707608ef3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  memory: {fileID: 0}
   PrimeDore: {fileID: 0}
-  FlappyDore: 0
-  EndDore: 0
-  stepCount: 0
+  startPos: {fileID: 0}
+  myZone: {fileID: 1995450778}
+  Buttons:
+    Buttons:
+    - {fileID: 1527894865}
+    SwitchButton: []
+    Set_StateButtons: []
+    Set_SwitchButton: []
+  Buttons_Extra:
+    StandartButtons: []
+    SwitchButtons: []
   Prime: 0
+  FlappyDore: 0
+  stepCount: 0
   Vertical: 0
   Bihaend: 0
   Closed: 0
   Opened: 0
   AllDone: 0
-  End: 0
-  state: 0
+  startState: 0
   curentState: 0
-  myZone: {fileID: 1995450778}
-  startPos: {fileID: 0}
   CurentPhoto: []
-  DinamicObj: []
-  PressButtons:
-  - {fileID: 726490366}
-  - {fileID: 972216674}
-  - {fileID: 1527894864}
-  - {fileID: 1571024896}
-  - {fileID: 639820882}
-  - {fileID: 1595912054}
-  NotNidButtons: []
-  NotNidButtonsState: []
-  buttons: []
-  buttonsState: []
   ChildDore: []
   sp:
     pl: {fileID: 251843394}
@@ -113173,9 +112836,7 @@ MonoBehaviour:
     OpenArt_Ver: {fileID: -498122695, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     ClousedArt_Ver: {fileID: 179997455, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     clousedOrder: 87
-  size: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
-  memory: {fileID: 0}
+  _gizmos: 0
 --- !u!1 &2012559204
 GameObject:
   m_ObjectHideFlags: 0
@@ -115183,6 +114844,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2080776033 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
+  m_PrefabInstance: {fileID: 1300668903}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2083232208
 GameObject:
   m_ObjectHideFlags: 0
@@ -115813,36 +115485,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 219842a0f9d55bc4585c01707608ef3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  memory: {fileID: 0}
   PrimeDore: {fileID: 0}
-  FlappyDore: 0
-  EndDore: 0
-  stepCount: 0
+  startPos: {fileID: 539148841}
+  myZone: {fileID: 1995450778}
+  Buttons:
+    Buttons:
+    - {fileID: 1514081093}
+    - {fileID: 1800843830}
+    - {fileID: 2050944730}
+    - {fileID: 1553819902}
+    SwitchButton: []
+    Set_StateButtons: []
+    Set_SwitchButton: []
+  Buttons_Extra:
+    StandartButtons: []
+    SwitchButtons: []
   Prime: 1
+  FlappyDore: 0
+  stepCount: 0
   Vertical: 0
   Bihaend: 1
   Closed: 0
   Opened: 0
   AllDone: 0
-  End: 0
-  state: 0
+  startState: 0
   curentState: 0
-  myZone: {fileID: 1995450778}
-  startPos: {fileID: 539148841}
   CurentPhoto: []
-  DinamicObj:
-  - {fileID: 967866701}
-  - {fileID: 482996730}
-  - {fileID: 1620535657}
-  PressButtons:
-  - {fileID: 1514081093}
-  - {fileID: 1800843830}
-  - {fileID: 2050944730}
-  - {fileID: 1553819902}
-  NotNidButtons:
-  - {fileID: 1795559561}
-  NotNidButtonsState: []
-  buttons: []
-  buttonsState: []
   ChildDore:
   - {fileID: 935106946}
   - {fileID: 180623705}
@@ -115854,9 +115523,7 @@ MonoBehaviour:
     OpenArt_Ver: {fileID: -498122695, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     ClousedArt_Ver: {fileID: 179997455, guid: 5d37d5b2457f20a4ea1227ee6963394b, type: 3}
     clousedOrder: 125
-  size: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
-  memory: {fileID: 0}
+  _gizmos: 0
 --- !u!1 &2104975981
 GameObject:
   m_ObjectHideFlags: 0
@@ -116107,6 +115774,17 @@ MonoBehaviour:
   _isIce: 0
   _isDipth: 0
   castRadius: 0.85
+--- !u!114 &2114482037 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1671910672538690128, guid: 2686871f9af679e4f9c4ed4f53845f51, type: 3}
+  m_PrefabInstance: {fileID: 452737943}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed396655ae36994b8370badc58deb0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2115404457
 GameObject:
   m_ObjectHideFlags: 0

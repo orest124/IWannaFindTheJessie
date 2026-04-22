@@ -8,6 +8,7 @@ public class Rock : MonoBehaviour
     public Vector2 StartPos;
     [SerializeField] Collider2D Hcoll;
     [SerializeField] Collider2D Acoll;
+    private bool curentState;
     public LayerMask IceArea;
     public LayerMask DipthArea;
     public LayerMask PlatformLayer;
@@ -32,11 +33,15 @@ public class Rock : MonoBehaviour
     {
         if(isMove) UncontrolMove(targetPoint);
     }
-    public void Restart(bool timeLaps = false)
+    public void RemovePos()
+    {
+        isMove = false;
+        transform.position = StartPos;
+    }
+        public void ChengPoint()
     {
         isMove = false;
         State(ChageToFallen(transform.position) == 1);
-        if(!timeLaps) transform.position = StartPos;
     }
 
 
@@ -90,7 +95,7 @@ public class Rock : MonoBehaviour
                 else break;
             }
         }
-        memory.RegistPoint(this, transform.position);
+        memory.RegistPoint(this, transform.position, curentState);
     }
 public void UncontrolMove(Vector3 _point)
     {
@@ -136,9 +141,10 @@ public void UncontrolMove(Vector3 _point)
         else {isMove = false;pl.SetStop(false);}
 
     }
-
+    public void PrewState(bool _state) => State(_state); 
     private void State(bool _plane)
     {
+        curentState = _plane;
         sp.sprite = _plane? PlatformArt : RockArt;
         isMove = false;
         Acoll.enabled = _plane;

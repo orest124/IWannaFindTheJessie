@@ -26,13 +26,16 @@ public class Button : MonoBehaviour
     {
         get { return _isPressed; }
         set { 
+            if(_isPressed == value) return;
             _isPressed = value;
             curentArt.sprite = _isPressed? ClousedArt: OpenArt;
             foreach (var d in dore) d?.Check();
             if(_isPressed == true)SpecialAction?.Invoke();
+            //dd
         }
     }
     [System.Serializable]
+    
     public class PressedEvent : UnityEvent{}
     [FormerlySerializedAs("Special Action")]
     [SerializeField] private PressedEvent SpecialAction = new PressedEvent();
