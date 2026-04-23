@@ -2,64 +2,69 @@ using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Dore : MonoBehaviour {
-    Collider2D coll;
-    SpriteRenderer curentArt;
+    private Collider2D coll;
+    private SpriteRenderer curentArt;
+    [HideInInspector] public MovementMemory memory;
     [HideInInspector] public Dore PrimeDore;
-    [SerializeField] bool FlappyDore;
-    [SerializeField] bool EndDore;
-    [HideInInspector] public List<PersonStepInfo> steps = new();
-    [HideInInspector] public int stepCount = 0;
+    public Transform startPos;
+    [SerializeField] ZoneOptimizatoin myZone;
+    [Space] [Space]
 
+    [Header("Buttons")]
+    [Tooltip("Тут можна назначити кнопки")]
+    [SerializeField] private ImportantButtonsCollection Buttons;
+    [Tooltip("Тут можна назначити неважливі кнопки")]
+    [SerializeField] private NotImportantButtonsCollection Buttons_Extra;
+    [Space] [Space]
 
     public bool Prime;
+    [Tooltip("Якщо забрати з кнопки камінь двері закриються. \n Навіть коли рівень пройдено")]
+    [SerializeField] bool FlappyDore;
+    [HideInInspector] public List<PersonStepInfo> steps = new();
+    [HideInInspector] public int stepCount = 0;
+    [Space]
 
     public bool Vertical;
     public bool Bihaend;
+    [Space]
 
     public bool Closed;
     public bool Opened;
-    public bool AllDone = false;
-    public bool End;
+    [Space]
 
-    [SerializeField] bool state;
+    public bool AllDone = false;
+    [Space]
+
+
+    [Tooltip("Стан дверей на початку гри")]
+    [SerializeField] bool startState;
     [SerializeField] bool curentState;
 
 
-    [SerializeField] ZoneOptimizatoin myZone;
-    public Transform startPos;
+
+
 
     public List<PhotoPictures> CurentPhoto = new();
-    public List<Rock> DinamicObj = new();
     public List <MemoriAtRock> memoryAtRock = new();
 
-    [SerializeField] List<Button> PressButtons = new();
-    [SerializeField] List<Button> NotNidButtons = new();
-    [SerializeField] List<ButtonStates> NotNidButtonsState = new();
-    [SerializeField] List<ButtonState_Pres> buttons = new();
-    [SerializeField] List<ButtonState_State> buttonsState = new();
     public List<Dore> ChildDore = new();
 
 
-    public DooreSprites sp = new();
-    private int PressedButtons;
-    private int Count;
     
+    public DooreSprites sp = new();
+    private Vector3 size;
+    private Vector3 offset;
     
     private void Awake() 
     {
         curentArt = GetComponent<SpriteRenderer>();
         coll = GetComponent<Collider2D>();
-        Count = buttons.Count + buttonsState.Count + PressButtons.Count;
-        if(Count != 0)
-        {
-            foreach (var b in buttons)             b.button.dore.Add(this); 
-            foreach (var b in PressButtons)        b.dore.Add(this); 
-            foreach (var b in NotNidButtons)       b.dore.Add(this); 
-            foreach (var b in NotNidButtonsState)  b.dore.Add(this); 
-            foreach (var b in buttonsState)        b.button.dore.Add(this); 
-        }
+        memory = FindAnyObjectByType<MovementMemory>();
+        Buttons.Preparation(this);
+        // на початку гри має оприділятись ордер енд леєр
             
         if(Prime)
         {
@@ -72,7 +77,7 @@ public class Dore : MonoBehaviour {
         }
         size = Vertical? new Vector2(0.1f,3): new Vector2(3,0.1f);
         offset = ChengedColliderOffset();
-        RemoveDore();
+        RemoveDore(newGame: true);
         
     }
     void Update()
@@ -83,17 +88,17 @@ public class Dore : MonoBehaviour {
     public void Check() {
 
         if(Closed || Opened) return;
-        PressedButtons = 0;
+        if(Buttons.Check()) 
+        {
+            if(!FlappyDore) memory.RegistPoint(this, curentState);
+            OpenDore(true);
+            AllDone = true;
+        }
+        else if(FlappyDore) OpenDore(false);
 
-        foreach (var b in buttons) if (b.isValid()) PressedButtons++; 
-        foreach (var b in buttonsState) if (b.isValid()) PressedButtons++; 
-        foreach (var b in PressButtons) if (b.IsPressed == true) PressedButtons++; 
-        
-        if(PressedButtons == Count) OpenAudit();
-        else if(FlappyDore)OpenDore(false);
     }
 
-    public void OpenDore(bool _state = true)
+    public void OpenDore(bool _state = true, bool newGame = false)
     {
         curentArt.sprite = ChengedSprite(_state);
         curentArt.sortingOrder = _state? 10:sp.clousedOrder;
@@ -101,25 +106,19 @@ public class Dore : MonoBehaviour {
         coll.isTrigger =  _state;
 
         curentState = _state;
-        End = !Prime && _state;
-        if(EndDore && _state) PrimeDore.AllDone = true;
-        
+        if(Prime && !_state) AllDone = false;
+        if(newGame) AllDone = false;
     }
 
-    public void RemoveDore()
+    public void RemoveDore(bool newGame = false)
     {
-        if(!Prime && !Closed && !Opened) OpenDore(state);
+        if(!Prime && !Closed && !Opened && newGame) OpenDore(startState);
         else if(!Prime && Closed && !Opened) OpenDore(false);
-        else if(!Prime && !Closed && Opened) OpenDore(true);
+        else if(!Prime && !Closed && Opened) OpenDore();
 
-        else if(Prime && !Closed) OpenDore(true);
+        else if(Prime && !Closed && !newGame) OpenDore(false);
+        else if(Prime && !Closed && newGame) OpenDore(newGame:true);
         else OpenDore(false);
-    }
-
-    public void OpenAudit()
-    {
-        if(!Closed && !Opened) OpenDore(true);
-        else if (Closed || Opened) return;
     }
 
     private Sprite ChengedSprite(bool open)
@@ -129,39 +128,30 @@ public class Dore : MonoBehaviour {
     }
     private Vector3 ChengedColliderOffset()
     {
-        Vector3 newOffset = new();
-        newOffset.x = Vertical? 1f:0;
-        newOffset.y = Vertical? 0:1f;
+        Vector3 newOffset = new Vector3(Vertical? 1f:0,Vertical? 0:1f);
         return Bihaend? -newOffset : newOffset;
     }
-    public void Restartlavel(bool newGame = false, bool justButtons = false, bool restLavel = false)
+    public void Restartlavel(bool newGame = false, bool restLavel = false)
     {
-        foreach (var b in buttons) b.ReturnState(); 
-        foreach (var b in buttonsState) b.button.RemoveState(); 
-        foreach (var b in PressButtons) b.IsPressed = false; 
-        foreach (var b in NotNidButtons) b.IsPressed = false; 
-        foreach (var b in NotNidButtonsState) b.RemoveState(); 
-
-        if(restLavel && memoryAtRock.Count != 0)
+        RemoveDore(newGame: true);
+        if(restLavel)
         {
-            AllDone = false;
-            OpenDore(false);
             foreach (var r in memoryAtRock) r.ReturnPos();
             foreach (var d in ChildDore) d.RemoveDore();
             return;
         }
-        if(!justButtons) foreach (var o in DinamicObj) o.Restart(); 
+        else if(newGame)
+        {
+            foreach (var r in memoryAtRock) r.NewGame();
+            foreach (var d in ChildDore) d.RemoveDore(newGame: true);
+        }
+        Buttons.RemoveState();
+        Buttons_Extra.RemoveState();
+            
 
-        if(AllDone && !newGame) return;
-        
-        if(newGame) AllDone = false;
-        
-        foreach (var d in ChildDore) d.RemoveDore();
     }
     
-    public Vector3 size;
-    public Vector3 offset;
-    public MovementMemory memory;
+
 
     void Trigger()
     {
@@ -170,10 +160,11 @@ public class Dore : MonoBehaviour {
         if(Physics2D.OverlapBox(transform.position + offset, size, 0, LayerMask.GetMask("Player")))
         {
             sp.pl.lavelMode(PrimeDore);
-            if(Prime && !AllDone) 
+            if(Prime && AllDone == false) 
             {
-                OpenDore(false);
-                memory.ReturnAllRockInLavel(startPos.transform.position ,inMemory: true);
+                memory.RegistPoint(this, curentState);
+                OpenDore(false, true);
+                if(memoryAtRock.Count == 0) memory.ReturnAllRockInLavel(inMemory: true);
             }
         }
     }
@@ -183,11 +174,10 @@ public class Dore : MonoBehaviour {
     
     
 
-
+    [SerializeField] bool _gizmos = false;
     void OnDrawGizmos()
     {
-        if(!curentState) return;
-        if(sp.pl.curentDore == PrimeDore) return;
+        if(!curentState || !_gizmos || sp.pl.curentDore == PrimeDore) return;
 
         Gizmos.color = Color.blue;
         Gizmos.DrawWireCube(transform.position + offset, size);
@@ -196,6 +186,21 @@ public class Dore : MonoBehaviour {
 
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 [System.Serializable]
 public class ButtonState_Pres
 {
@@ -203,6 +208,8 @@ public class ButtonState_Pres
     public bool state;
     public void ReturnState() => button.IsPressed = false;
     public bool isValid() => button.IsPressed == state;
+    public void Preparation(Dore d) => button.dore.Add(d);
+
 }
 [System.Serializable]
 public class ButtonState_State
@@ -211,6 +218,7 @@ public class ButtonState_State
     public int state;
     public void ReturnState() => button.RemoveState();
     public bool isValid() => button.stateNomb == state;
+    public void Preparation(Dore d) => button.dore.Add(d);
 }
 [System.Serializable]
 public class DooreSprites
@@ -222,15 +230,69 @@ public class DooreSprites
     public Sprite ClousedArt_Ver;
     public int clousedOrder;
 }
+[System.Serializable]
+public class ImportantButtonsCollection
+{
+
+    [Tooltip("Відкриття при нажатті")]
+    public List<Button> Buttons = new();
+    [Tooltip("Відкриття на останній стан")]
+    public List<ButtonStates> SwitchButton = new();
+    [Tooltip("Задати стан")]
+    public List<ButtonState_Pres> Set_StateButtons = new();
+    [Tooltip("Задати стан")]
+    public List<ButtonState_State> Set_SwitchButton = new();
+    
+    public int count;
+
+    public void Preparation(Dore d)
+    {
+        foreach (var b in Buttons) b.dore.Add(d);
+        foreach (var b in SwitchButton) b.dore.Add(d);
+        foreach (var b in Set_StateButtons) b.Preparation(d);
+        foreach (var b in Set_SwitchButton) b.Preparation(d);
+        count = Buttons.Count + SwitchButton.Count + Set_StateButtons.Count + Set_SwitchButton.Count;
+    }
+    public bool Check()
+    {
+        int _count = 0;
+        foreach (var b in Buttons) if(b.IsPressed) _count++;
+        foreach (var b in SwitchButton) if(b.isLost) _count++;;
+        foreach (var b in Set_StateButtons) if(b.isValid()) _count++;
+        foreach (var b in Set_SwitchButton) if(b.isValid()) _count++;
+        return _count == count;
+    }
+    public void RemoveState()
+    {
+        foreach (var b in Buttons) b.IsPressed = false; 
+        foreach (var b in SwitchButton) b.RemoveState(); 
+        foreach (var b in Set_StateButtons) b.ReturnState(); 
+        foreach (var b in Set_SwitchButton) b.ReturnState(); 
+    }
+}
+[System.Serializable]
+public class NotImportantButtonsCollection
+{
+    public List<Button> StandartButtons = new();
+    public List<ButtonStates> SwitchButtons = new();
+    public void RemoveState()
+    {
+        foreach (var b in StandartButtons) b.IsPressed = false; 
+        foreach (var b in SwitchButtons) b.RemoveState(); 
+    }
+
+    
+}
 public class MemoriAtRock
 {
-    Collider2D rock;
-    Vector3 pos;
-    public MemoriAtRock(Collider2D _rock, Vector3 _pos)
+    public Rock rock;
+    public Vector3 pos;
+    public MemoriAtRock(Rock _rock, Vector3 _pos)
     {
         rock = _rock;
         pos = _pos;
     }
     public void ReturnPos() => rock.transform.position = pos;
+    public void NewGame() => rock.RemovePos();
     
 }

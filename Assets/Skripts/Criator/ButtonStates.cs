@@ -12,15 +12,15 @@ public class ButtonStates : MonoBehaviour
     [SerializeField] Sprite[] stateImage;
     public int stateNomb;
     private int startNomb;
+    public bool isLost => stateNomb == stateImage.Length - 1;
 
     void Awake()
     {
         stateNomb --;
         NextState();
-        startNomb = stateNomb;
-        
-        
+        RemoveState();
     }
+    
     // private bool CheckPoint() => Physics2D.OverlapPoint(transform.position, HardestObj);
     void OnTriggerEnter2D(Collider2D collision)
     {

@@ -27,8 +27,7 @@ public class Movement : MonoBehaviour
     [Header("LavelStates")] 
     public Dore curentDore;
     public Dore StartDore;
-    public Vector3 StartPos;
-    public Vector3 NawGamePos;
+    [HideInInspector] public Vector3 StartPos;
 
     [Header("Keyboard")] 
     KeyCode up = KeyCode.W;
@@ -38,6 +37,8 @@ public class Movement : MonoBehaviour
 
     [Header("Movement")] 
     public Vector3 moveDir;
+    [SerializeField] Vector3 targetPoint;
+
     [SerializeField] float spd;
     float curentSpd;
     public float castRadius;
@@ -66,7 +67,6 @@ public class Movement : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.R) && ReversArtefact) memory.StepBihaind();
         if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.R)) memory.RestartLavel();
         if(Input.GetKey(KeyCode.Space) && Input.GetKeyUp(KeyCode.R)) memory.AbsolutRestart();
-        if(Input.GetKeyUp(KeyCode.L)) memory.LocalClining();
         if(Input.GetKeyUp(KeyCode.G)) memory._gizmo = !memory._gizmo;
 
         if(isMove || StopGame) return;
@@ -99,7 +99,6 @@ public class Movement : MonoBehaviour
         }
             
     }
-    private Vector3 targetPoint;
   
 
 
@@ -110,9 +109,30 @@ public class Movement : MonoBehaviour
         Vector3 newPos = Vector2.MoveTowards(transform.position, target, newspd);
         
         spr.ChengSprite(moveDir);
-        // FollowCamera();
         transform.position = newPos;
+        ButtonCheck(newPos);
     }   
+
+    private void ButtonCheck(Vector3 point)
+    {
+        Collider2D coll = Physics2D.OverlapPoint(point, LayerMask.GetMask("Button"));
+        if(coll != null && prewColl != coll)
+        {
+            curentButton?.ChengPresed(false, true);
+            prewColl = coll;
+            curentButton = coll.GetComponent<Button>();
+            curentButton.ChengPresed(true, true);
+        }
+        else if(prewColl != null)
+        {
+            curentButton.ChengPresed(false, true);
+            curentButton = null;
+            prewColl = null;
+        }
+    }
+    
+    private Collider2D prewColl;
+    private Button curentButton;
 
     private readonly Vector3 zero = Vector3.zero;
     
@@ -136,42 +156,52 @@ public class Movement : MonoBehaviour
     bool CinemaMod = false;
     private void NewDirection()
     {
-        
+        moveDir = GetDirect();
+        spr.ChengSprite(moveDir);
+
+        if(moveDir != zero )
+        {
+            if(!spr.RedyToMove()) {
+
+                moveDir = zero;
+                spr.StendUp(); return;
+            }
+
+            if(!_inLavel) return;
+
+            if(moveDir.x != 0) moveDir.y = 0;
+            targetPoint = IdealPos(mod: false) + moveDir;
+            
+            isMove = CheckEmpty(targetPoint);
+
+            if(isMove == false) return;
+
+            memory.RegistPoint(this, transform.position);
+
+            int nomb = ChageToFallen(targetPoint);
+            if(nomb == 2) 
+            {
+                //Падіння небуде бо він не робе скан кожен крок
+                curentSpd = spd * 1.6f;
+                FindLostPoint(moveDir);
+            }
+            else if(nomb == 1) {moveDir = zero; spr.ChengSprite(moveDir);return;}
+            else curentSpd = spd;
+
+        }    
+    }
+    public Vector3 GetDirect()
+    {
         float Bup = 0; float Bdown = 0; float Bleft = 0; float Bright = 0;
         
         if (Input.GetKey(up)) Bup = 1;
         if (Input.GetKey(down)) Bdown = 1;
         if (Input.GetKey(right)) Bright = 1;
         if (Input.GetKey(left)) Bleft = 1;
-        
 
         float x = Bright - Bleft;
         float y = Bup - Bdown;
-        
-        moveDir = new Vector2(x, y);
-        spr.ChengSprite(moveDir);
-
-        if(moveDir != zero )
-        {
-            if(!spr.RedyToMove())
-            {
-                moveDir = zero;
-                spr.StendUp();
-                return;
-            }
-
-            if(!_inLavel) return;
-
-            if(x != 0 && y != 0) moveDir.y = 0;
-            Vector3 _targetPoint = IdealPos(mod: false) + moveDir;
-            int nomb = ChageToFallen(_targetPoint);
-            
-            if(nomb == 2) {curentSpd = spd * 1.2f;}
-            else if(nomb == 1) {moveDir = zero; spr.ChengSprite(moveDir);return;}
-            else curentSpd = spd;
-            isMove = CheckEmpty(_targetPoint);
-            if(isMove) FindLostPoint(moveDir);
-        }    
+        return new Vector3(x,y);
     }
     public void FindLostPoint(Vector3 dir)
     {
@@ -184,37 +214,28 @@ public class Movement : MonoBehaviour
             
             else if(tipe == 2)
             {
+                if(!CheckEmpty(targetPoint + dir, true)) break;
+                
                 targetPoint += dir;
                 continue;
             }
-            else
-            {
-                if(!CheckEmpty(targetPoint))
-                {
-                    targetPoint -= dir;
-                    break;
-                }
-                else break;
-            }
+            else break;
         }
-        memory.RegistPoint(this, transform.position);
     }
 
     public int ChageToFallen(Vector3 _point)
     {
-        bool _isIce = Physics2D.OverlapCircle(_point,0.2f, s.IceArea);
-        bool _isDipth = Physics2D.OverlapCircle(_point, 0.2f, s.DipthArea) 
-                && !Physics2D.OverlapPoint(_point, s.PlatformMask);
-        if(_isDipth) return 1;
-        else if (_isIce) return 2;
+        if (Physics2D.OverlapCircle(_point, 0.2f, s.DipthArea) 
+        && !Physics2D.OverlapPoint(_point, s.PlatformMask)) return 1;
+        if (Physics2D.OverlapCircle(_point,0.2f, s.IceArea)) return 2;
         else return 0; 
     }
 
-    public bool CheckEmpty(Vector3 _point, bool _action = false)
+    public bool CheckEmpty(Vector3 _point, bool JustCheck = false)
     {
         var coll = CheckCollider(_point);
         if(coll == null || coll.isTrigger) return true;
-        else if(_action) return false;
+        else if (JustCheck) return false;
         else
         {
             Rock r;
@@ -231,44 +252,22 @@ public class Movement : MonoBehaviour
 
     public void PlaceControle(Vector3 dir)
     {
-        Vector3 myPoint = transform.position;
-        int tipe = ChageToFallen(myPoint);
+        int tipe = ChageToFallen(transform.position);
 
-        if      (tipe == 1) {memory.LocalClining();spr.Falling();}
-        else if (tipe == 2) 
-        {
-            targetPoint = moveDir + transform.position;
-            isMove = CheckEmpty(targetPoint, true);
-            int nomb = ChageToFallen(targetPoint);
-            if(nomb > 0) 
-            {
-                curentSpd = spd * 1.3f;
-                nomb = Random.Range(1,20);
-                if(nomb == 1)spr.Falling();
-            }
-        }
-        else 
-        {
-            isMove = false;
-        }
+        if (tipe == 1) {memory.RestartLavel();spr.Falling();}
+        else isMove = false;
     }
 
 
-    private bool isPlace(Vector2 place)
-    {
-        return place.x == transform.position.x && place.y == transform.position.y;
-    }
+    private bool isPlace(Vector2 place) => place.x == transform.position.x && place.y == transform.position.y;
     private Vector3 IdealPos(bool mod = true)
     {
-        float _mod = 0;
-        if(mod) _mod = 0.5f;
-        int x = (int)(transform.position.x + _mod);
-        int y = (int)(transform.position.y + _mod);
-        return new Vector2(x, y);
+        float _mod = mod? 0.5f : 0;
+        return new Vector2(Mathf.RoundToInt(transform.position.x + _mod), Mathf.RoundToInt(transform.position.y + _mod));
     }
+
     public void SprintAudit()
     {
-
         if (Input.GetKeyDown(KeyCode.LeftShift)) 
             {curentSpd = spd + s.pc.PhotoCount() * 0.1f; spr.AnimSpd(true); s.ChengTimeLoop(true);}
 
