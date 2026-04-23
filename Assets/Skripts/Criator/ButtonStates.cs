@@ -8,17 +8,19 @@ public class ButtonStates : MonoBehaviour
     public List<Dore> dore = new();
     [SerializeField] LayerMask HardestObj;
 
-    private SpriteRenderer curentArt;
+    [SerializeField] SpriteRenderer curentArt;
     [SerializeField] Sprite[] stateImage;
     public int stateNomb;
+    private int startNomb;
+    public bool isLost => stateNomb == stateImage.Length - 1;
 
     void Awake()
     {
-        curentArt = GetComponent<SpriteRenderer>();
         stateNomb --;
         NextState();
-        
+        RemoveState();
     }
+    
     // private bool CheckPoint() => Physics2D.OverlapPoint(transform.position, HardestObj);
     void OnTriggerEnter2D(Collider2D collision)
     {
@@ -31,7 +33,7 @@ public class ButtonStates : MonoBehaviour
     {
         if(stateNomb < stateImage.Length - 1)stateNomb ++;
         else stateNomb = 0;
-        if(remove) stateNomb = 0;
+        if(remove) stateNomb = startNomb;
         curentArt.sprite = stateImage[stateNomb];
         foreach (var d in dore) d?.Check();
         

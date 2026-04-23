@@ -1,12 +1,14 @@
 using System.Collections;
 using NUnit.Framework;
+using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class Rock : MonoBehaviour 
 {
-    Vector2 StartPos;
+    public Vector2 StartPos;
     [SerializeField] Collider2D Hcoll;
     [SerializeField] Collider2D Acoll;
+    private bool curentState;
     public LayerMask IceArea;
     public LayerMask DipthArea;
     public LayerMask PlatformLayer;
@@ -17,6 +19,8 @@ public class Rock : MonoBehaviour
 
     [SerializeField] float spd;
     [SerializeField]Movement pl;
+    [HideInInspector] public MovementMemory memory;
+
 
     private void Awake()
     {
@@ -29,13 +33,15 @@ public class Rock : MonoBehaviour
     {
         if(isMove) UncontrolMove(targetPoint);
     }
-    public void Restart()
+    public void RemovePos()
     {
-        enabled = true;
-        State(false);
-        StopAllCoroutines();
         isMove = false;
         transform.position = StartPos;
+    }
+        public void ChengPoint()
+    {
+        isMove = false;
+        State(ChageToFallen(transform.position) == 1);
     }
 
 
@@ -59,11 +65,37 @@ public class Rock : MonoBehaviour
         }
         else
         {
-            // StartCoroutine(EMove(dir));
             moveDir = dir;
-            targetPoint = transform.position + moveDir;
+            FindLostPoint(moveDir);
+            pl.SetStop(true);
             isMove = true;
         }
+    }
+    public void FindLostPoint(Vector3 dir)
+    {
+
+        targetPoint = transform.position + dir;
+        while(true)
+        {
+            int tipe = ChageToFallen(targetPoint);
+            if(tipe == 1) break;
+            
+            else if(tipe == 2)
+            {
+                targetPoint += dir;
+                continue;
+            }
+            else
+            {
+                if(!CheckEmpty(targetPoint))
+                {
+                    targetPoint -= dir;
+                    break;
+                }
+                else break;
+            }
+        }
+        memory.RegistPoint(this, transform.position, curentState);
     }
 public void UncontrolMove(Vector3 _point)
     {
@@ -80,43 +112,83 @@ public void UncontrolMove(Vector3 _point)
     {
         float newspd = Time.fixedDeltaTime * spd;
         Vector3 newPos = Vector2.MoveTowards(transform.position, target, newspd);
+
         transform.position = newPos;
+        ButtonCheck(newPos);
     }    
+
+
+    private Collider2D prewColl;
+    private Button curentButton;
+
+    private void ButtonCheck(Vector3 point)
+    {
+        Collider2D coll = Physics2D.OverlapPoint(point, LayerMask.GetMask("Button"));
+        if(coll != null && prewColl != coll)
+        {
+            curentButton?.ChengPresed(false);
+            prewColl = coll;
+            curentButton = coll.GetComponent<Button>();
+            curentButton.ChengPresed(true);
+        }
+        else if(prewColl != null)
+        {
+            curentButton.ChengPresed(false);
+            curentButton = null;
+            prewColl = null;
+        }
+    }
+    public int ChageToFallen(Vector3 _point)
+    {
+        bool _isIce = Physics2D.OverlapCircle(_point,0.2f, IceArea);
+        bool _isDipth = Physics2D.OverlapCircle(_point, 0.2f, DipthArea) 
+                && !Physics2D.OverlapPoint(_point, PlatformLayer);
+        if(_isDipth) return 1;
+        else if (_isIce) return 2;
+        else return 0; 
+    }
 
 
     public void PlaceControle(Vector3 dir)
     {
         Vector3 myPoint = transform.position;
 
-        _isIce = Physics2D.OverlapCircle(myPoint,0.3f, IceArea);
-        _isDipth = Physics2D.OverlapCircle(myPoint, 0.3f, DipthArea) 
-                && !Physics2D.OverlapPoint(myPoint, PlatformLayer);
+        int tipe = ChageToFallen(myPoint);
         
-        if(_isDipth) State(true);
-        else if (_isIce) 
+        if(tipe == 1) State(true);
+        else if (tipe == 2) 
         {
             targetPoint = transform.position + dir;
             isMove = CheckEmpty(targetPoint);
         }
-        else isMove = false;
-    }
+            
+        else {isMove = false;pl.SetStop(false);}
 
+    }
+    public void PrewState(bool _state) => State(_state); 
     private void State(bool _plane)
     {
+        curentState = _plane;
         sp.sprite = _plane? PlatformArt : RockArt;
         isMove = false;
         Acoll.enabled = _plane;
-        Hcoll.enabled = !_plane;
+        Hcoll.isTrigger = _plane;
         sp.sortingOrder = _plane? 11:20;
         if(_plane)
         {
             gameObject.transform.localScale = new Vector3(1.1f,1.1f,0);
+            pl.SetStop(false);
         }
         else
         {
             gameObject.transform.localScale = new Vector3(1f,1f,0);
         }
         
+    }
+    public void RestPos(Vector3 _point)
+    {
+        transform.position = _point;
+        State(ChageToFallen(transform.position) == 1);
     }
     public bool CheckEmpty(Vector3 _point)
     {
@@ -150,10 +222,7 @@ public void UncontrolMove(Vector3 _point)
 
     [SerializeField] float castRadius;
 
-        void OnDrawGizmos()
-    {
-        Gizmos.DrawWireCube(transform.position, new Vector3(castRadius,castRadius));
-    }
+    
 
 
 }

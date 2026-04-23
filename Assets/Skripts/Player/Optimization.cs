@@ -17,8 +17,13 @@ public class Optimization : MonoBehaviour {
     private void Start() {
         mc = GetComponent<Movement>();
         ClosestLavel = Lavel0;
-        if(DontNidMatematic) return;
-        StartCoroutine(CheckDist());
+        if(!DontNidMatematic)
+        {
+            StartCoroutine(CheckDist());
+            music.in2Lavel();
+        }
+        else music.in1Lavel();
+            
     }
     void Update()
     {
@@ -123,19 +128,21 @@ public class Optimization : MonoBehaviour {
         }
     }
     WaitForSeconds timer = new WaitForSeconds(1);
-    // public bool gizmo = false;
-    // void OnDrawGizmos()
-    // {
-    //     if(!gizmo) return;
-    //     Gizmos.color = Color.red;
-    //     Gizmos.DrawWireSphere(Lavel0.position, 25);
-    //     Gizmos.DrawWireSphere(Lavel1.position, 25);
-    //     Gizmos.DrawWireSphere(Lavel2.position, 25);
-    //     Gizmos.DrawWireSphere(Lavel3.position, 25);
-    //     Gizmos.color = Color.magenta;
-    //     Gizmos.DrawWireSphere(Lavel0.position, 60);
+    public bool gizmo = false;
+    void OnDrawGizmos()
+    {
+        if (!gizmo) return;
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(Lavel0.position, 25);
+        Gizmos.DrawWireSphere(Lavel2.position, 25);
+        Gizmos.DrawWireSphere(Lavel1.position, 25);
+        Gizmos.DrawWireSphere(Lavel3.position, 25);
+        
+        
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawWireSphere(Lavel0.position, 60);
 
-    // }
+    }
     [Header("NotFindeAbuse")]
     [SerializeField] Dore[] ClosestDore;
     [SerializeField] GameObject TriggerFish;

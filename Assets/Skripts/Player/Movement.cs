@@ -17,14 +17,17 @@ public class Movement : MonoBehaviour
     [HideInInspector] public P_SoundAndPhoto s;
     [HideInInspector] public Optimization optim;
     private Collider2D coll;
+    [HideInInspector] public MovementMemory memory;
 
 
     [Header("Abuse")] 
     public Dore abuseDore;
+    public bool ReversArtefact;
 
     [Header("LavelStates")] 
     public Dore curentDore;
-    public Vector3 StartPos;
+    public Dore StartDore;
+    [HideInInspector] public Vector3 StartPos;
 
     [Header("Keyboard")] 
     KeyCode up = KeyCode.W;
@@ -34,6 +37,8 @@ public class Movement : MonoBehaviour
 
     [Header("Movement")] 
     public Vector3 moveDir;
+    [SerializeField] Vector3 targetPoint;
+
     [SerializeField] float spd;
     float curentSpd;
     public float castRadius;
@@ -52,23 +57,26 @@ public class Movement : MonoBehaviour
         s = GetComponent<P_SoundAndPhoto>();
         coll = GetComponent<Collider2D>();
         spr.LStart();
-        
         StartPos = curentDore.startPos.position;
-        Cra.transform.position = new Vector3(transform.position.x,transform.position.y, Cra.transform.position.z);
+        FollowCamera();
         curentSpd = spd;
         
     
     }
     private void Update() {
-        if(Input.GetKeyDown(KeyCode.R)) Death();
+        if(Input.GetKeyDown(KeyCode.R) && ReversArtefact) memory.StepBihaind();
+        if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.R)) memory.RestartLavel();
+        if(Input.GetKey(KeyCode.Space) && Input.GetKeyUp(KeyCode.R)) memory.AbsolutRestart();
+        if(Input.GetKeyUp(KeyCode.G)) memory._gizmo = !memory._gizmo;
 
-        if(isMove) return;
+        if(isMove || StopGame) return;
         NewDirection();
     }
 
     private void FixedUpdate() {
 
-        if(isMove)  UncontrolMove(_targetPoint, curentSpd); 
+        FollowCamera(transform.position);
+        if(isMove)  UncontrolMove(targetPoint, curentSpd); 
         if(!_inLavel && !CinemaMod) Move(transform.position + moveDir,curentSpd);
     }
 
@@ -91,7 +99,6 @@ public class Movement : MonoBehaviour
         }
             
     }
-    private Vector3 _targetPoint;
   
 
 
@@ -102,9 +109,30 @@ public class Movement : MonoBehaviour
         Vector3 newPos = Vector2.MoveTowards(transform.position, target, newspd);
         
         spr.ChengSprite(moveDir);
-        Cra.transform.position = new Vector3(transform.position.x,transform.position.y, Cra.transform.position.z);
         transform.position = newPos;
+        ButtonCheck(newPos);
     }   
+
+    private void ButtonCheck(Vector3 point)
+    {
+        Collider2D coll = Physics2D.OverlapPoint(point, LayerMask.GetMask("Button"));
+        if(coll != null && prewColl != coll)
+        {
+            curentButton?.ChengPresed(false, true);
+            prewColl = coll;
+            curentButton = coll.GetComponent<Button>();
+            curentButton.ChengPresed(true, true);
+        }
+        else if(prewColl != null)
+        {
+            curentButton.ChengPresed(false, true);
+            curentButton = null;
+            prewColl = null;
+        }
+    }
+    
+    private Collider2D prewColl;
+    private Button curentButton;
 
     private readonly Vector3 zero = Vector3.zero;
     
@@ -114,7 +142,7 @@ public class Movement : MonoBehaviour
         curentSpd = 10;
         coll.enabled = false;
         spr.Falling();
-        _targetPoint = target;
+        targetPoint = target;
         isMove = true;
     }
 
@@ -123,71 +151,91 @@ public class Movement : MonoBehaviour
 
 
 
-
-
-
-
-    
-
     // Audit Method
 
     bool CinemaMod = false;
     private void NewDirection()
     {
-        
+        moveDir = GetDirect();
+        spr.ChengSprite(moveDir);
+
+        if(moveDir != zero )
+        {
+            if(!spr.RedyToMove()) {
+
+                moveDir = zero;
+                spr.StendUp(); return;
+            }
+
+            if(!_inLavel) return;
+
+            if(moveDir.x != 0) moveDir.y = 0;
+            targetPoint = IdealPos(mod: false) + moveDir;
+            
+            isMove = CheckEmpty(targetPoint);
+
+            if(isMove == false) return;
+
+            memory.RegistPoint(this, transform.position);
+
+            int nomb = ChageToFallen(targetPoint);
+            if(nomb == 2) 
+            {
+                //Падіння небуде бо він не робе скан кожен крок
+                curentSpd = spd * 1.6f;
+                FindLostPoint(moveDir);
+            }
+            else if(nomb == 1) {moveDir = zero; spr.ChengSprite(moveDir);return;}
+            else curentSpd = spd;
+
+        }    
+    }
+    public Vector3 GetDirect()
+    {
         float Bup = 0; float Bdown = 0; float Bleft = 0; float Bright = 0;
         
         if (Input.GetKey(up)) Bup = 1;
         if (Input.GetKey(down)) Bdown = 1;
         if (Input.GetKey(right)) Bright = 1;
         if (Input.GetKey(left)) Bleft = 1;
-        
 
         float x = Bright - Bleft;
         float y = Bup - Bdown;
-        
-        moveDir = new Vector2(x, y);
-        spr.ChengSprite(moveDir);
+        return new Vector3(x,y);
+    }
+    public void FindLostPoint(Vector3 dir)
+    {
 
-        if(moveDir != zero )
+        targetPoint = IdealPos(mod: false) + dir;
+        while(true)
         {
-            if(!spr.RedyToMove())
+            int tipe = ChageToFallen(targetPoint);
+            if(tipe == 1) break;
+            
+            else if(tipe == 2)
             {
-                moveDir = zero;
-                spr.StendUp();
-                return;
+                if(!CheckEmpty(targetPoint + dir, true)) break;
+                
+                targetPoint += dir;
+                continue;
             }
-
-            if(!_inLavel) return;
-
-            if(x != 0 && y != 0) moveDir.y = 0;
-            _targetPoint = transform.position + moveDir;
-            int nomb = ChageToFallen(_targetPoint);
-            
-            if(nomb == 2) curentSpd = spd * 1.2f;
-            else if(nomb == 1) {moveDir = zero; spr.ChengSprite(moveDir);return;}
-            else curentSpd = spd;
-            isMove = CheckEmpty(_targetPoint);
+            else break;
         }
-
-            
     }
 
     public int ChageToFallen(Vector3 _point)
     {
-        bool _isIce = Physics2D.OverlapCircle(_point,0.2f, s.IceArea);
-        bool _isDipth = Physics2D.OverlapCircle(_point, 0.2f, s.DipthArea) 
-                && !Physics2D.OverlapPoint(_point, s.PlatformMask);
-        if(_isDipth) return 1;
-        else if (_isIce) return 2;
+        if (Physics2D.OverlapCircle(_point, 0.2f, s.DipthArea) 
+        && !Physics2D.OverlapPoint(_point, s.PlatformMask)) return 1;
+        if (Physics2D.OverlapCircle(_point,0.2f, s.IceArea)) return 2;
         else return 0; 
     }
 
-    public bool CheckEmpty(Vector3 _point, bool _action = false)
+    public bool CheckEmpty(Vector3 _point, bool JustCheck = false)
     {
         var coll = CheckCollider(_point);
         if(coll == null || coll.isTrigger) return true;
-        else if(_action) return false;
+        else if (JustCheck) return false;
         else
         {
             Rock r;
@@ -204,39 +252,22 @@ public class Movement : MonoBehaviour
 
     public void PlaceControle(Vector3 dir)
     {
-        Vector3 myPoint = transform.position;
-        int tipe = ChageToFallen(myPoint);
+        int tipe = ChageToFallen(transform.position);
 
-        if      (tipe == 1) {Death();spr.Falling();}
-        else if (tipe == 2) 
-        {
-            _targetPoint = moveDir + transform.position;
-            isMove = CheckEmpty(_targetPoint, true);
-            int nomb = ChageToFallen(_targetPoint);
-            if(nomb > 0) 
-            {
-                curentSpd = spd * 1.3f;
-                nomb = Random.Range(1,20);
-                if(nomb == 1)spr.Falling();
-            }
-        }
+        if (tipe == 1) {memory.RestartLavel();spr.Falling();}
         else isMove = false;
     }
 
 
-    private bool isPlace(Vector2 place)
+    private bool isPlace(Vector2 place) => place.x == transform.position.x && place.y == transform.position.y;
+    private Vector3 IdealPos(bool mod = true)
     {
-        return place.x == transform.position.x && place.y == transform.position.y;
+        float _mod = mod? 0.5f : 0;
+        return new Vector2(Mathf.RoundToInt(transform.position.x + _mod), Mathf.RoundToInt(transform.position.y + _mod));
     }
-    private Vector3 IdealPos()
-    {
-        int x = (int)(transform.position.x + 0.5f);
-        int y = (int)(transform.position.y + 0.5f);
-        return new Vector2(x, y);
-    }
+
     public void SprintAudit()
     {
-
         if (Input.GetKeyDown(KeyCode.LeftShift)) 
             {curentSpd = spd + s.pc.PhotoCount() * 0.1f; spr.AnimSpd(true); s.ChengTimeLoop(true);}
 
@@ -269,6 +300,7 @@ public class Movement : MonoBehaviour
             if(curentDore == _dore) return;
             curentDore = _dore;
             StartPos = curentDore.startPos.position;
+            memory.NewDore(curentDore);
             
             if(!_inLavel)
             {
@@ -278,19 +310,42 @@ public class Movement : MonoBehaviour
                 
                 _inLavel = true;
                 optim.ChengedMusic();
-                _targetPoint = IdealPos() + cor;
+                targetPoint = IdealPos() + cor;
                 isMove = true;
             }
         }
     }
-    public void Death()
+    public void Idle(bool newGame = false, bool notFromLavel = false)
     {
+        if(newGame) curentDore = StartDore;
+        StartPos = curentDore.startPos.transform.position;
+        _inLavel = !notFromLavel;
+
         isMove = false;
+        StopGame = false;
         moveDir = Vector2.zero;
         transform.position = StartPos;
-        Cra.transform.position = new Vector3(StartPos.x,StartPos.y, Cra.transform.position.z);
-
-        curentDore.Restartlavel();
+        
     }
+    public float minModSpd;
+    public float maxModSpd;
+    public float dist;
+    public void FollowCamera(Vector3 point)
+    {
+        float _spd = Time.fixedDeltaTime;
+        dist = Vector3.SqrMagnitude(Cra.transform.position - new Vector3(transform.position.x,transform.position.y,Cra.transform.position.z));
+        if(dist > 9) _spd = _spd * maxModSpd;
+        Vector3 newpoint = Vector3.MoveTowards(Cra.transform.position, new Vector3(point.x,point.y, Cra.transform.position.z), _spd);
+        Cra.transform.position = newpoint;
+    }
+    public void FollowCamera() => Cra.transform.position = new Vector3(transform.position.x,transform.position.y, Cra.transform.position.z);
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireCube(targetPoint, new Vector3(0.3f,0.3f));
 
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(targetPoint + new Vector3(0.5f,0f), targetPoint + new Vector3(-0.5f,0f));
+        Gizmos.DrawLine(targetPoint + new Vector3(0,0.5f), targetPoint + new Vector3(0,-0.5f));
+    }
 }
