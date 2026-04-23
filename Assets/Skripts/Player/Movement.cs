@@ -27,8 +27,7 @@ public class Movement : MonoBehaviour
     [Header("LavelStates")] 
     public Dore curentDore;
     public Dore StartDore;
-    public Vector3 StartPos;
-    public Vector3 NawGamePos;
+    [HideInInspector] public Vector3 StartPos;
 
     [Header("Keyboard")] 
     KeyCode up = KeyCode.W;
@@ -38,6 +37,8 @@ public class Movement : MonoBehaviour
 
     [Header("Movement")] 
     public Vector3 moveDir;
+    [SerializeField] Vector3 targetPoint;
+
     [SerializeField] float spd;
     float curentSpd;
     public float castRadius;
@@ -98,7 +99,6 @@ public class Movement : MonoBehaviour
         }
             
     }
-    private Vector3 targetPoint;
   
 
 
@@ -109,9 +109,30 @@ public class Movement : MonoBehaviour
         Vector3 newPos = Vector2.MoveTowards(transform.position, target, newspd);
         
         spr.ChengSprite(moveDir);
-        // FollowCamera();
         transform.position = newPos;
+        ButtonCheck(newPos);
     }   
+
+    private void ButtonCheck(Vector3 point)
+    {
+        Collider2D coll = Physics2D.OverlapPoint(point, LayerMask.GetMask("Button"));
+        if(coll != null && prewColl != coll)
+        {
+            curentButton?.ChengPresed(false, true);
+            prewColl = coll;
+            curentButton = coll.GetComponent<Button>();
+            curentButton.ChengPresed(true, true);
+        }
+        else if(prewColl != null)
+        {
+            curentButton.ChengPresed(false, true);
+            curentButton = null;
+            prewColl = null;
+        }
+    }
+    
+    private Collider2D prewColl;
+    private Button curentButton;
 
     private readonly Vector3 zero = Vector3.zero;
     
@@ -148,8 +169,9 @@ public class Movement : MonoBehaviour
 
             if(!_inLavel) return;
 
-            if(moveDir.x != 0 && moveDir.y != 0) moveDir.y = 0;
+            if(moveDir.x != 0) moveDir.y = 0;
             targetPoint = IdealPos(mod: false) + moveDir;
+            
             isMove = CheckEmpty(targetPoint);
 
             if(isMove == false) return;
@@ -241,7 +263,7 @@ public class Movement : MonoBehaviour
     private Vector3 IdealPos(bool mod = true)
     {
         float _mod = mod? 0.5f : 0;
-        return new Vector2((int)(transform.position.x + _mod), (int)(transform.position.y + _mod));
+        return new Vector2(Mathf.RoundToInt(transform.position.x + _mod), Mathf.RoundToInt(transform.position.y + _mod));
     }
 
     public void SprintAudit()
