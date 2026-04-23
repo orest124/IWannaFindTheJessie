@@ -112,8 +112,32 @@ public void UncontrolMove(Vector3 _point)
     {
         float newspd = Time.fixedDeltaTime * spd;
         Vector3 newPos = Vector2.MoveTowards(transform.position, target, newspd);
+
         transform.position = newPos;
+        ButtonCheck(newPos);
     }    
+
+
+    private Collider2D prewColl;
+    private Button curentButton;
+
+    private void ButtonCheck(Vector3 point)
+    {
+        Collider2D coll = Physics2D.OverlapPoint(point, LayerMask.GetMask("Button"));
+        if(coll != null && prewColl != coll)
+        {
+            curentButton?.ChengPresed(false);
+            prewColl = coll;
+            curentButton = coll.GetComponent<Button>();
+            curentButton.ChengPresed(true);
+        }
+        else if(prewColl != null)
+        {
+            curentButton.ChengPresed(false);
+            curentButton = null;
+            prewColl = null;
+        }
+    }
     public int ChageToFallen(Vector3 _point)
     {
         bool _isIce = Physics2D.OverlapCircle(_point,0.2f, IceArea);

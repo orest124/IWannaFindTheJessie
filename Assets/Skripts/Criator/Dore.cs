@@ -55,7 +55,6 @@ public class Dore : MonoBehaviour {
 
     
     public DooreSprites sp = new();
-    private int _count;
     private Vector3 size;
     private Vector3 offset;
     
@@ -64,7 +63,6 @@ public class Dore : MonoBehaviour {
         curentArt = GetComponent<SpriteRenderer>();
         coll = GetComponent<Collider2D>();
         memory = FindAnyObjectByType<MovementMemory>();
-        _count = Buttons.Count;
         Buttons.Preparation(this);
         // на початку гри має оприділятись ордер енд леєр
             
@@ -90,7 +88,7 @@ public class Dore : MonoBehaviour {
     public void Check() {
 
         if(Closed || Opened) return;
-        if(Buttons.Check() == _count) 
+        if(Buttons.Check()) 
         {
             if(!FlappyDore) memory.RegistPoint(this, curentState);
             OpenDore(true);
@@ -244,22 +242,25 @@ public class ImportantButtonsCollection
     public List<ButtonState_Pres> Set_StateButtons = new();
     [Tooltip("Задати стан")]
     public List<ButtonState_State> Set_SwitchButton = new();
-    public int Count => Buttons.Count + SwitchButton.Count + Set_StateButtons.Count + Set_SwitchButton.Count;
+    
+    public int count;
+
     public void Preparation(Dore d)
     {
         foreach (var b in Buttons) b.dore.Add(d);
         foreach (var b in SwitchButton) b.dore.Add(d);
         foreach (var b in Set_StateButtons) b.Preparation(d);
         foreach (var b in Set_SwitchButton) b.Preparation(d);
+        count = Buttons.Count + SwitchButton.Count + Set_StateButtons.Count + Set_SwitchButton.Count;
     }
-    public int Check()
+    public bool Check()
     {
         int _count = 0;
         foreach (var b in Buttons) if(b.IsPressed) _count++;
         foreach (var b in SwitchButton) if(b.isLost) _count++;;
         foreach (var b in Set_StateButtons) if(b.isValid()) _count++;
         foreach (var b in Set_SwitchButton) if(b.isValid()) _count++;
-        return _count;
+        return _count == count;
     }
     public void RemoveState()
     {
