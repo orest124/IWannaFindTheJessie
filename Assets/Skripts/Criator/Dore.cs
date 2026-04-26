@@ -18,6 +18,9 @@ public class Dore : MonoBehaviour {
     [SerializeField] private ImportantButtonsCollection Buttons;
     [Tooltip("Тут можна назначити неважливі кнопки")]
     [SerializeField] private NotImportantButtonsCollection Buttons_Extra;
+
+    [Header("Cild Dores")]
+    public List<Dore> ChildDore = new();
     [Space] [Space]
 
     public bool Prime;
@@ -36,12 +39,9 @@ public class Dore : MonoBehaviour {
     [Space]
 
     public bool AllDone = false;
+    [SerializeField] bool curentState;
     [Space]
 
-
-    [Tooltip("Стан дверей на початку гри")]
-    [SerializeField] bool startState;
-    [SerializeField] bool curentState;
 
 
 
@@ -49,18 +49,19 @@ public class Dore : MonoBehaviour {
 
     public List<PhotoPictures> CurentPhoto = new();
     public List <MemoriAtRock> memoryAtRock = new();
-
-    public List<Dore> ChildDore = new();
-
-
     
     public DooreSprites sp = new();
     private Vector3 size;
     private Vector3 offset;
-    
     private void Awake() 
     {
         curentArt = GetComponent<SpriteRenderer>();
+        float y = curentArt.bounds.max.y;
+        int order = -Mathf.RoundToInt(y * 10);
+        curentArt.sortingOrder = order;
+
+        
+    
         coll = GetComponent<Collider2D>();
         memory = FindAnyObjectByType<MovementMemory>();
         Buttons.Preparation(this);
@@ -101,7 +102,6 @@ public class Dore : MonoBehaviour {
     public void OpenDore(bool _state = true, bool newGame = false)
     {
         curentArt.sprite = ChengedSprite(_state);
-        curentArt.sortingOrder = _state? 10:sp.clousedOrder;
         
         coll.isTrigger =  _state;
 
@@ -110,14 +110,24 @@ public class Dore : MonoBehaviour {
         if(newGame) AllDone = false;
     }
 
+    /*
+        Звичайні двері відкриваються
+        За начальним стейтом
+        Просто коли в них алл дон
+        Праймові
+        Відкриваються з завершенням рівня на алл дон
+        Відкриваються без алл дон
+        newGame = Стан як на початку гри.
+    */
     public void RemoveDore(bool newGame = false)
     {
-        if(!Prime && !Closed && !Opened && newGame) OpenDore(startState);
-        else if(!Prime && Closed && !Opened) OpenDore(false);
-        else if(!Prime && !Closed && Opened) OpenDore();
+        if(!Prime && !Closed && !Opened) OpenDore(false);
 
-        else if(Prime && !Closed && !newGame) OpenDore(false);
-        else if(Prime && !Closed && newGame) OpenDore(newGame:true);
+        else if(Opened && !Prime && !Closed) OpenDore();
+        else if(Closed && !Prime && !Opened) OpenDore(false);
+
+        else if(Prime && !newGame && !Closed) OpenDore(false);
+        else if(Prime &&  newGame && !Closed) OpenDore(newGame:true);
         else OpenDore(false);
     }
 
@@ -131,22 +141,37 @@ public class Dore : MonoBehaviour {
         Vector3 newOffset = new Vector3(Vertical? 1f:0,Vertical? 0:1f);
         return Bihaend? -newOffset : newOffset;
     }
-    public void Restartlavel(bool newGame = false, bool restLavel = false)
+    /*
+        В яких випадках викликається?
+        1. Локальний перезапуск конкретного рівня
+        2. Повний перезапуск карти
+
+
+
+    */
+    
+    public void LavelMod(bool newGame = false, bool restLavel = false, bool forMemory = false)
     {
-        RemoveDore(newGame: true);
-        if(restLavel)
+        if(forMemory)
         {
             foreach (var r in memoryAtRock) r.ReturnPos();
-            foreach (var d in ChildDore) d.RemoveDore();
             return;
-        }
-        else if(newGame)
-        {
-            foreach (var r in memoryAtRock) r.NewGame();
-            foreach (var d in ChildDore) d.RemoveDore(newGame: true);
         }
         Buttons.RemoveState();
         Buttons_Extra.RemoveState();
+
+        if(restLavel)
+        {
+            RemoveDore();
+            foreach (var r in memoryAtRock) r.ReturnPos();
+            foreach (var d in ChildDore) d.RemoveDore();
+        }
+        else if(newGame)
+        {
+            RemoveDore(newGame: true);
+            foreach (var r in memoryAtRock) r.NewGame();
+            foreach (var d in ChildDore) d.RemoveDore(newGame: true);
+        }
             
 
     }
@@ -163,7 +188,7 @@ public class Dore : MonoBehaviour {
             if(Prime && AllDone == false) 
             {
                 memory.RegistPoint(this, curentState);
-                OpenDore(false, true);
+                OpenDore(false);
                 if(memoryAtRock.Count == 0) memory.ReturnAllRockInLavel(inMemory: true);
             }
         }
@@ -264,7 +289,7 @@ public class ImportantButtonsCollection
     }
     public void RemoveState()
     {
-        foreach (var b in Buttons) b.IsPressed = false; 
+        foreach (var b in Buttons) b.RemoveState(); 
         foreach (var b in SwitchButton) b.RemoveState(); 
         foreach (var b in Set_StateButtons) b.ReturnState(); 
         foreach (var b in Set_SwitchButton) b.ReturnState(); 
@@ -277,7 +302,7 @@ public class NotImportantButtonsCollection
     public List<ButtonStates> SwitchButtons = new();
     public void RemoveState()
     {
-        foreach (var b in StandartButtons) b.IsPressed = false; 
+        foreach (var b in StandartButtons) b.RemoveState(); 
         foreach (var b in SwitchButtons) b.RemoveState(); 
     }
 
@@ -292,7 +317,7 @@ public class MemoriAtRock
         rock = _rock;
         pos = _pos;
     }
-    public void ReturnPos() => rock.transform.position = pos;
-    public void NewGame() => rock.RemovePos();
+    public void ReturnPos() { rock.SetPos(pos);  } 
+    public void NewGame() => rock.SetPos();
     
 }

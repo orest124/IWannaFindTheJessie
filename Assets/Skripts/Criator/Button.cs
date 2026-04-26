@@ -8,21 +8,22 @@ public class Button : MonoBehaviour
 {
     [HideInInspector]
     public List<Dore> dore = new();
-    [SerializeField] LayerMask HardestObj;
-    [SerializeField] float radius;
-
+    [Header("Sprite")]
     private SpriteRenderer curentArt;
-    [SerializeField] Sprite OpenArt;
-    [SerializeField] Sprite ClousedArt;
+    [SerializeField] private Sprite OpenArt;
+    [SerializeField] private Sprite ClousedArt;
 
 
     void Awake()
     {
         curentArt = GetComponent<SpriteRenderer>();
-        
+        RemoveState();
     }
-    [SerializeField] bool nideToPressed;
-    [SerializeField] bool _isPressed;
+    [Header("Special")]
+    [SerializeField] private bool nideToPressed;
+    [SerializeField] private bool PlayerPressed;
+    [SerializeField] private bool _isPressed;
+
     public bool IsPressed
     {
         get { return _isPressed; }
@@ -39,20 +40,12 @@ public class Button : MonoBehaviour
     public class PressedEvent : UnityEvent{}
     [FormerlySerializedAs("Special Action")]
     [SerializeField] private PressedEvent SpecialAction = new PressedEvent();
-    bool _check = true;
-    void Update()
-    {
-        // if(!_check) return;
-        // if (!nideToPressed && !IsPressed && CheckPoint()) IsPressed = true;
-        // if (nideToPressed) IsPressed = CheckPoint();
-        
-    }
-    private bool CheckPoint() => Physics2D.OverlapPoint(transform.position, HardestObj);
-    [SerializeField] bool PlayerPressed;
+
+    public void RemoveState() =>IsPressed = CheckPoint();
+    private bool CheckPoint() => Physics2D.OverlapPoint(transform.position, LayerMask.GetMask("Rook"));
     internal void ChengPresed(bool state, bool player = false)
     {
         if(!PlayerPressed && player) return;
-        print("state");
         IsPressed = nideToPressed? state : true;
     }
 }

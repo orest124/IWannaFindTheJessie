@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class AnimationSprite : MonoBehaviour
 {
-    SpriteRenderer spriteRenderer;
+    public SpriteRenderer sp;
 
     public Sprite idleSprite;
     public Sprite[] animationSprite;
@@ -19,16 +19,16 @@ public class AnimationSprite : MonoBehaviour
 
     void Awake()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        sp = GetComponent<SpriteRenderer>();
     }
 
     void OnDisable()
     {
-        spriteRenderer.enabled = false;
+        sp.enabled = false;
     }
     void OnEnable()
     {
-        spriteRenderer.enabled = true;
+        sp.enabled = true;
     }
     void Start()
     {
@@ -46,21 +46,21 @@ public class AnimationSprite : MonoBehaviour
 
             if(fall)
             {
-                spriteRenderer.sprite = FallAnimationSprite[animationFrameFall];
+                sp.sprite = FallAnimationSprite[animationFrameFall];
                 if(animationFrameFall < FallAnimationSprite.Length - 1) animationFrameFall++;
             }
             else if(!fall && !_redyToMove)
             {
-                spriteRenderer.sprite = FallAnimationSprite[animationFrameFall];
+                sp.sprite = FallAnimationSprite[animationFrameFall];
                 if(animationFrameFall > 0) animationFrameFall--;
                 if(animationFrameFall == 0) _redyToMove = true;
             }
             else if (idle) 
-                spriteRenderer.sprite = idleSprite;
+                sp.sprite = idleSprite;
 
             
             else if (animationFrame >= 0 && animationFrame < animationSprite.Length)
-                spriteRenderer.sprite = animationSprite[animationFrame];
+                sp.sprite = animationSprite[animationFrame];
 
             
         }
