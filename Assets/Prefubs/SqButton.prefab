@@ -70,6 +70,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  PlayerPressed: 0
 --- !u!212 &8343845996015857234
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -112,7 +113,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 11
   m_Sprite: {fileID: -6106212025343717799, guid: e627f36c28921b74899bad5a5fa72c8c, type: 3}
-  m_Color: {r: 0.4336062, g: 0.5855043, b: 0.990566, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
