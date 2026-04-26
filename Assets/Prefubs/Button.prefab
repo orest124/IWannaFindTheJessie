@@ -48,18 +48,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dore:
   - {fileID: 0}
-  HardestObj:
-    serializedVersion: 2
-    m_Bits: 4608
-  radius: 0.5
   OpenArt: {fileID: -4948438469318495077, guid: 13fbaa5c71978ab4fa96f3cdb0882660, type: 3}
   ClousedArt: {fileID: -2895141558340963647, guid: 13fbaa5c71978ab4fa96f3cdb0882660, type: 3}
   nideToPressed: 1
+  PlayerPressed: 0
   _isPressed: 0
   SpecialAction:
     m_PersistentCalls:
       m_Calls: []
-  PlayerPressed: 1
 --- !u!212 &8343845996015857234
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -100,7 +96,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 11
+  m_SortingOrder: -31000
   m_Sprite: {fileID: -4948438469318495077, guid: 13fbaa5c71978ab4fa96f3cdb0882660, type: 3}
   m_Color: {r: 0.9283019, g: 0.9446094, b: 1, a: 1}
   m_FlipX: 0

@@ -13,7 +13,7 @@ public class LavelSelect : MonoBehaviour
     {
         pl.lavelMode(l[nomb], true);
         pl.Idle();
-        if(Restart) l[nomb].Restartlavel(restLavel: true);
+        if(Restart) l[nomb].LavelMod(restLavel: true);
     }
     public void RestartInLavel(int nomb) => TeleportInLavel(nomb,true);
     public void TeleportInLavel(int nomb) => TeleportInLavel(nomb,false);
