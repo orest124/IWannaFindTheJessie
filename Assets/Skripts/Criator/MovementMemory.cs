@@ -1,26 +1,20 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using TMPro;
 using UnityEngine;
 
 public class MovementMemory : MonoBehaviour
 {
     public List<Dore> dores;
     private Dore abusDore;
-    public Rock[] DinamicObj;
 
     private Dore curentDore;
+    public void NewDore(Dore d) => curentDore = d;
     public Movement pl;
     [SerializeField] Button HardModButton;
-    // public List<PersonStepInfo> Steps => curentDore.steps;
     public List<PersonStepInfo> Steps = new();
     [SerializeField] int stepCount = 0;
     [SerializeField] int maxStepMember;
     [SerializeField] bool maxStep;
-
-    // private int stepCount { get => curentDore.stepCount; set => curentDore.stepCount = value;}
-    [SerializeField] private TextMeshProUGUI _score;
 
     ContactFilter2D fl;
     void Awake()
@@ -28,54 +22,36 @@ public class MovementMemory : MonoBehaviour
         fl.SetLayerMask(LayerMask.GetMask("Rook"));
         fl.useTriggers = true;
 
-        DinamicObj = FindObjectsByType<Rock>(FindObjectsSortMode.None);
         Dore[] _dores = FindObjectsByType<Dore>(FindObjectsSortMode.None);
         dores = _dores.Where(d => d.Prime == true).ToList();
         foreach (var d in dores) { if(d.name == "AbuseDoor") abusDore = d; }
         
-        // foreach (var d in dores) d.memory = this;
-        foreach (var r in DinamicObj) r.memory = this;
-
         pl = FindAnyObjectByType<Movement>();
         pl.memory = this;
         curentDore = pl.curentDore;
         
         RemoveMemory();
     }
-    public Vector3 mousePos ;
-    void Update()
-    {
-        if(Input.GetMouseButtonDown(0))
-        {
-            mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            CheckAllRock(mousePos);
-            
-            if(tempRock.Count != 0) print(tempRock[^1].name);
-            
-        }
-        if(Input.GetMouseButtonDown(2))
-        {
-            ClearRock();
-        }
-    }
-    public void NewDore(Dore d) => curentDore = d;
 
+    
+        void W() => AbsolutRestart();
+        void R() => RestartLavel();
+        void E() => LocalClining();
+        void A() => RemoveMemory();
 
-    public void RegistPoint(Rock rock, Vector3 point, bool _state)
-    {
-        Steps.Add(new PersonStepInfo(stepCount, rock, point, _state));
-    }
-    public void RegistPoint(Movement p, Vector3 point)
-    {
-        IncrementMove();
-        Steps.Add(new PersonStepInfo(stepCount, p, point, p.curentDore));
-    }
-    public void RegistPoint(Dore d, bool _state)
-    {
-        print("new egist");
-        Steps.Add(new PersonStepInfo(stepCount, d, _state, d.AllDone? Vector3.one: Vector3.zero));
-    }
+        void D() => OnDrawGizmos();
 
+        void U() => ReturnAllRockInLavel();
+
+        void Y() => RegistPoint(null,false);
+    
+
+    /////////////////////////
+    // ------------------- //
+    //    MEMORY METHOD    //
+    // ------------------- //
+    /////////////////////////
+    
     public void IncrementMove()
     {
         stepCount += 1;
@@ -86,12 +62,6 @@ public class MovementMemory : MonoBehaviour
         else maxStep = false;
         
         if(maxStep) RemoveLastStep();
-    }
-    public void RemoveMemory()
-    {
-        stepCount = 0;
-        Steps.Clear();
-        maxStep = false;
     }
     private void RemoveLastStep()
     {
@@ -107,6 +77,8 @@ public class MovementMemory : MonoBehaviour
             else return;
         }
     }
+
+
 
     public void StepBihaind()
     {
@@ -128,43 +100,77 @@ public class MovementMemory : MonoBehaviour
             }
             else break;
         }
-        PlayerState();
-    }
-    public void PlayerState()
-    {
         pl.isMove = false;
         pl.SetStop(false);
     }
 
 
-    // рестарт гри
-    // рестарт всієї зони
-    // рестарт уровня
-    // клінінг
+    /////////////////////////
+    // ------------------- //
+    //    LAVEL METHOD     //
+    // ------------------- //
+    /////////////////////////
 
     public void AbsolutRestart()
     {
         RemoveMemory();
         pl.Idle(newGame: true, notFromLavel: true); // Якщо ню гейм в 2 зоні. Змінити на фолс
-        foreach (var d in dores) d.Restartlavel(newGame: true);
+        foreach (var d in dores) d.LavelMod(newGame: true);
     }
     public void RestartLavel()
     {
         if(curentDore == abusDore) return;
-        RemoveMemory();
+        
         LocalClining();
-        curentDore.Restartlavel(restLavel:true);
+        curentDore.LavelMod(restLavel:true);
         HardModButton.IsPressed = false;
     }
-    public void LocalClining()
+    public void LocalClining( bool forMemory = false)
     {
+        RemoveMemory();
         pl.Idle();
+        if(forMemory) { curentDore.LavelMod(forMemory:true); return; }
         ReturnAllRockInLavel();
+    }
+    public void RemoveMemory()
+    {
+        stepCount = 0;
+        Steps.Clear();
+        maxStep = false;
     }
 
 
-    List<Vector3> OPEN = new();
-    List<Vector3> CLOUSED = new();
+    /////////////////////////
+    // ------------------- //
+    //        GIZMO        //
+    // ------------------- //
+    /////////////////////////
+    public bool _gizmo = false;
+        void OnDrawGizmos()
+    {
+        if (!_gizmo) return;
+        foreach (var p in CLOUSED)
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere (p, 0.3f);
+
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine (p + new Vector3(0.15f,0f),p + new Vector3(-0.15f,0f));
+            Gizmos.DrawLine (p + new Vector3(0,0.15f), p+ new Vector3(0,-0.15f));
+            
+        }
+    }
+
+
+    /////////////////////////
+    // ------------------- //
+    //     SCAN METHOD     //
+    // ------------------- //
+    /////////////////////////
+    List<Collider2D> tempRock = new List<Collider2D>();
+    List<Collider2D> temp = new List<Collider2D>();
+    private List<Vector3> OPEN = new();
+    private List<Vector3> CLOUSED = new();
 
     public void ReturnAllRockInLavel(bool inMemory = false)
     {
@@ -211,18 +217,7 @@ public class MovementMemory : MonoBehaviour
         else ClearRock();
 
     }
-    List<Collider2D> tempRock = new List<Collider2D>();
-    List<Collider2D> temp = new List<Collider2D>();
     private bool CheckWall(Vector3 point) => Physics2D.OverlapCircle(point,0.3f, LayerMask.GetMask("Wall"));
-    private void CheckAllRock(Vector3 point)
-    {
-        Physics2D.OverlapCircle(point, 0.2f, fl,temp);
-        foreach (var i in temp)
-        {
-            if(!tempRock.Contains(i))
-                tempRock.Add(i);
-        }
-    }
     private void ClearRock()
     {
         Rock rc;
@@ -230,7 +225,7 @@ public class MovementMemory : MonoBehaviour
         while(tempRock.Count > 0)
         {
             i++;
-            if(i > 10000) break;
+            if(i > 1000) break;
             
             if(tempRock[0].TryGetComponent<Rock>(out rc))
             {
@@ -241,22 +236,37 @@ public class MovementMemory : MonoBehaviour
         }
         
     }
-    
-    public bool _gizmo = false;
-        void OnDrawGizmos()
+    private void CheckAllRock(Vector3 point)
     {
-        if (!_gizmo) return;
-        foreach (var p in CLOUSED)
+        Physics2D.OverlapCircle(point, 0.2f, fl,temp);
+        foreach (var i in temp)
         {
-            Gizmos.color = Color.green;
-            Gizmos.DrawWireSphere (p, 0.3f);
-
-            Gizmos.color = Color.red;
-            Gizmos.DrawLine (p + new Vector3(0.15f,0f),p + new Vector3(-0.15f,0f));
-            Gizmos.DrawLine (p + new Vector3(0,0.15f), p+ new Vector3(0,-0.15f));
-            
+            if(!tempRock.Contains(i))
+                tempRock.Add(i);
         }
     }
+
+
+
+    /////////////////////////
+    // ------------------- //
+    // REGISTRATION METHOD //
+    // ------------------- //
+    /////////////////////////
+    public void RegistPoint(Rock rock, Vector3 point, bool _state)
+    {
+        Steps.Add(new PersonStepInfo(stepCount, rock, point, _state));
+    }
+    public void RegistPoint(Movement p, Vector3 point)
+    {
+        IncrementMove();
+        Steps.Add(new PersonStepInfo(stepCount, p, point, p.curentDore));
+    }
+    public void RegistPoint(Dore d, bool _state)
+    {
+        Steps.Add(new PersonStepInfo(stepCount, d, _state, d.AllDone? Vector3.one: Vector3.zero));
+    }
+
 }
 
 
@@ -303,7 +313,7 @@ public struct PersonStepInfo
         else if(tipe == 2)
         {
             rock.transform.position = point;
-            rock.PrewState(state);
+            rock.State(state);
         }
         else 
         {
