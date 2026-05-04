@@ -6,8 +6,7 @@ public class P_SoundAndPhoto : Sounds {
 
     [Header("Photo Value")]
     public PhotoColection pc;
-    [SerializeField] GameObject FhotoInventory;
-    public bool LookAtPhoto;
+    public bool notFromPhoto = true;
 
     [Header("Sound Value")]
     float curentTimerTime;
@@ -28,19 +27,19 @@ public class P_SoundAndPhoto : Sounds {
 
     void Update()
     {
-        if(mc.OptionsOpen || mc.DialogOpen) return;
+        if(mc.OptionsOpen) return;
         
-        if(!LookAtPhoto) {
+        if(notFromPhoto) {
 
             PhotoAudit(); 
 
-            if(Input.GetKeyDown(KeyCode.Tab)  && pc.PhotoCount() > 0) PhotoTime(true);
+            if(Input.GetKeyDown(KeyCode.Tab)  && pc.PhotoCount() > 0) PhotoTime(notFromPhoto);
             
             return;   
         }
         else {
 
-            if(Input.GetKeyDown(KeyCode.Tab) || Input.GetKeyDown(KeyCode.Escape)) PhotoTime(false);
+            if(Input.GetKeyDown(KeyCode.Tab) || Input.GetKeyDown(KeyCode.Escape)) PhotoTime(notFromPhoto);
              
 
             if(Input.GetKey(KeyCode.Space) && Input.GetKeyDown(KeyCode.A)) pc.PrewPhoto();
@@ -51,10 +50,7 @@ public class P_SoundAndPhoto : Sounds {
     }
     public void PhotoTime(bool state)
     {
-        mc.SetStop(state);
-        LookAtPhoto = state;      
-        FhotoInventory.SetActive(state); 
-
+        notFromPhoto = !state;      
         if(state) pc.OpenPhoto(); else pc.ClousedPhoto();
 
     }
@@ -93,19 +89,14 @@ public class P_SoundAndPhoto : Sounds {
 
     private void PhotoAudit()
     {
-        if(mc.curentDore.CurentPhoto.Count == 0 ) return;
-
-        foreach (var f in mc.curentDore.CurentPhoto)
-        {
-            if(Vector2.Distance(f.transform.position, transform.position) < 1f && Input.GetKeyDown(KeyCode.E))
-            { 
-                f.gameObject.SetActive(false);
-                pc.AddPhoto(f);
-                mc.curentDore.CurentPhoto.Remove(f);
-                PhotoTime(true);
-                f.inInventory = true;
-                break;
-            }
+        Collider2D coll = Physics2D.OverlapCircle(transform.position,0.3f,LayerMask.GetMask("Photo"));
+        PhotoPictures ph;
+        if(coll != null && coll.TryGetComponent<PhotoPictures>(out ph))
+        { 
+            ph.gameObject.SetActive(false);
+            pc.AddPhoto(ph);
+            PhotoTime(true);
+            ph.inInventory = true;
         }
     }
 

@@ -44,7 +44,7 @@ public class PlayerSprite
         activeSpriteRender = spriteRenderRight;
         else spriteRenderRight.enabled = false;
 
-        activeSpriteRender.sp.sortingOrder = -Mathf.RoundToInt(mc.transform.position.y * 10);
+        activeSpriteRender.sp.sortingOrder = -Mathf.RoundToInt(mc.transform.position.y * 10) + 1;
         activeSpriteRender.enabled = true;
         activeSpriteRender.idle = _dir == Vector3.zero;
         

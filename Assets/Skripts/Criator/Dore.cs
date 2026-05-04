@@ -1,16 +1,14 @@
 using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class Dore : MonoBehaviour {
     private Collider2D coll;
     private SpriteRenderer curentArt;
+    public JsonDoor remember;
     [HideInInspector] public MovementMemory memory;
     [HideInInspector] public Dore PrimeDore;
     public Transform startPos;
-    [SerializeField] ZoneOptimizatoin myZone;
     [Space] [Space]
 
     [Header("Buttons")]
@@ -26,33 +24,33 @@ public class Dore : MonoBehaviour {
     public bool Prime;
     [Tooltip("Якщо забрати з кнопки камінь двері закриються. \n Навіть коли рівень пройдено")]
     [SerializeField] bool FlappyDore;
-    [HideInInspector] public List<PersonStepInfo> steps = new();
-    [HideInInspector] public int stepCount = 0;
     [Space]
 
     public bool Vertical;
     public bool Bihaend;
     [Space]
 
-    public bool Closed;
     public bool Opened;
     [Space]
 
+
     public bool AllDone = false;
+    public void SetComplite(bool state)
+    {
+        AllDone = state;
+        remember.completed = AllDone;
+    }
+    
     [SerializeField] bool curentState;
     [Space]
 
 
-
-
-
-
-    public List<PhotoPictures> CurentPhoto = new();
     public List <MemoriAtRock> memoryAtRock = new();
-    
+
     public DooreSprites sp = new();
     private Vector3 size;
     private Vector3 offset;
+    private SoundControler sound;
     private void Awake() 
     {
         curentArt = GetComponent<SpriteRenderer>();
@@ -60,12 +58,18 @@ public class Dore : MonoBehaviour {
         int order = -Mathf.RoundToInt(y * 10);
         curentArt.sortingOrder = order;
 
-        
     
-        coll = GetComponent<Collider2D>();
+        GetName();
         memory = FindAnyObjectByType<MovementMemory>();
+        memory.IsSaveReady(this);
+        
+
+        
+        coll = GetComponent<Collider2D>();
+        sound = FindAnyObjectByType<SoundControler>();
         Buttons.Preparation(this);
-        // на початку гри має оприділятись ордер енд леєр
+        
+        remember = new JsonDoor(ID,Prime?AllDone:curentState);
             
         if(Prime)
         {
@@ -73,27 +77,46 @@ public class Dore : MonoBehaviour {
             foreach (var b in ChildDore) 
             {
                 b.PrimeDore = this; 
-                b.myZone = myZone;
             }
         }
         size = Vertical? new Vector2(0.1f,3): new Vector2(3,0.1f);
         offset = ChengedColliderOffset();
-        RemoveDore(newGame: true);
+        if(!AllDone) RemoveDore(newGame: true);
         
     }
-    void Update()
-    {
+
+    void Update() {
         if(curentState == true) Trigger();
     }
 
+    public int ID;
+    private void GetName()
+    {
+        Vector3 pos = transform.position;
+        int x = Mathf.RoundToInt(Mathf.Abs(pos.x));
+        int y = Mathf.RoundToInt(Mathf.Abs(pos.y));
+        int z = 0;
+        if(pos.x < 0 && pos.y >=0) z = 1;
+        else if(pos.x >= 0 && pos.y < 0) z = 2;
+        else if(pos.x < 0 && pos.y < 0) z = 3;
+        ID = int.Parse(x + "" +y +"" +z);
+
+        gameObject.name = $"Door {ID}";;
+    }
+
+
+
+
     public void Check() {
 
-        if(Closed || Opened) return;
+        if(Opened) return;
         if(Buttons.Check()) 
         {
             if(!FlappyDore) memory.RegistPoint(this, curentState);
             OpenDore(true);
-            AllDone = true;
+            SetComplite(true);
+            sound.DoreSound();
+
         }
         else if(FlappyDore) OpenDore(false);
 
@@ -102,12 +125,12 @@ public class Dore : MonoBehaviour {
     public void OpenDore(bool _state = true, bool newGame = false)
     {
         curentArt.sprite = ChengedSprite(_state);
-        
         coll.isTrigger =  _state;
-
         curentState = _state;
-        if(Prime && !_state) AllDone = false;
-        if(newGame) AllDone = false;
+
+        if(!Prime) remember.completed = curentState;
+        else if(Prime && (_state == false || newGame)) SetComplite(false);
+
     }
 
     /*
@@ -121,14 +144,13 @@ public class Dore : MonoBehaviour {
     */
     public void RemoveDore(bool newGame = false)
     {
-        if(!Prime && !Closed && !Opened) OpenDore(false);
+        if(!Prime && Opened) OpenDore();
+        else if(Prime &&  newGame) OpenDore(newGame:true);
 
-        else if(Opened && !Prime && !Closed) OpenDore();
-        else if(Closed && !Prime && !Opened) OpenDore(false);
-
-        else if(Prime && !newGame && !Closed) OpenDore(false);
-        else if(Prime &&  newGame && !Closed) OpenDore(newGame:true);
         else OpenDore(false);
+        Buttons.RemoveState();
+        Buttons_Extra.RemoveState();
+        
     }
 
     private Sprite ChengedSprite(bool open)
@@ -157,30 +179,29 @@ public class Dore : MonoBehaviour {
             foreach (var r in memoryAtRock) r.ReturnPos();
             return;
         }
+
+        LavelRemove(newGame);
+        if(restLavel) foreach (var r in memoryAtRock) r.ReturnPos();
+        else if(newGame) 
+        {
+            foreach (var r in memoryAtRock) r.NewGame();
+            RemoveMemoryAtRook();
+        }
+
+    }
+    public void LavelRemove(bool newGame = false)
+    {
         Buttons.RemoveState();
         Buttons_Extra.RemoveState();
-
-        if(restLavel)
-        {
-            RemoveDore();
-            foreach (var r in memoryAtRock) r.ReturnPos();
-            foreach (var d in ChildDore) d.RemoveDore();
-        }
-        else if(newGame)
-        {
-            RemoveDore(newGame: true);
-            foreach (var r in memoryAtRock) r.NewGame();
-            foreach (var d in ChildDore) d.RemoveDore(newGame: true);
-        }
-            
-
+        OpenDore(newGame, newGame);
+        foreach (var d in ChildDore) d.RemoveDore();
     }
     
 
 
     void Trigger()
     {
-        if(sp.pl.curentDore == PrimeDore) return;
+        if(sp.pl.curentDore == PrimeDore || memory.stopAll) return;
         
         if(Physics2D.OverlapBox(transform.position + offset, size, 0, LayerMask.GetMask("Player")))
         {
@@ -193,6 +214,8 @@ public class Dore : MonoBehaviour {
             }
         }
     }
+    public void RemoveMemoryAtRook() => memoryAtRock.Clear();
+    
 
 
 
@@ -202,7 +225,8 @@ public class Dore : MonoBehaviour {
     [SerializeField] bool _gizmos = false;
     void OnDrawGizmos()
     {
-        if(!curentState || !_gizmos || sp.pl.curentDore == PrimeDore) return;
+        if(!_gizmos) return;
+        if(!curentState || sp.pl.curentDore == PrimeDore) return;
 
         Gizmos.color = Color.blue;
         Gizmos.DrawWireCube(transform.position + offset, size);
@@ -253,7 +277,6 @@ public class DooreSprites
     public Sprite ClousedArt_Hor;
     public Sprite OpenArt_Ver;
     public Sprite ClousedArt_Ver;
-    public int clousedOrder;
 }
 [System.Serializable]
 public class ImportantButtonsCollection
@@ -289,9 +312,9 @@ public class ImportantButtonsCollection
     }
     public void RemoveState()
     {
-        foreach (var b in Buttons) b.RemoveState(); 
+        foreach (var b in Buttons) b.CheckPoint(); 
         foreach (var b in SwitchButton) b.RemoveState(); 
-        foreach (var b in Set_StateButtons) b.ReturnState(); 
+        foreach (var b in Set_StateButtons) b.button.CheckPoint(); 
         foreach (var b in Set_SwitchButton) b.ReturnState(); 
     }
 }
@@ -302,12 +325,13 @@ public class NotImportantButtonsCollection
     public List<ButtonStates> SwitchButtons = new();
     public void RemoveState()
     {
-        foreach (var b in StandartButtons) b.RemoveState(); 
+        foreach (var b in StandartButtons) b.CheckPoint(); 
         foreach (var b in SwitchButtons) b.RemoveState(); 
     }
 
     
 }
+[Serializable]
 public class MemoriAtRock
 {
     public Rock rock;
@@ -317,7 +341,38 @@ public class MemoriAtRock
         rock = _rock;
         pos = _pos;
     }
-    public void ReturnPos() { rock.SetPos(pos);  } 
-    public void NewGame() => rock.SetPos();
+    public void ReturnPos() => rock.SetPos(pos);  
+    public void NewGame()   => rock.SetPos();
+    
+}
+public class JsonRock : Entyty
+{
+    public int name;
+    public float x;
+    public float y;
+    public JsonRock(int name, Vector3 pos)
+    {
+        this.name = name;
+        x = pos.x;
+        y = pos.y;
+        Type = EntytyType.Rock;
+    }
+    public Vector3 GetPos() => new Vector3(x,y);
+    
+}
+
+
+public class JsonDoor : Entyty
+{
+    public int name;
+    public bool completed;
+    public List<JsonRock> memory;
+    public JsonDoor(int n, bool end)
+    {
+        name = n;
+        completed = end;
+        memory = new();
+        Type = EntytyType.Door;
+    }
     
 }

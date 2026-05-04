@@ -1,9 +1,12 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class MovementMemory : MonoBehaviour
 {
+    private SaveSystem _save;
+    
     public List<Dore> dores;
     private Dore abusDore;
 
@@ -21,7 +24,6 @@ public class MovementMemory : MonoBehaviour
     {
         fl.SetLayerMask(LayerMask.GetMask("Rook"));
         fl.useTriggers = true;
-
         Dore[] _dores = FindObjectsByType<Dore>(FindObjectsSortMode.None);
         dores = _dores.Where(d => d.Prime == true).ToList();
         foreach (var d in dores) { if(d.name == "AbuseDoor") abusDore = d; }
@@ -32,9 +34,46 @@ public class MovementMemory : MonoBehaviour
         
         RemoveMemory();
     }
+    private List<JsonDoor> saveDoors = new();
+    public void SaveState()
+    {
+        saveDoors.Clear();
+        foreach (var p in dores)
+        {
+            if(p.memoryAtRock.Count == 0) continue;
+            
+            saveDoors.Add(p.remember);
+            foreach (var d in p.ChildDore)
+            {
+                saveDoors.Add(d.remember);
+            }   
+        }
+        _save.SaveAllDoors(saveDoors);
 
+        _save.SaveAllRocks();
+
+        _save.SaveCharacter();
+        
+    }
+    public void RemovSaweData() => _save.RemoveAllMemory();
+    public void IsSaveReady(Rock r)
+    {
+        if(_save == null) {_save = GetComponent<SaveSystem>();_save.AddRock(r);}
+        else _save.AddRock(r);
+    }
+    public void IsSaveReady(Dore d)
+    {
+        if(_save == null) {_save = GetComponent<SaveSystem>();_save.AddDoor(d);}
+        else _save.AddDoor(d);
+    }
+    public void IsSaveReady(PhotoPictures f)
+    {
+        if(_save == null) {_save = GetComponent<SaveSystem>();_save.AddPict(f);}
+        else _save.AddPict(f);
+    }
     
-        void W() => AbsolutRestart();
+    
+        void W() => ProtectWithBadDebut();
         void R() => RestartLavel();
         void E() => LocalClining();
         void A() => RemoveMemory();
@@ -110,12 +149,18 @@ public class MovementMemory : MonoBehaviour
     //    LAVEL METHOD     //
     // ------------------- //
     /////////////////////////
-
-    public void AbsolutRestart()
+public bool stopAll = false;
+    public void ProtectWithBadDebut()
     {
-        RemoveMemory();
-        pl.Idle(newGame: true, notFromLavel: true); // Якщо ню гейм в 2 зоні. Змінити на фолс
-        foreach (var d in dores) d.LavelMod(newGame: true);
+        if(pl.IsLostDoor())return;
+        stopAll = true;
+        LocalClining();
+        curentDore.LavelMod(newGame: true);
+
+        pl.SetOldDoor();
+        LocalClining(forMemory:true);
+
+
     }
     public void RestartLavel()
     {
@@ -123,14 +168,18 @@ public class MovementMemory : MonoBehaviour
         
         LocalClining();
         curentDore.LavelMod(restLavel:true);
-        HardModButton.IsPressed = false;
+        // HardModButton.IsPressed = false;
     }
     public void LocalClining( bool forMemory = false)
     {
+        PlayerPreparation();
+        ReturnAllRockInLavel();
+        if(forMemory) { curentDore.LavelMod(forMemory:true); return; }
+    }
+    private void PlayerPreparation()
+    {
         RemoveMemory();
         pl.Idle();
-        if(forMemory) { curentDore.LavelMod(forMemory:true); return; }
-        ReturnAllRockInLavel();
     }
     public void RemoveMemory()
     {
@@ -210,7 +259,9 @@ public class MovementMemory : MonoBehaviour
             foreach (var R in tempRock) 
             {
                 Rock r = R.GetComponent<Rock>();
-                curentDore.memoryAtRock.Add(new MemoriAtRock(r, R.transform.position)); 
+                MemoriAtRock mr = new MemoriAtRock(r, R.transform.position);
+                curentDore.memoryAtRock.Add(mr); 
+                curentDore.remember.memory.Add(new JsonRock(r.ID, mr.pos));
             }
         }
         
@@ -230,7 +281,7 @@ public class MovementMemory : MonoBehaviour
             if(tempRock[0].TryGetComponent<Rock>(out rc))
             {
                 CheckAllRock(rc.StartPos);
-                tempRock[0].transform.position = rc.StartPos;
+                rc.SetPos();
                 tempRock.Remove(tempRock[0]);
             }
         }
@@ -256,11 +307,13 @@ public class MovementMemory : MonoBehaviour
     public void RegistPoint(Rock rock, Vector3 point, bool _state)
     {
         Steps.Add(new PersonStepInfo(stepCount, rock, point, _state));
+        IncrementMove();
+
     }
     public void RegistPoint(Movement p, Vector3 point)
     {
-        IncrementMove();
         Steps.Add(new PersonStepInfo(stepCount, p, point, p.curentDore));
+        IncrementMove();
     }
     public void RegistPoint(Dore d, bool _state)
     {
@@ -312,13 +365,14 @@ public struct PersonStepInfo
         }
         else if(tipe == 2)
         {
-            rock.transform.position = point;
+            rock.SetPos(point);
             rock.State(state);
         }
         else 
         {
 
-            dore.AllDone = point == Vector3.one;
+            dore.SetComplite(point == Vector3.one);
+
             dore.OpenDore(state, true);
         }
         
