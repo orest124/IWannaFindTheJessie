@@ -5,26 +5,37 @@ using UnityEngine;
 
 public class Rock : MonoBehaviour 
 {
-    public Vector2 StartPos;
+    void W() => UncontrolMove(new());
+    void R() => Move(new());
+    void E() => FindLostPoint(new());
+    void A() => State(false);
+
+    void D() => ButtonCheck(new());
+    void Y() => PlaceControle();
+    void U() => CheckEmpty(new());
+    void T() => CheckCollider(new());
+
+    SpriteRenderer sp;
+    [SerializeField]Movement pl;
     [SerializeField] Collider2D Hcoll;
     [SerializeField] Collider2D Acoll;
-    private bool curentState;
-    public LayerMask IceArea;
-    public LayerMask DipthArea;
-    public LayerMask PlatformLayer;
-    public LayerMask BaricadeArea;
-    SpriteRenderer sp;
+
+    [SerializeField] float spd;
+    public Vector2 StartPos;
+    [SerializeField] bool isMove;
+    [SerializeField] bool PlatformState;
     [SerializeField] Sprite PlatformArt;
     [SerializeField] Sprite RockArt;
 
-    [SerializeField] float spd;
-    [SerializeField]Movement pl;
     [HideInInspector] public MovementMemory memory;
+    public LayerMask PlatformLayer;
 
 
     private void Awake()
     {
         sp = GetComponent<SpriteRenderer>();
+        sp.sortingOrder = -Mathf.RoundToInt(transform.position.y * 10);
+        memory = FindAnyObjectByType<MovementMemory>();
         sp.sortingOrder = 80;
 
         StartPos = transform.position;
@@ -33,16 +44,26 @@ public class Rock : MonoBehaviour
     {
         if(isMove) UncontrolMove(targetPoint);
     }
-    public void RemovePos()
+
+    /////////////////////////
+    // ------------------- //
+    //   Movement METHOD   //
+    // ------------------- //
+    /////////////////////////
+    public void SetPos(Vector3 point = new())
     {
         isMove = false;
-        transform.position = StartPos;
+        point = point == Vector3.zero? StartPos : point;
+        transform.position = point;
+        ChengPoint();
     }
-        public void ChengPoint()
+    public void ChengPoint()
     {
-        isMove = false;
-        State(ChageToFallen(transform.position) == 1);
+        State(CheckFallen(transform.position) == 1);
+        ButtonCheck(transform.position);
     }
+
+
 
 
     [SerializeField] Vector3 targetPoint;
@@ -50,60 +71,52 @@ public class Rock : MonoBehaviour
     public void MoveTo(Vector3 dir, bool inToMove = false)
     {
         if(isMove) return;
-        var hit = Physics2D.OverlapCircle(transform.position + dir, 0.3f,BaricadeArea);
-
-        if(hit != null && !hit.isTrigger)
+        moveDir = dir;  
+        if(CheckEmpty(transform.position + dir,!inToMove))
         {
-            Rock r;
-            if(inToMove && hit.TryGetComponent<Rock>(out r))
-            {
-                r.MoveTo(dir,inToMove);
-            }
-            isMove = false;
-            return;
-
-        }
-        else
-        {
-            moveDir = dir;
-            FindLostPoint(moveDir);
             pl.SetStop(true);
+            stepCount = 0;
+            _rice = false;
             isMove = true;
+
+            memory.RegistPoint(this, transform.position, PlatformState);
+            FindLostPoint(moveDir);
         }
     }
+    private bool _rice;
+    private int stepCount = 0;
     public void FindLostPoint(Vector3 dir)
     {
 
         targetPoint = transform.position + dir;
         while(true)
         {
-            int tipe = ChageToFallen(targetPoint);
+            int tipe = CheckFallen(targetPoint);
             if(tipe == 1) break;
             
             else if(tipe == 2)
             {
+                if(!CheckEmpty(targetPoint + dir, true)) 
+                {
+                    _rice = true;
+                    break;
+                }
                 targetPoint += dir;
                 continue;
             }
-            else
-            {
-                if(!CheckEmpty(targetPoint))
-                {
-                    targetPoint -= dir;
-                    break;
-                }
-                else break;
-            }
+            else break;      
         }
-        memory.RegistPoint(this, transform.position, curentState);
     }
 public void UncontrolMove(Vector3 _point)
     {
         Move(_point);
         if(isPlace(_point))
         {
-            PlaceControle(moveDir);
+            PlaceControle();
+            if(!PlatformState && _rice) MoveTo(moveDir, true);
         }
+        
+
             
     }
     private bool isPlace(Vector2 place) => place.x == transform.position.x && place.y == transform.position.y;
@@ -112,63 +125,37 @@ public void UncontrolMove(Vector3 _point)
     {
         float newspd = Time.fixedDeltaTime * spd;
         Vector3 newPos = Vector2.MoveTowards(transform.position, target, newspd);
-
         transform.position = newPos;
+        sp.sortingOrder = -((int)transform.position.y * 10);
         ButtonCheck(newPos);
     }    
 
 
-    private Collider2D prewColl;
-    private Button curentButton;
+    /////////////////////////
+    // ------------------- //
+    //     SCAN METHOD     //
+    // ------------------- //
+    /////////////////////////
 
-    private void ButtonCheck(Vector3 point)
+    public int CheckFallen(Vector3 _point)
     {
-        Collider2D coll = Physics2D.OverlapPoint(point, LayerMask.GetMask("Button"));
-        if(coll != null && prewColl != coll)
-        {
-            curentButton?.ChengPresed(false);
-            prewColl = coll;
-            curentButton = coll.GetComponent<Button>();
-            curentButton.ChengPresed(true);
-        }
-        else if(prewColl != null)
-        {
-            curentButton.ChengPresed(false);
-            curentButton = null;
-            prewColl = null;
-        }
-    }
-    public int ChageToFallen(Vector3 _point)
-    {
-        bool _isIce = Physics2D.OverlapCircle(_point,0.2f, IceArea);
-        bool _isDipth = Physics2D.OverlapCircle(_point, 0.2f, DipthArea) 
-                && !Physics2D.OverlapPoint(_point, PlatformLayer);
-        if(_isDipth) return 1;
-        else if (_isIce) return 2;
+        if(Physics2D.OverlapPoint(_point, LayerMask.GetMask("Dipth")) 
+                && !Physics2D.OverlapPoint(_point, PlatformLayer)) return 1;
+        else if(Physics2D.OverlapPoint(_point, LayerMask.GetMask("Ice"))) return 2;
         else return 0; 
     }
 
 
-    public void PlaceControle(Vector3 dir)
+    public void PlaceControle()
     {
-        Vector3 myPoint = transform.position;
-
-        int tipe = ChageToFallen(myPoint);
-        
-        if(tipe == 1) State(true);
-        else if (tipe == 2) 
-        {
-            targetPoint = transform.position + dir;
-            isMove = CheckEmpty(targetPoint);
-        }
-            
-        else {isMove = false;pl.SetStop(false);}
+        State(CheckFallen(transform.position) == 1);
+        isMove = false;
+        pl.SetStop(false);
 
     }
-    public void PrewState(bool _state) => State(_state); 
-    private void State(bool _plane)
+    public void State(bool _plane)
     {
-        curentState = _plane;
+        PlatformState = _plane;
         sp.sprite = _plane? PlatformArt : RockArt;
         isMove = false;
         Acoll.enabled = _plane;
@@ -185,42 +172,53 @@ public void UncontrolMove(Vector3 _point)
         }
         
     }
-    public void RestPos(Vector3 _point)
-    {
-        transform.position = _point;
-        State(ChageToFallen(transform.position) == 1);
-    }
-    public bool CheckEmpty(Vector3 _point)
+    public bool CheckEmpty(Vector3 _point, bool JustCheck = false)
     {
         var coll = CheckCollider(_point);
-            if(coll == null || coll.isTrigger) return true;
+            if(coll == null) return true;
+            else if (JustCheck) return false;
             else
             {
                 Rock r;
                 if(coll.TryGetComponent<Rock>(out r))
                 {
-                    r.MoveTo(moveDir);
+                    r.MoveTo(moveDir, true);
                     return false;
                 }
                 else return false;
             }
     }
-    private Collider2D CheckCollider(Vector3 point) => Physics2D.OverlapCircle(point, 0.3f,BaricadeArea);
-    
-    
-    public Vector3 oldPos;
-    Vector3 MoveDir;
-    [SerializeField] bool isMove;
-    public bool _isIce;
-    public bool _isDipth;
-    
-    bool MoveBreack;
+    private Collider2D CheckCollider(Vector3 point)
+    {
+        Collider2D coll = Physics2D.OverlapCircle(point, 0.3f,LayerMask.GetMask("Wall"));
+        if(coll != null && !coll.isTrigger) return coll;
+        
+        coll = Physics2D.OverlapCircle(point, 0.3f,LayerMask.GetMask("Rook"));
+        if(coll != null && !coll.isTrigger) return coll;
 
+        return null;
+        
+    } 
+    private Collider2D prewColl;
+    private Button curentButton;
 
-
-
-
-    [SerializeField] float castRadius;
+    private void ButtonCheck(Vector3 point)
+    {
+        Collider2D coll = Physics2D.OverlapPoint(point, LayerMask.GetMask("Button"));
+        if(coll != null && prewColl != coll)
+        {
+            curentButton?.ChengPresed(false);
+            prewColl = coll;
+            curentButton = coll.GetComponent<Button>();
+            curentButton.ChengPresed(true);
+        }
+        else if(coll == null && prewColl != null)
+        {
+            curentButton.ChengPresed(false);
+            curentButton = null;
+            prewColl = null;
+        }
+    }
 
     
 

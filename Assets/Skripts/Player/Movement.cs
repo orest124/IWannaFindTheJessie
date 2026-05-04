@@ -4,6 +4,22 @@ using Vector3 = UnityEngine.Vector3;
 
 public class Movement : MonoBehaviour
 {
+    void Q() => NewDirection();
+    void W() => UncontrolMove(new(), 0);
+    void R() => Move(new(), 0);
+    void A() => lavelMode();
+    void S() => Idle();
+    void D() => OnDrawGizmos();
+
+
+    void E() => CheckButton(new());
+    void Y() => CheckFallen(new());
+    void U() => CheckEmpty(new());
+    void T() => CheckCollider(new());
+
+
+
+
     [Header("States")] 
     public bool StopGame = false;
     public bool isMove;
@@ -14,6 +30,7 @@ public class Movement : MonoBehaviour
     [Header("Components")] 
     [SerializeField] PlayerSprite spr = new PlayerSprite();
     [SerializeField] Camera Cra;
+    private FollowCamera cMove;
     [HideInInspector] public P_SoundAndPhoto s;
     [HideInInspector] public Optimization optim;
     private Collider2D coll;
@@ -26,6 +43,7 @@ public class Movement : MonoBehaviour
 
     [Header("LavelStates")] 
     public Dore curentDore;
+    public Dore oldDore;
     public Dore StartDore;
     [HideInInspector] public Vector3 StartPos;
 
@@ -56,18 +74,27 @@ public class Movement : MonoBehaviour
         optim = GetComponent<Optimization>();
         s = GetComponent<P_SoundAndPhoto>();
         coll = GetComponent<Collider2D>();
-        spr.LStart();
+        cMove = FindAnyObjectByType<FollowCamera>();
         StartPos = curentDore.startPos.position;
-        FollowCamera();
+        CentralizedCamera();
         curentSpd = spd;
         
     
     }
+    void Start()
+    {
+        spr.LStart();
+    }
     private void Update() {
-        if(Input.GetKeyDown(KeyCode.R) && ReversArtefact) memory.StepBihaind();
-        if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.R)) memory.RestartLavel();
-        if(Input.GetKey(KeyCode.Space) && Input.GetKeyUp(KeyCode.R)) memory.AbsolutRestart();
-        if(Input.GetKeyUp(KeyCode.G)) memory._gizmo = !memory._gizmo;
+        if ( Input.GetKeyDown(KeyCode.R ) && ReversArtefact) memory.StepBihaind();
+        if ( Input.GetKeyDown(KeyCode.P) && curentDore.AllDone) memory.LocalClining();  // лише в меню
+        if ( Input.GetKey(KeyCode.LeftShift ) && Input.GetKeyDown( KeyCode.R)) 
+        {
+            if(curentDore.AllDone) memory.LocalClining( forMemory:true );
+            else memory.RestartLavel();
+        }
+        if ( Input.GetKey(KeyCode.Space ) && Input.GetKeyUp( KeyCode.R)) memory.AbsolutRestart(); // лише в меню
+        if ( Input.GetKeyUp(KeyCode.G )) memory._gizmo = !memory._gizmo;
 
         if(isMove || StopGame) return;
         NewDirection();
@@ -75,7 +102,6 @@ public class Movement : MonoBehaviour
 
     private void FixedUpdate() {
 
-        FollowCamera(transform.position);
         if(isMove)  UncontrolMove(targetPoint, curentSpd); 
         if(!_inLavel && !CinemaMod) Move(transform.position + moveDir,curentSpd);
     }
@@ -110,20 +136,20 @@ public class Movement : MonoBehaviour
         
         spr.ChengSprite(moveDir);
         transform.position = newPos;
-        ButtonCheck(newPos);
+        CheckButton(newPos);
     }   
 
-    private void ButtonCheck(Vector3 point)
+    private void CheckButton(Vector3 point)
     {
         Collider2D coll = Physics2D.OverlapPoint(point, LayerMask.GetMask("Button"));
         if(coll != null && prewColl != coll)
         {
-            curentButton?.ChengPresed(false, true);
             prewColl = coll;
+            curentButton?.ChengPresed(false, true);
             curentButton = coll.GetComponent<Button>();
             curentButton.ChengPresed(true, true);
         }
-        else if(prewColl != null)
+        else if(coll == null && prewColl != null)
         {
             curentButton.ChengPresed(false, true);
             curentButton = null;
@@ -178,7 +204,7 @@ public class Movement : MonoBehaviour
 
             memory.RegistPoint(this, transform.position);
 
-            int nomb = ChageToFallen(targetPoint);
+            int nomb = CheckFallen(targetPoint);
             if(nomb == 2) 
             {
                 //Падіння небуде бо він не робе скан кожен крок
@@ -209,7 +235,7 @@ public class Movement : MonoBehaviour
         targetPoint = IdealPos(mod: false) + dir;
         while(true)
         {
-            int tipe = ChageToFallen(targetPoint);
+            int tipe = CheckFallen(targetPoint);
             if(tipe == 1) break;
             
             else if(tipe == 2)
@@ -223,18 +249,17 @@ public class Movement : MonoBehaviour
         }
     }
 
-    public int ChageToFallen(Vector3 _point)
+    public int CheckFallen(Vector3 _point)
     {
         if (Physics2D.OverlapCircle(_point, 0.2f, s.DipthArea) 
         && !Physics2D.OverlapPoint(_point, s.PlatformMask)) return 1;
         if (Physics2D.OverlapCircle(_point,0.2f, s.IceArea)) return 2;
         else return 0; 
     }
-
     public bool CheckEmpty(Vector3 _point, bool JustCheck = false)
     {
         var coll = CheckCollider(_point);
-        if(coll == null || coll.isTrigger) return true;
+        if(coll == null) return true;
         else if (JustCheck) return false;
         else
         {
@@ -242,17 +267,29 @@ public class Movement : MonoBehaviour
             if(coll.TryGetComponent<Rock>(out r))
             {
                 r.MoveTo(moveDir);
+                cMove.shake = true;
                 return false;
             }
-            else return false;
+            
+            return false;
         }
     }
-    private Collider2D CheckCollider(Vector3 point) => Physics2D.OverlapCircle(point, 0.3f,s.BaricadeArea);
+    private Collider2D CheckCollider(Vector3 point)
+    {
+        Collider2D coll = Physics2D.OverlapCircle(point, 0.3f,LayerMask.GetMask("Wall"));
+        if(coll != null && !coll.isTrigger) return coll;
+        
+        coll = Physics2D.OverlapCircle(point, 0.3f,LayerMask.GetMask("Rook"));
+        if(coll != null && !coll.isTrigger) return coll;
+
+        return null;
+        
+    } 
     
 
     public void PlaceControle(Vector3 dir)
     {
-        int tipe = ChageToFallen(transform.position);
+        int tipe = CheckFallen(transform.position);
 
         if (tipe == 1) {memory.RestartLavel();spr.Falling();}
         else isMove = false;
@@ -284,6 +321,11 @@ public class Movement : MonoBehaviour
     {
         StopGame = _state;
     }
+    public void ReversOn(bool state)
+    {
+        ReversArtefact = state;
+        memory.RemoveMemory();
+    }
 
     public void lavelMode(Dore _dore = null, bool inLavel = true)
     {
@@ -298,6 +340,7 @@ public class Movement : MonoBehaviour
         else
         {
             if(curentDore == _dore) return;
+            oldDore = curentDore;
             curentDore = _dore;
             StartPos = curentDore.startPos.position;
             memory.NewDore(curentDore);
@@ -327,18 +370,8 @@ public class Movement : MonoBehaviour
         transform.position = StartPos;
         
     }
-    public float minModSpd;
-    public float maxModSpd;
-    public float dist;
-    public void FollowCamera(Vector3 point)
-    {
-        float _spd = Time.fixedDeltaTime;
-        dist = Vector3.SqrMagnitude(Cra.transform.position - new Vector3(transform.position.x,transform.position.y,Cra.transform.position.z));
-        if(dist > 9) _spd = _spd * maxModSpd;
-        Vector3 newpoint = Vector3.MoveTowards(Cra.transform.position, new Vector3(point.x,point.y, Cra.transform.position.z), _spd);
-        Cra.transform.position = newpoint;
-    }
-    public void FollowCamera() => Cra.transform.position = new Vector3(transform.position.x,transform.position.y, Cra.transform.position.z);
+
+    public void CentralizedCamera() => Cra.transform.position = new Vector3(transform.position.x,transform.position.y, Cra.transform.position.z);
     void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
