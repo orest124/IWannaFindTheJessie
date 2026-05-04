@@ -6,18 +6,22 @@ using System;
 
 public class Button : MonoBehaviour
 {
+
     [HideInInspector]
     public List<Dore> dore = new();
     [Header("Sprite")]
     private SpriteRenderer curentArt;
     [SerializeField] private Sprite OpenArt;
     [SerializeField] private Sprite ClousedArt;
+    private SoundControler sound;
+
 
 
     void Awake()
     {
         curentArt = GetComponent<SpriteRenderer>();
-        RemoveState();
+        sound = FindAnyObjectByType<SoundControler>();
+        CheckPoint();
     }
     [Header("Special")]
     [SerializeField] private bool nideToPressed;
@@ -30,7 +34,8 @@ public class Button : MonoBehaviour
         set { 
             if(_isPressed == value) return;
             _isPressed = value;
-            curentArt.sprite = _isPressed? ClousedArt: OpenArt;
+            Sound();
+            Art().sprite = _isPressed? ClousedArt: OpenArt;
             foreach (var d in dore) d?.Check();
             if(_isPressed == true)SpecialAction?.Invoke();
         }
@@ -41,11 +46,33 @@ public class Button : MonoBehaviour
     [FormerlySerializedAs("Special Action")]
     [SerializeField] private PressedEvent SpecialAction = new PressedEvent();
 
-    public void RemoveState() =>IsPressed = CheckPoint();
-    private bool CheckPoint() => Physics2D.OverlapPoint(transform.position, LayerMask.GetMask("Rook"));
-    internal void ChengPresed(bool state, bool player = false)
+    public void ChengPresed(bool state, bool player = false)
     {
         if(!PlayerPressed && player) return;
         IsPressed = nideToPressed? state : true;
+    
+    }
+    public void CheckPoint() 
+    {
+        Collider2D c = Physics2D.OverlapPoint(transform.position, LayerMask.GetMask("Rook"));
+        c?.GetComponent<Rock>().ButtonCheck(transform.position);
+    }
+    private void Sound()
+    {
+        if(sound != null) sound.ButtonSound();
+        else
+        {
+            sound = FindAnyObjectByType<SoundControler>();
+            sound.ButtonSound();
+        }
+    }
+    private SpriteRenderer Art()
+    {
+        if(curentArt != null) return curentArt;
+        else
+        {
+            curentArt = GetComponent<SpriteRenderer>();
+            return curentArt;
+        }
     }
 }

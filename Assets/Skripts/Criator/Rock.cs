@@ -22,7 +22,7 @@ public class Rock : MonoBehaviour
 
     [SerializeField] float spd;
     public Vector2 StartPos;
-    [SerializeField] bool isMove;
+    public bool isMove;
     [SerializeField] bool PlatformState;
     [SerializeField] Sprite PlatformArt;
     [SerializeField] Sprite RockArt;
@@ -34,17 +34,31 @@ public class Rock : MonoBehaviour
     private void Awake()
     {
         sp = GetComponent<SpriteRenderer>();
-        sp.sortingOrder = -Mathf.RoundToInt(transform.position.y * 10);
-        memory = FindAnyObjectByType<MovementMemory>();
-        sp.sortingOrder = 80;
-
+        sp.sortingOrder = -Mathf.RoundToInt(transform.position.y * 9);
+        GetName();
         StartPos = transform.position;
+        memory = FindAnyObjectByType<MovementMemory>();
+        memory.IsSaveReady(this);
+        curentSpd = spd;
     }
     void FixedUpdate()
     {
         if(isMove) UncontrolMove(targetPoint);
     }
+    public int ID;
+    private void GetName()
+    {
+        Vector3 pos = transform.position;
+        int x = Mathf.RoundToInt(Mathf.Abs(pos.x));
+        int y = Mathf.RoundToInt(Mathf.Abs(pos.y));
+        int z = 0;
+        if(pos.x < 0 && pos.y >=0) z = 1;
+        else if(pos.x >= 0 && pos.y < 0) z = 2;
+        else if(pos.x < 0 && pos.y < 0) z = 3;
+        ID = int.Parse($"{x}{y}{z}");
 
+        gameObject.name = $"Rock {ID}";;
+    }
     /////////////////////////
     // ------------------- //
     //   Movement METHOD   //
@@ -55,17 +69,13 @@ public class Rock : MonoBehaviour
         isMove = false;
         point = point == Vector3.zero? StartPos : point;
         transform.position = point;
-        ChengPoint();
-    }
-    public void ChengPoint()
-    {
+        ButtonCheck(point);
         State(CheckFallen(transform.position) == 1);
-        ButtonCheck(transform.position);
     }
 
 
 
-
+    public Vector3 GetTarget() => targetPoint;
     [SerializeField] Vector3 targetPoint;
     [SerializeField] Vector3 moveDir;
     public void MoveTo(Vector3 dir, bool inToMove = false)
@@ -74,8 +84,6 @@ public class Rock : MonoBehaviour
         moveDir = dir;  
         if(CheckEmpty(transform.position + dir,!inToMove))
         {
-            pl.SetStop(true);
-            stepCount = 0;
             _rice = false;
             isMove = true;
 
@@ -84,10 +92,10 @@ public class Rock : MonoBehaviour
         }
     }
     private bool _rice;
-    private int stepCount = 0;
     public void FindLostPoint(Vector3 dir)
     {
 
+        int rockForvard = 0;
         targetPoint = transform.position + dir;
         while(true)
         {
@@ -96,16 +104,23 @@ public class Rock : MonoBehaviour
             
             else if(tipe == 2)
             {
-                if(!CheckEmpty(targetPoint + dir, true)) 
+                int p = CheckRockInMove(targetPoint + dir);
+                if(p == 2) 
                 {
                     _rice = true;
                     break;
                 }
+                else if(p == 1) rockForvard++;
+
                 targetPoint += dir;
                 continue;
             }
             else break;      
         }
+        if(_rice) curentSpd = spd * 1.5f;
+        else curentSpd = spd;
+        targetPoint -= moveDir * rockForvard;
+
     }
 public void UncontrolMove(Vector3 _point)
     {
@@ -120,13 +135,13 @@ public void UncontrolMove(Vector3 _point)
             
     }
     private bool isPlace(Vector2 place) => place.x == transform.position.x && place.y == transform.position.y;
-
+    private float curentSpd;
     void Move(Vector3 target)
     {
-        float newspd = Time.fixedDeltaTime * spd;
+        float newspd = Time.fixedDeltaTime * curentSpd;
         Vector3 newPos = Vector2.MoveTowards(transform.position, target, newspd);
         transform.position = newPos;
-        sp.sortingOrder = -((int)transform.position.y * 10);
+        sp.sortingOrder = -Mathf.RoundToInt(transform.position.y * 10) + 2;
         ButtonCheck(newPos);
     }    
 
@@ -150,7 +165,6 @@ public void UncontrolMove(Vector3 _point)
     {
         State(CheckFallen(transform.position) == 1);
         isMove = false;
-        pl.SetStop(false);
 
     }
     public void State(bool _plane)
@@ -160,14 +174,15 @@ public void UncontrolMove(Vector3 _point)
         isMove = false;
         Acoll.enabled = _plane;
         Hcoll.isTrigger = _plane;
-        sp.sortingOrder = _plane? 11:20;
         if(_plane)
         {
             gameObject.transform.localScale = new Vector3(1.1f,1.1f,0);
-            pl.SetStop(false);
+            sp.sortingOrder = -30000;
         }
         else
         {
+
+            sp.sortingOrder = -Mathf.RoundToInt(transform.position.y * 10) + 2;
             gameObject.transform.localScale = new Vector3(1f,1f,0);
         }
         
@@ -188,12 +203,29 @@ public void UncontrolMove(Vector3 _point)
                 else return false;
             }
     }
+    public int CheckRockInMove(Vector3 _point)
+    {
+        var coll = CheckCollider(_point);
+        if(coll == null) return 0;
+        else
+        {
+            Rock r;
+            if(coll.TryGetComponent<Rock>(out r))
+            {
+                if (r.isMove) return 1;
+                else return 2;
+
+            }
+            
+            return 2;
+        }
+    }
     private Collider2D CheckCollider(Vector3 point)
     {
-        Collider2D coll = Physics2D.OverlapCircle(point, 0.3f,LayerMask.GetMask("Wall"));
+        Collider2D coll = Physics2D.OverlapPoint(point, LayerMask.GetMask("Wall"));
         if(coll != null && !coll.isTrigger) return coll;
         
-        coll = Physics2D.OverlapCircle(point, 0.3f,LayerMask.GetMask("Rook"));
+        coll = Physics2D.OverlapPoint(point, LayerMask.GetMask("Rook"));
         if(coll != null && !coll.isTrigger) return coll;
 
         return null;
@@ -202,7 +234,7 @@ public void UncontrolMove(Vector3 _point)
     private Collider2D prewColl;
     private Button curentButton;
 
-    private void ButtonCheck(Vector3 point)
+    public void ButtonCheck(Vector3 point)
     {
         Collider2D coll = Physics2D.OverlapPoint(point, LayerMask.GetMask("Button"));
         if(coll != null && prewColl != coll)

@@ -8,4 +8,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/BonusLavels.unity
+    guid: 3c68f9ee83ac7a94b8ce09d7de44b48a
   m_configObjects: {}
+  m_UseUCBPForAssetBundles: 0

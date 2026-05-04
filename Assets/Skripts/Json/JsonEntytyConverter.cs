@@ -16,9 +16,10 @@ public class JsonEntytyConverter : JsonConverter<Entyty>
 
         return tipe switch
         {
-            EntytyType.Character => throw new NotImplementedException(),
-            EntytyType.Door => JsonObject.ToObject<DoorEntyty>(_entytyInitialSerializer),
-            EntytyType.PickupableItem => JsonObject.ToObject<PickupableEntyty>(_entytyInitialSerializer),
+            EntytyType.Door => JsonObject.ToObject<JsonDoor>(_entytyInitialSerializer),
+            EntytyType.Rock => JsonObject.ToObject<JsonRock>(_entytyInitialSerializer),
+            EntytyType.Character => JsonObject.ToObject<JsonCharacter>(_entytyInitialSerializer),
+            EntytyType.Config => JsonObject.ToObject<JsonConfig>(_entytyInitialSerializer),
             _ => throw new NotImplementedException()
         };
     }
