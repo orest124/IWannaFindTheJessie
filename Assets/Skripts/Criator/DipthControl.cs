@@ -3,7 +3,7 @@ using UnityEngine;
 public class DipthControl : MonoBehaviour {
     void Awake()
     {
-        int order = -((int)transform.position.y * 10);
+        int order = -Mathf.RoundToInt(transform.position.y * 10);
         GetComponent<SpriteRenderer>().sortingOrder = order;
     }
 }

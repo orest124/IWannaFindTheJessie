@@ -19,7 +19,6 @@ public class JsonEntytyConverter : JsonConverter<Entyty>
             EntytyType.Door => JsonObject.ToObject<JsonDoor>(_entytyInitialSerializer),
             EntytyType.Rock => JsonObject.ToObject<JsonRock>(_entytyInitialSerializer),
             EntytyType.Character => JsonObject.ToObject<JsonCharacter>(_entytyInitialSerializer),
-            EntytyType.Config => JsonObject.ToObject<JsonConfig>(_entytyInitialSerializer),
             _ => throw new NotImplementedException()
         };
     }

@@ -34,43 +34,7 @@ public class MovementMemory : MonoBehaviour
         
         RemoveMemory();
     }
-    private List<JsonDoor> saveDoors = new();
-    public void SaveState()
-    {
-        saveDoors.Clear();
-        foreach (var p in dores)
-        {
-            if(p.memoryAtRock.Count == 0) continue;
-            
-            saveDoors.Add(p.remember);
-            foreach (var d in p.ChildDore)
-            {
-                saveDoors.Add(d.remember);
-            }   
-        }
-        _save.SaveAllDoors(saveDoors);
 
-        _save.SaveAllRocks();
-
-        _save.SaveCharacter();
-        
-    }
-    public void RemovSaweData() => _save.RemoveAllMemory();
-    public void IsSaveReady(Rock r)
-    {
-        if(_save == null) {_save = GetComponent<SaveSystem>();_save.AddRock(r);}
-        else _save.AddRock(r);
-    }
-    public void IsSaveReady(Dore d)
-    {
-        if(_save == null) {_save = GetComponent<SaveSystem>();_save.AddDoor(d);}
-        else _save.AddDoor(d);
-    }
-    public void IsSaveReady(PhotoPictures f)
-    {
-        if(_save == null) {_save = GetComponent<SaveSystem>();_save.AddPict(f);}
-        else _save.AddPict(f);
-    }
     
     
         void W() => ProtectWithBadDebut();
@@ -318,6 +282,25 @@ public bool stopAll = false;
     public void RegistPoint(Dore d, bool _state)
     {
         Steps.Add(new PersonStepInfo(stepCount, d, _state, d.AllDone? Vector3.one: Vector3.zero));
+    }
+
+
+
+
+    public void IsSaveReady(Rock r)
+    {
+        if(_save == null) {_save = GetComponent<SaveSystem>();_save.AddRock(r);}
+        else _save.AddRock(r);
+    }
+    public void IsSaveReady(Dore d)
+    {
+        if(_save == null) {_save = GetComponent<SaveSystem>();_save.AddDoor(d);}
+        else _save.AddDoor(d);
+    }
+    public void IsSaveReady(PhotoPictures f)
+    {
+        if(_save == null) {_save = GetComponent<SaveSystem>();_save.AddPict(f);}
+        else _save.AddPict(f);
     }
 
 }

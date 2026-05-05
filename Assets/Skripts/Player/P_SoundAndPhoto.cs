@@ -64,7 +64,7 @@ public class P_SoundAndPhoto : Sounds {
         if(t > curentTimerTime)
         {
             t = 0;
-            if(mc._inSnow || mc._inLavel) StepSnowNoise(stepVolume);
+            if(mc._inSnow || mc.inLavel) StepSnowNoise(stepVolume);
             else StepNoise(stepVolume);
         }
     }

@@ -34,9 +34,9 @@ public class Button : MonoBehaviour
         set { 
             if(_isPressed == value) return;
             _isPressed = value;
+            foreach (var d in dore) d?.Check();
             Sound();
             Art().sprite = _isPressed? ClousedArt: OpenArt;
-            foreach (var d in dore) d?.Check();
             if(_isPressed == true)SpecialAction?.Invoke();
         }
     }
@@ -55,7 +55,12 @@ public class Button : MonoBehaviour
     public void CheckPoint() 
     {
         Collider2D c = Physics2D.OverlapPoint(transform.position, LayerMask.GetMask("Rook"));
-        c?.GetComponent<Rock>().ButtonCheck(transform.position);
+        if(c == null)
+        {
+            IsPressed = false;
+        }
+        else   c.GetComponent<Rock>().ButtonCheck(transform.position);
+            
     }
     private void Sound()
     {
