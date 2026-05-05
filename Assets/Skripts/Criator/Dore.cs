@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class Dore : MonoBehaviour {
@@ -38,7 +39,8 @@ public class Dore : MonoBehaviour {
     public void SetComplite(bool state)
     {
         AllDone = state;
-        remember.completed = AllDone;
+        remember.opened = AllDone;
+        remember.complited = AllDone;
     }
     
     [SerializeField] bool curentState;
@@ -114,9 +116,9 @@ public class Dore : MonoBehaviour {
         {
             if(!FlappyDore) memory.RegistPoint(this, curentState);
             OpenDore(true);
+            if(AllDone) return;
             SetComplite(true);
             sound.DoreSound();
-
         }
         else if(FlappyDore) OpenDore(false);
 
@@ -128,7 +130,7 @@ public class Dore : MonoBehaviour {
         coll.isTrigger =  _state;
         curentState = _state;
 
-        if(!Prime) remember.completed = curentState;
+        if(!Prime) remember.opened = curentState;
         else if(Prime && (_state == false || newGame)) SetComplite(false);
 
     }
@@ -176,6 +178,7 @@ public class Dore : MonoBehaviour {
     {
         if(forMemory)
         {
+            ButtonsRemove();
             foreach (var r in memoryAtRock) r.ReturnPos();
             return;
         }
@@ -191,10 +194,14 @@ public class Dore : MonoBehaviour {
     }
     public void LavelRemove(bool newGame = false)
     {
-        Buttons.RemoveState();
-        Buttons_Extra.RemoveState();
+        ButtonsRemove();
         OpenDore(newGame, newGame);
         foreach (var d in ChildDore) d.RemoveDore();
+    }
+    public void ButtonsRemove()
+    {
+        Buttons.RemoveState();
+        Buttons_Extra.RemoveState();
     }
     
 
@@ -277,6 +284,7 @@ public class DooreSprites
     public Sprite ClousedArt_Hor;
     public Sprite OpenArt_Ver;
     public Sprite ClousedArt_Ver;
+    public AudioClip musicTheme;
 }
 [System.Serializable]
 public class ImportantButtonsCollection
@@ -300,6 +308,7 @@ public class ImportantButtonsCollection
         foreach (var b in Set_StateButtons) b.Preparation(d);
         foreach (var b in Set_SwitchButton) b.Preparation(d);
         count = Buttons.Count + SwitchButton.Count + Set_StateButtons.Count + Set_SwitchButton.Count;
+        
     }
     public bool Check()
     {
@@ -365,12 +374,13 @@ public class JsonRock : Entyty
 public class JsonDoor : Entyty
 {
     public int name;
-    public bool completed;
+    public bool opened;
+    public bool complited;
     public List<JsonRock> memory;
     public JsonDoor(int n, bool end)
     {
         name = n;
-        completed = end;
+        opened = end;
         memory = new();
         Type = EntytyType.Door;
     }

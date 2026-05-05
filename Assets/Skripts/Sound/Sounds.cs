@@ -36,6 +36,13 @@ public class Sounds : MonoBehaviour
         audioSrc.Play();
         
     }
+        public void PlayTheme(AudioClip c)
+    {
+        if(audioSrc.clip == c) return;
+        audioSrc.clip = c;
+        audioSrc.Play();
+        
+    }
 
     public void HasLoop(bool itIs = true)
     {

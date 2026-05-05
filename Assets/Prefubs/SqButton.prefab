@@ -55,24 +55,7 @@ MonoBehaviour:
   _isPressed: 0
   SpecialAction:
     m_PersistentCalls:
-<<<<<<< HEAD
       m_Calls: []
-=======
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 16
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-  PlayerPressed: 0
->>>>>>> f62db92d7becd80504f1c7175e94145bf9da6496
 --- !u!212 &8343845996015857234
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -113,7 +96,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -31000
+  m_SortingOrder: -31025
   m_Sprite: {fileID: -6106212025343717799, guid: e627f36c28921b74899bad5a5fa72c8c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

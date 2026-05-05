@@ -1,26 +1,27 @@
 
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Newtonsoft.Json;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SaveSystem : MonoBehaviour 
 {
+    public bool inMeny;
     private const string STATE = nameof(STATE);
     private const string pathToDoor = "/Saves/Memory Of Door.json";
     private const string pathToRock = "/Saves/Memory Of Rook.json";
     private const string pathToCharacter = "/Saves/Player Memory.json";
-    private const string pathToConfig = "/Saves/Configuration.json";
-    private const string pathToUAContext = "/Saves/UAContext.json";
 
     private GameState _gameState;
     Movement pl;
     void Awake()
     {
         JsonProgectSeting.ApplayProgectSerializeationSeting();
-        pl = FindAnyObjectByType<Movement>();
         _gameState = new GameState { Entytys = new List<Entyty>() };
-        GetContext();
+        
+        if(!inMeny)pl = FindAnyObjectByType<Movement>();
         
     }
     public void LoadAllData()
@@ -41,17 +42,20 @@ public class SaveSystem : MonoBehaviour
 
     private GameState LoadState(string path)
     {
-        // var stateJson = PlayerPrefs.GetString(STATE);
         if(!File.Exists(Application.dataPath + "/" + path))
         {
             Directory.CreateDirectory(Application.dataPath + "/Saves");
             File.WriteAllText(Application.dataPath + "/" + path, string.Empty);
         }
         var stateJson = File.ReadAllText(Application.dataPath + "/" + path);
-        
-        var state = string.IsNullOrEmpty(stateJson)
-        ? new GameState { Entytys = new List<Entyty>() }
-        : JsonConvert.DeserializeObject<GameState>(stateJson);
+        GameState state;
+        try {
+            state = string.IsNullOrEmpty(stateJson)
+            ? new GameState { Entytys = new List<Entyty>() }
+            : JsonConvert.DeserializeObject<GameState>(stateJson);
+        }
+        catch
+        { state = new GameState { Entytys = new List<Entyty>() }; }
 
         return state;
     }
@@ -74,11 +78,20 @@ public class SaveSystem : MonoBehaviour
         File.WriteAllText(Application.dataPath + "/" + path, string.Empty);
         File.WriteAllText(Application.dataPath + "/" + path, stateJson);
     }
-    public void SaveAllDoors(List<JsonDoor> doors)
+    public void SaveState()
+    {
+        SaveAllDoors();
+        SaveAllRocks();
+        SaveCharacter();
+
+        pl.meny.SaveSceneIndex();
+    }
+    public void SaveAllDoors()
     {
         _gameState.Entytys.Clear();
-        foreach (var d in doors)
+        foreach (var door in dores)
         {
+            JsonDoor d = door.Value.remember;
             d.ID = _gameState.Entytys.Count;
             _gameState.Entytys.Add(d);
         }
@@ -102,12 +115,6 @@ public class SaveSystem : MonoBehaviour
        _gameState.Entytys.Add(i);
         SaveState(pathToCharacter);
     }
-    public void SaveConfig(JsonConfig i)
-    {
-       _gameState.Entytys.Clear();
-       _gameState.Entytys.Add(i);
-        SaveState(pathToConfig);
-    }
     
     public void RemoveAllMemory()
     {
@@ -122,9 +129,9 @@ public class SaveSystem : MonoBehaviour
         {
             if(!dores.ContainsKey(i.name)) continue;
             Dore d = dores[i.name];
-            if(d.Prime) d.SetComplite(i.completed);
+            if(d.Prime) d.SetComplite(i.opened);
 
-            if(i.completed == true) d.OpenDore(true);
+            if(i.opened == true) d.OpenDore(true);
             else d.RemoveDore();
 
             d.remember.memory.Clear();
@@ -163,7 +170,7 @@ public class SaveSystem : MonoBehaviour
         
         
         pl.transform.position = pi.GetVector();
-        pl._inLavel = pi.inLavel;
+        pl.inLavel = pi.inLavel;
     } 
     private Dictionary<int,Dore> dores = new();
     private Dictionary<int,Rock> rocks = new();
@@ -178,27 +185,8 @@ public class SaveSystem : MonoBehaviour
     {
         if( !photos.ContainsKey(f.ID) )  photos.Add(f.ID, f);
     }
-
-
-    public JsonConfig GetConfig()
-    {
-        _gameState.Entytys.Clear();
-        _gameState = LoadState(pathToConfig);
-        if(_gameState.Entytys.Count == 0) return new JsonConfig{Type = EntytyType.Config};
-        return (JsonConfig)_gameState.Entytys[0];
-    }
     public class Context
     {
         public string text;
-    }
-    string[] context;
-    private void GetContext()
-    {
-        context = File.ReadAllLines(Application.dataPath + "/" + pathToUAContext);
-    }
-    public string GetRandomContext()
-    {
-        int i = Random.Range(0, context.Length);
-        return context[i];
     }
 }

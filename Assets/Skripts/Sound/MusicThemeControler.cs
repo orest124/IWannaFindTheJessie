@@ -1,7 +1,10 @@
 public class MusicThemeControler : Sounds
 {
+    public bool inMeny;
     private void Start() {
         HasLoop();
+        if(inMeny) return;
+        in1Lavel();
     }
     public void inAbuse()
     {

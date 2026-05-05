@@ -11,51 +11,49 @@ public class Movement : MonoBehaviour
 
     [Header("States")] 
     public bool StopGame = false;
+    public bool inLavel;
     public bool isMove;
     public bool PhotoOpen => !s.notFromPhoto;
     public bool OptionsOpen = false;
+    [Header("Movement")] 
+    [SerializeField] float spd;
+    private float curentSpd;
+    [Space]
+
+    public Vector3 moveDir;
+    [SerializeField] Vector3 targetPoint;
 
     [Header("Components")] 
     [SerializeField] PlayerSprite spr = new PlayerSprite();
     [SerializeField] Camera Cra;
-    private FollowCamera cMove;
-    private Meny meny;
     [HideInInspector] public P_SoundAndPhoto s;
-    [HideInInspector] public Optimization optim;
-    private Collider2D coll;
     [HideInInspector] public MovementMemory memory;
+    private MusicThemeControler music;
+    private FollowCamera cMove;
+    [HideInInspector] public GameOptions meny;
+    private Collider2D coll;
 
 
     [Header("Abuse")] 
     public Dore abuseDore;
-    public bool ReversArtefact;
+    private bool ReversArtefact;
 
     [Header("LavelStates")] 
     public Dore curentDore;
-    public Dore oldDore;
-    public Dore StartDore;
     [HideInInspector] public Vector3 StartPos;
-    [HideInInspector] public Vector3 lavelStartPos;
 
-    [Header("Movement")] 
-    public Vector3 moveDir;
-    [SerializeField] Vector3 targetPoint;
 
-    [SerializeField] float spd;
-    float curentSpd;
-    public float castRadius;
     
 
 
     public void SetStop(bool _stop) => StopGame = _stop;
-    public bool _inLavel {get{return optim.inLavel;} set{optim.inLavel = value;}}
+
     public bool _inSnow => spr.inSnow;
 
 
 
     void Awake()
     {
-        optim = GetComponent<Optimization>();
         s = GetComponent<P_SoundAndPhoto>();
         coll = GetComponent<Collider2D>();
         cMove = FindAnyObjectByType<FollowCamera>();
@@ -63,8 +61,6 @@ public class Movement : MonoBehaviour
         CentralizedCamera();
         curentSpd = spd;
         preLavels.Add(curentDore);
-        
-    
     }
     void Start()
     {
@@ -83,7 +79,7 @@ public class Movement : MonoBehaviour
         }
 
         else if ( Input.GetKeyDown(Return)) memory.StepBihaind();
-        if ( Input.GetKeyDown(Save)) memory.SaveState();
+        if ( Input.GetKeyDown(Save)) meny.Save();
 
         
         if(isMove || StopGame) return;
@@ -93,7 +89,7 @@ public class Movement : MonoBehaviour
     private void FixedUpdate() {
 
         if(isMove)  UncontrolMove(targetPoint, curentSpd); 
-        if(!_inLavel && !CinemaMod) Move(transform.position + moveDir,curentSpd);
+        if(!inLavel && !CinemaMod) Move(transform.position + moveDir,curentSpd);
     }
 
 
@@ -126,7 +122,7 @@ public class Movement : MonoBehaviour
     void Move(Vector3 target, float _spd)
     {
         if(StopGame) return;
-        if(_inLavel)
+        if(inLavel)
         {
             if(fall)
             {
@@ -204,7 +200,7 @@ public class Movement : MonoBehaviour
                 spr.StendUp(); return;
             }
 
-            if(!_inLavel) return;
+            if(!inLavel) return;
 
             targetPoint = IdealPos(mod: false) + moveDir;
 
@@ -231,7 +227,7 @@ public class Movement : MonoBehaviour
 
         }    
     }
-    public bool JoysticMod;
+    [HideInInspector] public bool JoysticMod;
     public Vector3 GetDirect()
     {
         float x, y;
@@ -251,7 +247,7 @@ public class Movement : MonoBehaviour
             x = Bright - Bleft;
             y = Bup - Bdown;
         }
-        if(_inLavel && x != 0) y = 0;
+        if(inLavel && x != 0) y = 0;
             
         return new Vector3(x,y);
 
@@ -410,12 +406,11 @@ public class Movement : MonoBehaviour
         if(_dore == curentDore || StopGame) return;
         if(_dore == null)
         {
-            _inLavel = false;
+            
+            inLavel = false;
             curentDore = abuseDore;
             preLavels.Add(abuseDore);
             StartPos = curentDore.startPos.position;
-            lavelStartPos = StartPos;
-            optim.ChengedMusic();
 
         }
         else
@@ -423,20 +418,23 @@ public class Movement : MonoBehaviour
             NextDoor(_dore);
             preLavels.Add(curentDore);
             
-            if(!_inLavel)
+            if(!inLavel)
             {
                 int x = curentDore.Vertical? 1:0;
                 int y = !curentDore.Vertical? 1:0;
                 Vector3 cor = new Vector3(x,y) * (curentDore.Bihaend? -1:1);
                 
-                _inLavel = true;
-                lavelStartPos = StartPos;
-                optim.ChengedMusic();
+                inLavel = true;
                 targetPoint = IdealPos() + cor;
                 isMove = true;
             }
         }
+
+        AudioClip c = curentDore.sp.musicTheme;
+        if(c != null) music.PlayTheme(c);
     }
+
+
     public void NextDoor(Dore _dore)
     {
         curentDore = _dore;
@@ -449,11 +447,10 @@ public class Movement : MonoBehaviour
         NextDoor(preLavels[^1]);
     }
     public bool IsLostDoor() => preLavels.Count <= 1;
-    public void Idle(bool newGame = false, bool FromLavel = true)
+    public void Idle(bool FromLavel = true)
     {
-        if(newGame) curentDore = StartDore;
         StartPos = curentDore.startPos.transform.position;
-        _inLavel = FromLavel;
+        inLavel = FromLavel;
 
         isMove = false;
         StopGame = false;
@@ -465,28 +462,6 @@ public class Movement : MonoBehaviour
     {
         switch (tipe)
         {
-            case 1:
-                up = KeyCode.W; 
-                left = KeyCode.A; 
-                down = KeyCode.S; 
-                right = KeyCode.D;
-                Return = KeyCode.R; 
-                Restart = KeyCode.RightShift; 
-                Esc = KeyCode.Escape;
-                Save = KeyCode.Y;
-
-            break;
-            case 2:
-                up = KeyCode.UpArrow; 
-                left = KeyCode.LeftArrow; 
-                down = KeyCode.DownArrow; 
-                right = KeyCode.RightArrow;
-                Return = KeyCode.RightControl; 
-                Restart = KeyCode.LeftShift; 
-                Esc = KeyCode.Escape;
-                Save = KeyCode.Keypad0;
-
-            break;
             case 3:
                 up = KeyCode.I; 
                 left = KeyCode.J; 
@@ -500,7 +475,6 @@ public class Movement : MonoBehaviour
         }
     }
     [Header("Keyboard")] 
-    public int KeyBoardType = 99;
     private KeyCode up = KeyCode.W; private KeyCode left = KeyCode.A; private KeyCode down = KeyCode.S; private KeyCode right = KeyCode.D;
     private KeyCode Return = KeyCode.Space; private KeyCode Restart = KeyCode.Q; private KeyCode Esc = KeyCode.Escape; private KeyCode Save = KeyCode.Y;
     
@@ -515,12 +489,12 @@ public class Movement : MonoBehaviour
         Gizmos.DrawLine(targetPoint + new Vector3(0.5f,0f), targetPoint + new Vector3(-0.5f,0f));
         Gizmos.DrawLine(targetPoint + new Vector3(0,0.5f), targetPoint + new Vector3(0,-0.5f));
     }
-    public void SetMeny(Meny m) => meny = m;
+    public void SetMusic(MusicThemeControler m) => music = m;
     
     public JsonCharacter GetPersonalmemory() 
     {
         JsonCharacter i = new JsonCharacter();
-        i.inLavel = _inLavel;
+        i.inLavel = inLavel;
         i.SetVector(transform.position);
         return i.BuldNevMemory(s.pc._photoColection, preLavels);
     }
