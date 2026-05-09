@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Dore : MonoBehaviour {
     private Collider2D coll;
@@ -11,6 +12,9 @@ public class Dore : MonoBehaviour {
     [HideInInspector] public Dore PrimeDore;
     public Transform startPos;
     [Space] [Space]
+    [Header("Cild Dores")]
+    public List<Dore> ChildDore = new();
+    [Space] [Space]
 
     [Header("Buttons")]
     [Tooltip("Тут можна назначити кнопки")]
@@ -18,9 +22,6 @@ public class Dore : MonoBehaviour {
     [Tooltip("Тут можна назначити неважливі кнопки")]
     [SerializeField] private NotImportantButtonsCollection Buttons_Extra;
 
-    [Header("Cild Dores")]
-    public List<Dore> ChildDore = new();
-    [Space] [Space]
 
     public bool Prime;
     [Tooltip("Якщо забрати з кнопки камінь двері закриються. \n Навіть коли рівень пройдено")]
@@ -60,25 +61,28 @@ public class Dore : MonoBehaviour {
         int order = -Mathf.RoundToInt(y * 10);
         curentArt.sortingOrder = order;
 
-    
         GetName();
-        memory = FindAnyObjectByType<MovementMemory>();
-        memory.IsSaveReady(this);
-        
-
+        Buttons.Preparation(this);
+        remember = new JsonDoor(ID,Prime?AllDone:curentState);
         
         coll = GetComponent<Collider2D>();
-        sound = FindAnyObjectByType<SoundControler>();
-        Buttons.Preparation(this);
-        
-        remember = new JsonDoor(ID,Prime?AllDone:curentState);
+
+        if(Prime || FlappyDore)
+        {
+            sound = FindAnyObjectByType<SoundControler>();
+            memory = FindAnyObjectByType<MovementMemory>();
+            memory.IsSaveReady(this);
+        }    
             
         if(Prime)
         {
             PrimeDore = this;
             foreach (var b in ChildDore) 
             {
-                b.PrimeDore = this; 
+                b.PrimeDore = this;
+                b.sound = sound;
+                b.memory = memory;
+                memory.IsSaveReady(b);
             }
         }
         size = Vertical? new Vector2(0.1f,3): new Vector2(3,0.1f);
@@ -111,7 +115,7 @@ public class Dore : MonoBehaviour {
 
     public void Check() {
 
-        if(Opened) return;
+        if(Opened || Buttons.count == 0) return;
         if(Buttons.Check()) 
         {
             if(!FlappyDore) memory.RegistPoint(this, curentState);
@@ -146,12 +150,13 @@ public class Dore : MonoBehaviour {
     */
     public void RemoveDore(bool newGame = false)
     {
-        if(!Prime && Opened) OpenDore();
+        ButtonsRemove();
+
+        if(FlappyDore) Check();
+        else if(!Prime && Opened) OpenDore();
         else if(Prime &&  newGame) OpenDore(newGame:true);
 
         else OpenDore(false);
-        Buttons.RemoveState();
-        Buttons_Extra.RemoveState();
         
     }
 
@@ -178,18 +183,19 @@ public class Dore : MonoBehaviour {
     {
         if(forMemory)
         {
-            ButtonsRemove();
             foreach (var r in memoryAtRock) r.ReturnPos();
+            ButtonsRemove();
             return;
         }
 
-        LavelRemove(newGame);
-        if(restLavel) foreach (var r in memoryAtRock) r.ReturnPos();
+        else if(restLavel) foreach (var r in memoryAtRock) r.ReturnPos();
         else if(newGame) 
         {
             foreach (var r in memoryAtRock) r.NewGame();
             RemoveMemoryAtRook();
         }
+        
+        LavelRemove(newGame);
 
     }
     public void LavelRemove(bool newGame = false)
@@ -204,7 +210,6 @@ public class Dore : MonoBehaviour {
         Buttons_Extra.RemoveState();
     }
     
-
 
     void Trigger()
     {
@@ -233,7 +238,7 @@ public class Dore : MonoBehaviour {
     void OnDrawGizmos()
     {
         if(!_gizmos) return;
-        if(!curentState || sp.pl.curentDore == PrimeDore) return;
+        if(sp.pl.curentDore == PrimeDore) return;
 
         Gizmos.color = Color.blue;
         Gizmos.DrawWireCube(transform.position + offset, size);
@@ -308,7 +313,6 @@ public class ImportantButtonsCollection
         foreach (var b in Set_StateButtons) b.Preparation(d);
         foreach (var b in Set_SwitchButton) b.Preparation(d);
         count = Buttons.Count + SwitchButton.Count + Set_StateButtons.Count + Set_SwitchButton.Count;
-        
     }
     public bool Check()
     {
@@ -321,9 +325,9 @@ public class ImportantButtonsCollection
     }
     public void RemoveState()
     {
-        foreach (var b in Buttons) b.CheckPoint(); 
+        // foreach (var b in Buttons) b.CheckPoint(); 
         foreach (var b in SwitchButton) b.RemoveState(); 
-        foreach (var b in Set_StateButtons) b.button.CheckPoint(); 
+        // foreach (var b in Set_StateButtons) b.button.CheckPoint(); 
         foreach (var b in Set_SwitchButton) b.ReturnState(); 
     }
 }
@@ -334,7 +338,7 @@ public class NotImportantButtonsCollection
     public List<ButtonStates> SwitchButtons = new();
     public void RemoveState()
     {
-        foreach (var b in StandartButtons) b.CheckPoint(); 
+        // foreach (var b in StandartButtons) b.CheckPoint(); 
         foreach (var b in SwitchButtons) b.RemoveState(); 
     }
 

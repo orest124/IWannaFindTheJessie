@@ -8,6 +8,8 @@ using Newtonsoft.Json;
 using System.IO;
 
 public class GameOptions : MonoBehaviour {
+    [SerializeField] bool DontNidMeny;
+    [SerializeField] bool inLavel;
     private MusicThemeControler music;
     private SoundControler sound;
     private P_SoundAndPhoto p_Sound;
@@ -22,7 +24,6 @@ public class GameOptions : MonoBehaviour {
 
     void Awake()
     {
-        GlobalFone.gameObject.SetActive(true);
         music = FindAnyObjectByType<MusicThemeControler>();
         sound = FindAnyObjectByType<SoundControler>();
 
@@ -36,8 +37,12 @@ public class GameOptions : MonoBehaviour {
     void Start()
     {
         pl = FindAnyObjectByType<Movement>(); pl.meny = this; pl.SetMusic(music); p_Sound = pl.s;
-        pl.SetStop(true);
         Preparation();
+        if(inLavel) pl.inLavel = true;
+        if(DontNidMeny) return;
+        
+        GlobalFone.gameObject.SetActive(true);
+        pl.SetStop(true);
         if(config.Continue) Load();
         else Play();
          

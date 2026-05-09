@@ -7,7 +7,7 @@ public class MovementMemory : MonoBehaviour
 {
     private SaveSystem _save;
     
-    public List<Dore> dores;
+    public Dictionary<int,Dore> dores;
     private Dore abusDore;
 
     private Dore curentDore;
@@ -24,15 +24,16 @@ public class MovementMemory : MonoBehaviour
     {
         fl.SetLayerMask(LayerMask.GetMask("Rook"));
         fl.useTriggers = true;
-        Dore[] _dores = FindObjectsByType<Dore>(FindObjectsSortMode.None);
-        dores = _dores.Where(d => d.Prime == true).ToList();
-        foreach (var d in dores) { if(d.name == "AbuseDoor") abusDore = d; }
         
         pl = FindAnyObjectByType<Movement>();
         pl.memory = this;
         curentDore = pl.curentDore;
         
         RemoveMemory();
+    }
+    private void Start() {
+        dores = _save.GetDoorArr();
+        abusDore = pl.abuseDore;
     }
 
     
@@ -122,14 +123,18 @@ public bool stopAll = false;
         curentDore.LavelMod(newGame: true);
 
         pl.SetOldDoor();
-        LocalClining(forMemory:true);
+        LocalClining();
+        PlayerPreparation();
 
 
     }
     public void RestartLavel()
     {
-        if(curentDore == abusDore) return;
-        
+        if(pl.curentDore == abusDore)
+        {
+            pl.Idle(true);
+            return;
+        }
         LocalClining();
         curentDore.LavelMod(restLavel:true);
         // HardModButton.IsPressed = false;
@@ -138,7 +143,6 @@ public bool stopAll = false;
     {
         PlayerPreparation();
         ReturnAllRockInLavel();
-        if(forMemory) { curentDore.LavelMod(forMemory:true); return; }
     }
     private void PlayerPreparation()
     {

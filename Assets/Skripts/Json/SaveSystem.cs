@@ -174,6 +174,7 @@ public class SaveSystem : MonoBehaviour
     } 
     private Dictionary<int,Dore> dores = new();
     private Dictionary<int,Rock> rocks = new();
+    public Dictionary <int,Dore> GetDoorArr() => dores;
     public void AddRock(Rock r) {
         if( !rocks.ContainsKey(r.ID) )  rocks.Add(r.ID,r);
     }
