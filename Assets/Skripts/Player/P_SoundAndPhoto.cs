@@ -50,7 +50,8 @@ public class P_SoundAndPhoto : Sounds {
     }
     public void PhotoTime(bool state)
     {
-        notFromPhoto = !state;      
+        notFromPhoto = !state;    
+        mc.SetStop(state);  
         if(state) pc.OpenPhoto(); else pc.ClousedPhoto();
 
     }

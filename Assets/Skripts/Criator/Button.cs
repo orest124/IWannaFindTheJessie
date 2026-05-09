@@ -52,8 +52,13 @@ public class Button : MonoBehaviour
         IsPressed = nideToPressed? state : true;
     
     }
+    public bool select;
     public void CheckPoint() 
     {
+        if(select)
+        {
+            select = true;
+        }
         Collider2D c = Physics2D.OverlapPoint(transform.position, LayerMask.GetMask("Rook"));
         if(c == null)
         {

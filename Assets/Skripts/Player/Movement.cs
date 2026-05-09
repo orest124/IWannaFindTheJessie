@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 using Random = UnityEngine.Random;
+using UnityEngine.UIElements;
 
 public class Movement : MonoBehaviour
 {
@@ -190,7 +191,7 @@ public class Movement : MonoBehaviour
     {
         prePos = Vector3.zero; 
         moveDir = GetDirect();
-        spr.ChengSprite(moveDir);
+        spr.ChengSprite(isMove?moveDir : zero);
 
         if(moveDir != zero )
         {
@@ -222,7 +223,7 @@ public class Movement : MonoBehaviour
                 curentSpd = spd * 1.5f;
                 FindLostPoint(moveDir);
             }
-            else if(nomb == 1) {moveDir = zero; spr.ChengSprite(moveDir);return;}
+            else if(nomb == 1) {isMove = false; spr.ChengSprite(zero);return;}
             else curentSpd = spd;
 
         }    
@@ -376,30 +377,11 @@ public class Movement : MonoBehaviour
         return new Vector2(Mathf.RoundToInt(transform.position.x + _mod), Mathf.RoundToInt(transform.position.y + _mod));
     }
 
-    public void SprintAudit()
-    {
-        if (Input.GetKeyDown(KeyCode.LeftShift)) 
-            {curentSpd = spd + s.pc.PhotoCount() * 0.1f; spr.AnimSpd(true); s.ChengTimeLoop(true);}
-
-        else if (Input.GetKeyUp(KeyCode.LeftShift)) 
-            {curentSpd = spd; spr.AnimSpd(false);s.ChengTimeLoop();}
-    }
-
     /////////////////////////
     // ------------------- //
     //    STATE METHOD     //
     // ------------------- //
     /////////////////////////
-
-    public void MenuMod(bool _state)
-    {
-        StopGame = _state;
-    }
-    public void ReversOn(bool state)
-    {
-        ReversArtefact = state;
-        memory.RemoveMemory();
-    }
     public List<Dore> preLavels = new();
     public void lavelMode(Dore _dore = null)
     {
@@ -447,33 +429,34 @@ public class Movement : MonoBehaviour
         NextDoor(preLavels[^1]);
     }
     public bool IsLostDoor() => preLavels.Count <= 1;
-    public void Idle(bool FromLavel = true)
+    public void Idle( bool JustStp = false, bool FromLavel = true)
     {
-        StartPos = curentDore.startPos.transform.position;
-        inLavel = FromLavel;
-
         isMove = false;
         StopGame = false;
         moveDir = Vector2.zero;
+        if(JustStp) return;
+        
+        StartPos = curentDore.startPos.transform.position;
+        inLavel = FromLavel;
         transform.position = StartPos;
         
     }
-    public void FiendKey(int tipe)
-    {
-        switch (tipe)
-        {
-            case 3:
-                up = KeyCode.I; 
-                left = KeyCode.J; 
-                down = KeyCode.K; 
-                right = KeyCode.L;
-                Return = KeyCode.U; 
-                Restart = KeyCode.Space; 
-                Esc = KeyCode.Escape;
-                Save = KeyCode.P;
-            break;
-        }
-    }
+    // public void FiendKey(int tipe)
+    // {
+    //     switch (tipe)
+    //     {
+    //         case 3:
+    //             up = KeyCode.I; 
+    //             left = KeyCode.J; 
+    //             down = KeyCode.K; 
+    //             right = KeyCode.L;
+    //             Return = KeyCode.U; 
+    //             Restart = KeyCode.Space; 
+    //             Esc = KeyCode.Escape;
+    //             Save = KeyCode.P;
+    //         break;
+    //     }
+    // }
     [Header("Keyboard")] 
     private KeyCode up = KeyCode.W; private KeyCode left = KeyCode.A; private KeyCode down = KeyCode.S; private KeyCode right = KeyCode.D;
     private KeyCode Return = KeyCode.Space; private KeyCode Restart = KeyCode.Q; private KeyCode Esc = KeyCode.Escape; private KeyCode Save = KeyCode.Y;
@@ -508,6 +491,7 @@ public class Movement : MonoBehaviour
 
 
     void E() => CheckButton(new());
+    void F() => PlaceControle(new());
     void Y() => CheckFallen(new());
     void U() => CheckEmpty(new());
     void T() => CheckCollider(new());

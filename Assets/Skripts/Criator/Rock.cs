@@ -69,7 +69,7 @@ public class Rock : MonoBehaviour
         isMove = false;
         point = point == Vector3.zero? StartPos : point;
         transform.position = point;
-        ButtonCheck(point);
+        ButtonCheck(transform.position);
         State(CheckFallen(transform.position) == 1);
     }
 
