@@ -6,12 +6,8 @@ public class FollowCamera : MonoBehaviour{
     private Movement pl;
     [Header("Values")]
     [SerializeField] private float dist;
-    [SerializeField] private float curentSpd;
-    [Space]
-    [Space]
-    [SerializeField] private float MaxSpd;
-    [SerializeField] private float ModSpdDist;
-    [SerializeField] private float lookForwardDist;
+    [SerializeField] float corSpd;
+
 
     const float fix = 0.02f;
     
@@ -24,7 +20,6 @@ public class FollowCamera : MonoBehaviour{
 
     private void Awake() {
         pl = FindAnyObjectByType<Movement>();
-        curentSpd = MaxSpd;
     }
 
 
@@ -34,27 +29,31 @@ public class FollowCamera : MonoBehaviour{
         FollowC(pl.transform.position);
     }
 
-
+    
     public void FollowC(Vector3 point)
     {
-        float _spd = Time.fixedDeltaTime;
+        if(point == transform.position) return;
+
+
         dist = Vector3.SqrMagnitude(transform.position - new Vector3(point.x,point.y, transform.position.z));
-        if(dist > ModSpdDist) _spd = _spd * MaxSpd;
-        if(dist > ModSpdDist + 9) _spd = _spd * (MaxSpd + 4);
+        float _spd = GetSpd(dist);
+    
+        // if(dist > ModSpdDist) _spd = _spd * MaxSpd;
         Vector3 newpoint = Vector3.MoveTowards(transform.position, new Vector3(point.x, point.y, transform.position.z), _spd);
         transform.position = newpoint;
     }
 
-    private float ts = 1;
-    private void GetSpd(Vector3 point)
+    private float tempspd = 1;
+    private float GetSpd(float _dist)
     {
-        Vector3 Pos = transform.position;
-
-        dist = Vector3.SqrMagnitude(Pos - new Vector3(point.x,point.y, Pos.z));
-
-        if(dist > ModSpdDist) ts += fix;
-        else  ts = MaxSpd;
-        curentSpd = fix * ts;
+        // if(tempspd >= minSpd) return minSpd;
+        // else
+        // {
+        //     tempspd += minSpd * 0.05f;
+        //     return tempspd;
+        // }
+        float dist = _dist / corSpd;
+        return Time.fixedDeltaTime * (dist > 0.01? dist : 0.01f);
 
     }
     private Vector3 GetPoint()

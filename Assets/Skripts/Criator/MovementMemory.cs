@@ -1,23 +1,46 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
+using TMPro;
 using UnityEngine;
 
 public class MovementMemory : MonoBehaviour
 {
+
+
+    // Зробити 0 кнопок. Прайм зразу Алл дон, Звичайна відкриється
+    // Перезапустити рівень
+    // Засейвити і зробити откат до попереднього
+    //зібрати трофей і подивитись чи він сохраняється
+
+
     private SaveSystem _save;
     
     public Dictionary<int,Dore> dores;
     private Dore abusDore;
 
     private Dore curentDore;
-    public void NewDore(Dore d) => curentDore = d;
+    public void NewDore(Dore d, bool Load = false)
+    {
+        curentDore = d;
+        stats.SetStatistic(curentDore);
+        if(Load)
+        {
+            stepCount = curentDore.StepCount;
+            return;
+        }
+        if(curentDore.AllDone) return;
+        else RemoveMemory();
+
+    }
+
     public Movement pl;
-    [SerializeField] Button HardModButton;
     public List<PersonStepInfo> Steps = new();
-    [SerializeField] int stepCount = 0;
+    public int stepCount = 0;
     [SerializeField] int maxStepMember;
     [SerializeField] bool maxStep;
+    [SerializeField] TextMeshProUGUI countText;
+    private StatisticInterface stats;
+    public void FlipCounter() => stats.Flip(0);
+    public void SetStats() => stats.SetStatistic(curentDore);
 
     ContactFilter2D fl;
     void Awake()
@@ -28,10 +51,10 @@ public class MovementMemory : MonoBehaviour
         pl = FindAnyObjectByType<Movement>();
         pl.memory = this;
         curentDore = pl.curentDore;
-        
-        RemoveMemory();
+        stats = FindAnyObjectByType<StatisticInterface>();
     }
     private void Start() {
+
         dores = _save.GetDoorArr();
         abusDore = pl.abuseDore;
     }
@@ -46,8 +69,6 @@ public class MovementMemory : MonoBehaviour
         void D() => OnDrawGizmos();
 
         void U() => ReturnAllRockInLavel();
-
-        void Y() => RegistPoint(null,false);
     
 
     /////////////////////////
@@ -55,10 +76,11 @@ public class MovementMemory : MonoBehaviour
     //    MEMORY METHOD    //
     // ------------------- //
     /////////////////////////
-    
+
     public void IncrementMove()
     {
         stepCount += 1;
+        SetCurentDoreScore();
         if(Steps.Count > maxStepMember) 
         {
             maxStep  = true;
@@ -67,6 +89,13 @@ public class MovementMemory : MonoBehaviour
         
         if(maxStep) RemoveLastStep();
     }
+    public void SetCurentDoreScore()
+    {
+        if(curentDore.AllDone) return;
+        curentDore.StepCount = stepCount;
+        stats.SetCount(curentDore);
+    }
+
     private void RemoveLastStep()
     {
         int nomb = Steps[0].step;
@@ -83,6 +112,15 @@ public class MovementMemory : MonoBehaviour
     }
 
 
+    // public void StepBihaind()
+    // {
+    //     if(Steps.Count == 0) return;
+    //     PersonStepInfo i = Steps[^1];
+    //     i.PrewStep();
+    //     Steps.Remove(i);
+    //     pl.isMove = false;
+    //     pl.SetStop(false);
+    // }
 
     public void StepBihaind()
     {
@@ -99,14 +137,16 @@ public class MovementMemory : MonoBehaviour
             if(Steps.Count == 0) break;
             if(Steps[^1].step == nomb)
             {
-                Steps[^1].PrewStep();
-                Steps.Remove(Steps[^1]);
+                PersonStepInfo i = Steps[^1];
+                i.PrewStep();
+                Steps.Remove(i);
             }
             else break;
         }
         pl.isMove = false;
         pl.SetStop(false);
     }
+    
 
 
     /////////////////////////
@@ -117,45 +157,50 @@ public class MovementMemory : MonoBehaviour
 public bool stopAll = false;
     public void ProtectWithBadDebut()
     {
-        if(pl.IsLostDoor())return;
+        if(pl.IsLostDoor() || curentDore.AllDone)return;
         stopAll = true;
         LocalClining();
-        curentDore.LavelMod(newGame: true);
+        curentDore.Restart(newGame: true);
 
         pl.SetOldDoor();
         LocalClining();
-        PlayerPreparation();
+        stats.SetStatistic(curentDore);
 
 
     }
     public void RestartLavel()
     {
         if(pl.curentDore == abusDore)
-        {
-            pl.Idle(true);
-            return;
-        }
+            { pl.Idle(); return; }
+        if(curentDore.AllDone) 
+            { Restartlavel_AfterComplit(); return; }
+
         LocalClining();
-        curentDore.LavelMod(restLavel:true);
-        // HardModButton.IsPressed = false;
+        curentDore.Restart();
+
     }
-    public void LocalClining( bool forMemory = false)
+        
+
+    public void Restartlavel_AfterComplit()
     {
-        PlayerPreparation();
-        ReturnAllRockInLavel();
+        LocalClining();
+        curentDore.PutAllRock();
     }
-    private void PlayerPreparation()
+    public void LocalClining()
     {
         RemoveMemory();
         pl.Idle();
+        ReturnAllRockInLavel();
+        
     }
-    public void RemoveMemory()
+    public void RemoveMemory(bool AllDone = false)
     {
         stepCount = 0;
         Steps.Clear();
         maxStep = false;
+        if(!AllDone && !curentDore.AllDone) SetCurentDoreScore();
     }
-
+    public int GetStepsCount() => stepCount;
 
     /////////////////////////
     // ------------------- //
@@ -229,7 +274,6 @@ public bool stopAll = false;
                 Rock r = R.GetComponent<Rock>();
                 MemoriAtRock mr = new MemoriAtRock(r, R.transform.position);
                 curentDore.memoryAtRock.Add(mr); 
-                curentDore.remember.memory.Add(new JsonRock(r.ID, mr.pos));
             }
         }
         
@@ -274,18 +318,15 @@ public bool stopAll = false;
     /////////////////////////
     public void RegistPoint(Rock rock, Vector3 point, bool _state)
     {
-        Steps.Add(new PersonStepInfo(stepCount, rock, point, _state));
         IncrementMove();
+        Steps.Add(new PersonStepInfo(stepCount, rock, point, _state));
 
     }
-    public void RegistPoint(Movement p, Vector3 point)
+    public void RegistPoint(Movement p, Vector3 point, bool dontNidRegistr = false)
     {
-        Steps.Add(new PersonStepInfo(stepCount, p, point, p.curentDore));
-        IncrementMove();
-    }
-    public void RegistPoint(Dore d, bool _state)
-    {
-        Steps.Add(new PersonStepInfo(stepCount, d, _state, d.AllDone? Vector3.one: Vector3.zero));
+        if(dontNidRegistr == false )IncrementMove();
+
+        Steps.Add(new PersonStepInfo(stepCount, p, point));
     }
 
 
@@ -314,16 +355,15 @@ public struct PersonStepInfo
 {
     public int step;
     private int tipe;
-    public Movement person; public Dore dore; public Rock rock;
+    public Movement person; public Rock rock;
     public Vector3 point;
     public bool state;
-    public PersonStepInfo(int _s, Movement ps, Vector3 pos, Dore _dore)
+    public PersonStepInfo(int _s, Movement ps, Vector3 pos)
     {
         step = _s;
         tipe = 1;
         person = ps;
         point = pos;
-        dore = _dore;
         state = false; rock = null;
     }
     public PersonStepInfo(int _s, Rock _r, Vector3 pos, bool _state)
@@ -333,34 +373,17 @@ public struct PersonStepInfo
         point = pos;
         rock = _r;
         state = _state;
-        person = null; dore = null;
-    }
-    public PersonStepInfo(int _s, Dore _d, bool _state, Vector3 _allDone)
-    {
-        step = _s;
-        tipe = 3;
-        dore = _d;
-        state = _state;
-        point = _allDone; person = null; rock = null;
+        person = null;
     }
     public void PrewStep()
     {
         if(tipe == 1) 
         {
-            person.transform.position = point;
-            person.lavelMode(dore);
+            person.StartAlphaAnim(point);
         }
         else if(tipe == 2)
         {
-            rock.SetPos(point);
-            rock.State(state);
-        }
-        else 
-        {
-
-            dore.SetComplite(point == Vector3.one);
-
-            dore.OpenDore(state, true);
+            rock.StartAlphaAnim(point, state);
         }
         
     } 

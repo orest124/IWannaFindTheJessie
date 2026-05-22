@@ -32,33 +32,36 @@ public class GameOptions : MonoBehaviour {
 
         _save = GetComponent<SaveSystem>();
 
+        pl = FindAnyObjectByType<Movement>(); pl.meny = this; pl.SetMusic(music); p_Sound = pl.s;
+        Preparation();
     }
 
     void Start()
     {
-        pl = FindAnyObjectByType<Movement>(); pl.meny = this; pl.SetMusic(music); p_Sound = pl.s;
-        Preparation();
         if(inLavel) pl.inLavel = true;
-        if(DontNidMeny) return;
+        if(DontNidMeny) loadingTime = 0;
         
         GlobalFone.gameObject.SetActive(true);
         pl.SetStop(true);
-        if(config.Continue) Load();
-        else Play();
+        Play();
          
     }
     private void Preparation()
     {
         AllVolumeState(config.globalVolumeMod);
         MusicState(config.musicVolumeMod);
-        JoyType(config.JoysticTipe);
+        JoyType(config.JoysticType);
+        MoveType(config.MoveType);
     }
-    
+    public void MoveType(bool isSakaban) 
+    {
+        pl.MotionMod = isSakaban;
+    }
     public void JoyType(bool tipe) 
     {
         Buttons[4].SetActive(    tipe); 
         Buttons[5].SetActive(   !tipe); 
-        config.JoysticTipe     = tipe;
+        config.JoysticType     = tipe;
         pl.JoysticMod          = tipe;
     }
     public void MusicState(bool state) {
@@ -98,7 +101,11 @@ public class GameOptions : MonoBehaviour {
     {
         SetContinueValue(false);
         _save.LoadAllData();
-        Play();
+    } 
+    public void ReloadScene()
+    {
+        SetContinueValue(true);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     } 
     
     public void Play() => StartCoroutine(Loading());
@@ -150,7 +157,7 @@ public class GameOptions : MonoBehaviour {
     {
         config.Continue = state;
         SaveConfig();
-    }
+    }    
     public void SaveSceneIndex()
     {
         config.L_I_N_T_P_B_A_C = SceneManager.GetActiveScene().buildIndex;
@@ -174,6 +181,8 @@ public class GameOptions : MonoBehaviour {
 
         }
 
+        if(config.Continue) Load();
+        pl.memory.SetStats();
         yield return new WaitForSeconds(loadingTime); // очікуєм кінця загрузки
 
         t = 0;
@@ -202,6 +211,28 @@ public class GameOptions : MonoBehaviour {
                 yield return fixTime;
         }
         SceneManager.LoadScene(scene);
+    }
+    public void BlackFon(Action a) => StartCoroutine(BlackFonProces(a));
+    [SerializeField] float BlackSpd;
+    [SerializeField] float BlackPause;
+    IEnumerator BlackFonProces(Action action)
+    {
+        float t = 0;
+        while (t < 1) {
+            t += Time.fixedDeltaTime * BlackSpd;
+            GlobalFone.color = new Color(GlobalFone.color.r,GlobalFone.color.g,GlobalFone.color.b,t);
+                yield return fixTime;
+        }
+        action.Invoke();
+        yield return new WaitForSeconds(BlackPause);
+        t = 1;
+        while (t > 0)
+        {
+            t -= Time.fixedDeltaTime * BlackSpd;
+            GlobalFone.color = new Color(GlobalFone.color.r,GlobalFone.color.g,GlobalFone.color.b,t);
+                yield return fixTime;
+
+        }
     }
 
     [SerializeField] float spd;
