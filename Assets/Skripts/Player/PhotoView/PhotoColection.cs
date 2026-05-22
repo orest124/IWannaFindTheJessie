@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PhotoColection {
-    List<PhotoPictures> _photoColection;
+    public List<PhotoPictures> _photoColection;
     int curentIndex = 0;
     public PhotoColection()
     {
@@ -28,12 +28,13 @@ public class PhotoColection {
     public void OpenPhoto() => _photoColection[curentIndex].OpenFhoto();
     public void ClousedPhoto() => _photoColection[curentIndex].ClousedPhoto();
     
-    public void AddPhoto(PhotoPictures newPhoto)
+    public void AddPhoto(PhotoPictures newPhoto, bool inInvent = false)
     {
         if(!_photoColection.Contains(newPhoto))
         {
             curentIndex = PhotoCount();
             _photoColection.Add(newPhoto); 
+            if(inInvent) newPhoto.inInventory = true;
         }
 
     }

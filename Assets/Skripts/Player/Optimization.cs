@@ -29,7 +29,7 @@ public class Optimization : MonoBehaviour {
     {
         if(inLavel && Physics2D.OverlapCircle(transform.position,0.3f,mc.s.EndArea))
         {
-            mc.lavelMode(inLavel:false);
+            mc.lavelMode(null);
             music.inAbuse();
         }
         if(NotFindeAbuse &&  Physics2D.OverlapCircle(transform.position,0.3f,mc.s.FishTrigger)) ControledFish();
@@ -153,7 +153,6 @@ private void ControledFish()
 {
     foreach (var d in ClosestDore)
     {
-        d.Closed = false;
         d.OpenDore(true);
     }
     ClosestLavel = Lavel0;

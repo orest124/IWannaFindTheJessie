@@ -18,9 +18,11 @@ public class Entyty
 }
 public enum EntytyType
 {
-    Character,
     Door,
-    PickupableItem
+    Rock,
+    Character,
+    Photo,
+    Config
 }
 
 public class DoorEntyty : Entyty

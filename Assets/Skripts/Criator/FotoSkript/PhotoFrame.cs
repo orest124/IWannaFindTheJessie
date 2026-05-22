@@ -9,10 +9,8 @@ public class PhotoFrame : MonoBehaviour
     [SerializeField] GameObject beck;
     [SerializeField] GameObject front;
     [SerializeField] TextMeshProUGUI text;
-    public GameObject TabHelper;
-    [SerializeField] Transform t;
-    [SerializeField] Movement pl;
-    public Image img;
+    [SerializeField] Transform Rotation_Object;
+    public Image Photo;
     [SerializeField] float swapSpd;
     public Vector3 lokalSkale;
     void Start()
@@ -21,11 +19,11 @@ public class PhotoFrame : MonoBehaviour
     }
     public void SetImagine(Sprite _image, bool blecText, string massag, bool inInventory = false) 
     {
-        if (!inInventory) t.eulerAngles += new Vector3(0,180,0);
-        img.sprite = _image;
+        if (!inInventory) Rotation_Object.eulerAngles += new Vector3(0,180,0);
+        Photo.sprite = _image;
         text.color = blecText? Color.black:Color.white;
         text.text = massag;
-        Vector3 a = t.eulerAngles;
+        Vector3 a = Rotation_Object.eulerAngles;
         AngleControl(a);
         
         
@@ -33,16 +31,16 @@ public class PhotoFrame : MonoBehaviour
     
     void Update()
     {
-        Vector3 a = t.eulerAngles;
+        Vector3 a = Rotation_Object.eulerAngles;
         AngleControl(a);
-        if(Input.GetKey(KeyCode.A)) t.eulerAngles += new Vector3(0, Time.deltaTime * swapSpd);
-        if(Input.GetKey(KeyCode.D)) t.eulerAngles += new Vector3(0, -Time.deltaTime * swapSpd);
-        if(Input.GetKey(KeyCode.S)) t.eulerAngles = new Vector3(a.x, 0,a.z);
+        if(Input.GetKey(KeyCode.A)) Rotation_Object.eulerAngles += new Vector3(0, Time.deltaTime * swapSpd);
+        if(Input.GetKey(KeyCode.D)) Rotation_Object.eulerAngles += new Vector3(0, -Time.deltaTime * swapSpd);
+        if(Input.GetKey(KeyCode.S)) Rotation_Object.eulerAngles = new Vector3(a.x, 0,a.z);
         
     }
     public void ClousedPhoto()
     {
-        t.eulerAngles = new Vector3(t.eulerAngles.x, 0,t.eulerAngles.z);;
+        Rotation_Object.eulerAngles = new Vector3(Rotation_Object.eulerAngles.x, 0,Rotation_Object.eulerAngles.z);;
         front.SetActive(false);
         gameObject.SetActive(false);
     }
