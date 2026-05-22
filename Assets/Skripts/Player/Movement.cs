@@ -1,9 +1,10 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 using Random = UnityEngine.Random;
-using UnityEngine.UIElements;
+using System.Collections;
+using Unity.Mathematics;
+using System;
 
 public class Movement : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class Movement : MonoBehaviour
     public bool inLavel;
     public bool isMove;
     public bool PhotoOpen => !s.notFromPhoto;
+    public bool noInteractive;
     public bool OptionsOpen = false;
     [Header("Movement")] 
     [SerializeField] float spd;
@@ -37,17 +39,13 @@ public class Movement : MonoBehaviour
 
     [Header("Abuse")] 
     public Dore abuseDore;
-    private bool ReversArtefact;
 
     [Header("LavelStates")] 
     public Dore curentDore;
     [HideInInspector] public Vector3 StartPos;
 
-
-    
-
-
     public void SetStop(bool _stop) => StopGame = _stop;
+    public void SetNoInteractiv(bool noInter) => noInteractive = noInter;
 
     public bool _inSnow => spr.inSnow;
 
@@ -66,29 +64,31 @@ public class Movement : MonoBehaviour
     void Start()
     {
         spr.LStart();
+        CheckButton(transform.position);
     }
     private bool Run => Input.GetKey(KeyCode.LeftShift);
+    public bool MotionMod;
     private void Update() {
         
-        if(PhotoOpen) return;
+        if(PhotoOpen || noInteractive) return;
 
         if ( Input.GetKeyDown(Esc)) meny.InOptions(!OptionsOpen);
-        if ( Input.GetKeyDown(Restart))
-        {
-            if(curentDore.AllDone) memory.LocalClining( forMemory:true );
-            else memory.RestartLavel();
-        }
-
+        if ( Input.GetKeyDown(Restart)) meny.BlackFon(() => memory.RestartLavel());
+        
         else if ( Input.GetKeyDown(Return)) memory.StepBihaind();
         if ( Input.GetKeyDown(Save)) meny.Save();
+        if ( Input.GetKeyDown(KeyCode.L)) meny.ReloadScene();
+        if ( Input.GetKeyDown(KeyCode.X)) memory.FlipCounter();
 
         
+        if(dirTimer > 0) { dirTimer -= Time.deltaTime; return; }
         if(isMove || StopGame) return;
         NewDirection();
     }
+    
 
     private void FixedUpdate() {
-
+        
         if(isMove)  UncontrolMove(targetPoint, curentSpd); 
         if(!inLavel && !CinemaMod) Move(transform.position + moveDir,curentSpd);
     }
@@ -113,9 +113,7 @@ public class Movement : MonoBehaviour
             PlaceControle(moveDir);
             memory.stopAll = false;
             }
-
         }
-            
     }
   
 
@@ -143,8 +141,7 @@ public class Movement : MonoBehaviour
         Vector3 newPos = Vector2.MoveTowards(transform.position, target, newspd);
         
         spr.ChengSprite(moveDir);
-        transform.position = newPos;
-        CheckButton(newPos);
+        SetPos(newPos);
     }   
 
     private void CheckButton(Vector3 point)
@@ -187,14 +184,24 @@ public class Movement : MonoBehaviour
     /////////////////////////
 
     bool CinemaMod = false;
+    bool PushRock = false;
+
+    private float dirTimer;
+    private float dirTime = 0.05f;
     private void NewDirection()
     {
         prePos = Vector3.zero; 
+        if(dirTimer > 0) { return; }
+
+        bool FollowMod = MotionMod? !Run : Run;
+        PushRock = false;
         moveDir = GetDirect();
         spr.ChengSprite(isMove?moveDir : zero);
 
         if(moveDir != zero )
         {
+            if(!FollowMod) dirTimer = dirTime;
+
             if(!spr.RedyToMove()) {
 
                 moveDir = zero;
@@ -205,17 +212,16 @@ public class Movement : MonoBehaviour
 
             targetPoint = IdealPos(mod: false) + moveDir;
 
-            if(Run) {
+            if(FollowMod) {
                 Vector3 pos = GetTargetRockInMove(targetPoint);
                 if(pos.z == 1) return;
                 else if(pos.z == -1) isMove = true;
                 else isMove = targetPoint != pos; 
             }
             else  isMove = CheckEmpty(targetPoint);
-             
-            if(isMove == false) return;   
             
-            memory.RegistPoint(this, transform.position);
+            if(isMove == false) return;   
+            memory.RegistPoint(this, transform.position, FollowMod && PushRock);
 
             int nomb = CheckFallen(targetPoint);
             if(nomb == 2) 
@@ -249,7 +255,7 @@ public class Movement : MonoBehaviour
             y = Bup - Bdown;
         }
         if(inLavel && x != 0) y = 0;
-            
+        if(x != 0 || y != 0) oldDir = new Vector3(x,y);
         return new Vector3(x,y);
 
     }
@@ -307,6 +313,7 @@ public class Movement : MonoBehaviour
             Rock r;
             if(coll.TryGetComponent<Rock>(out r))
             {
+                spr.AlignedSprite(moveDir);
                 r.MoveTo(moveDir);
                 cMove.shake = true;
                 return false;
@@ -324,7 +331,12 @@ public class Movement : MonoBehaviour
             Rock r;
             if(coll.TryGetComponent<Rock>(out r))
             {
-                if (r.isMove) return 1;
+                
+                if (r.isMove) 
+                {
+                    spr.AlignedSprite(moveDir);
+                    return 1;
+                }
                 else return 2;
             }
             return 2;
@@ -338,12 +350,13 @@ public class Movement : MonoBehaviour
         if(coll.TryGetComponent<Rock>(out r))
         {
             if (r.isMove) return r.GetTarget();
-            else
+            else if(r.MoveTo(moveDir))
             {
                 cMove.shake = true;
-                r.MoveTo(moveDir);
-                return new Vector3(0,0,1);
-            } 
+                PushRock = true;
+                return r.GetTarget();
+            }
+            
         }
         return new Vector3(0,0,1);
         
@@ -365,7 +378,7 @@ public class Movement : MonoBehaviour
     {
         int tipe = CheckFallen(transform.position);
 
-        if (tipe == 1) {memory.RestartLavel();spr.Falling();}
+        if (tipe == 1) {meny.BlackFon(() => memory.RestartLavel());spr.Falling();}
         else isMove = false;
     }
 
@@ -375,6 +388,10 @@ public class Movement : MonoBehaviour
     {
         float _mod = mod? 0.5f : 0;
         return new Vector2(Mathf.RoundToInt(transform.position.x + _mod), Mathf.RoundToInt(transform.position.y + _mod));
+    }
+        private Vector3 IdealPos(Vector3 pos)
+    {
+        return new Vector2(Mathf.RoundToInt(pos.x), Mathf.RoundToInt(pos.y));
     }
 
     /////////////////////////
@@ -434,11 +451,13 @@ public class Movement : MonoBehaviour
         isMove = false;
         StopGame = false;
         moveDir = Vector2.zero;
-        if(JustStp) return;
-        
-        StartPos = curentDore.startPos.transform.position;
-        inLavel = FromLavel;
-        transform.position = StartPos;
+        if(JustStp == false)
+        {
+            StartPos = curentDore.startPos.transform.position;
+            inLavel = FromLavel;
+            SetPos(StartPos);
+        }
+        CentralizedCamera();
         
     }
     // public void FiendKey(int tipe)
@@ -459,8 +478,53 @@ public class Movement : MonoBehaviour
     // }
     [Header("Keyboard")] 
     private KeyCode up = KeyCode.W; private KeyCode left = KeyCode.A; private KeyCode down = KeyCode.S; private KeyCode right = KeyCode.D;
-    private KeyCode Return = KeyCode.Space; private KeyCode Restart = KeyCode.Q; private KeyCode Esc = KeyCode.Escape; private KeyCode Save = KeyCode.Y;
+    private KeyCode Return = KeyCode.R; private KeyCode Restart = KeyCode.Q; private KeyCode Esc = KeyCode.Escape; private KeyCode Save = KeyCode.Y;
     
+
+    private Vector3 oldDir;
+    [SerializeField] float alphaDuration = 2f;
+    public void StartAlphaAnim(Vector3 next) => StartCoroutine(AlphaAnim(next));
+    WaitForFixedUpdate fix = new WaitForFixedUpdate();
+    IEnumerator AlphaAnim(Vector3 nextPoint)
+    {
+        SetNoInteractiv(true);
+        AnimationSprite startSp = spr.GetSprite(oldDir);
+        nextPoint = IdealPos(nextPoint);
+        Vector3 myPoint = IdealPos(false);
+        Vector3 next = myPoint - nextPoint;
+        
+        AnimationSprite nextSp = spr.GetSprite(next);
+
+        
+
+        float t = alphaDuration;
+        while (t > 0)
+        {
+            yield return fix;
+            t -= Time.fixedDeltaTime;
+            float n = t / alphaDuration;
+            
+            spr.SetShedowAlpha(n * 0.35f);
+            startSp.SetAlpha(n);
+        }
+        SetPos(nextPoint);
+        spr.AlignedSprite(next);
+        startSp.SetAlpha(1);
+        nextSp.SetAlpha(0);
+
+        t = 0;
+        
+        while (t < alphaDuration)
+        {
+            yield return fix;
+            t += Time.fixedDeltaTime;
+            float n = t / alphaDuration;
+            
+            spr.SetShedowAlpha(n * 0.35f);
+            nextSp.SetAlpha(n);
+        }
+        SetNoInteractiv(false);
+    }
 
     public void CentralizedCamera() => Cra.transform.position = new Vector3(transform.position.x,transform.position.y, Cra.transform.position.z);
     void OnDrawGizmos()
@@ -496,6 +560,12 @@ public class Movement : MonoBehaviour
     void U() => CheckEmpty(new());
     void T() => CheckCollider(new());
 
+    public void SetPos(Vector3 point, bool stop = false)
+    {
+        transform.position = point;
+        CheckButton(point);
+        if(stop) Idle(true);
+    }
 }
 
 public class JsonCharacter : Entyty

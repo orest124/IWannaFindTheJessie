@@ -1,6 +1,4 @@
 using System.Collections;
-using NUnit.Framework;
-using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class Rock : MonoBehaviour 
@@ -10,13 +8,12 @@ public class Rock : MonoBehaviour
     void E() => FindLostPoint(new());
     void A() => State(false);
 
-    void D() => ButtonCheck(new());
+    void D() => CheckButton(new());
     void Y() => PlaceControle();
     void U() => CheckEmpty(new());
     void T() => CheckCollider(new());
 
     SpriteRenderer sp;
-    [SerializeField]Movement pl;
     [SerializeField] Collider2D Hcoll;
     [SerializeField] Collider2D Acoll;
 
@@ -34,12 +31,16 @@ public class Rock : MonoBehaviour
     private void Awake()
     {
         sp = GetComponent<SpriteRenderer>();
-        sp.sortingOrder = -Mathf.RoundToInt(transform.position.y * 9);
+        sp.sortingOrder = -Mathf.RoundToInt(transform.position.y * 10);
         GetName();
         StartPos = transform.position;
         memory = FindAnyObjectByType<MovementMemory>();
         memory.IsSaveReady(this);
         curentSpd = spd;
+    }
+    void Start()
+    {
+        CheckButton(transform.position);
     }
     void FixedUpdate()
     {
@@ -69,7 +70,7 @@ public class Rock : MonoBehaviour
         isMove = false;
         point = point == Vector3.zero? StartPos : point;
         transform.position = point;
-        ButtonCheck(transform.position);
+        CheckButton(transform.position);
         State(CheckFallen(transform.position) == 1);
     }
 
@@ -78,9 +79,9 @@ public class Rock : MonoBehaviour
     public Vector3 GetTarget() => targetPoint;
     [SerializeField] Vector3 targetPoint;
     [SerializeField] Vector3 moveDir;
-    public void MoveTo(Vector3 dir, bool inToMove = false)
+    public bool MoveTo(Vector3 dir, bool inToMove = false)
     {
-        if(isMove) return;
+        if(isMove) return false;
         moveDir = dir;  
         if(CheckEmpty(transform.position + dir,!inToMove))
         {
@@ -89,7 +90,9 @@ public class Rock : MonoBehaviour
 
             memory.RegistPoint(this, transform.position, PlatformState);
             FindLostPoint(moveDir);
+            return true;
         }
+        return false;
     }
     private bool _rice;
     public void FindLostPoint(Vector3 dir)
@@ -141,9 +144,47 @@ public void UncontrolMove(Vector3 _point)
         float newspd = Time.fixedDeltaTime * curentSpd;
         Vector3 newPos = Vector2.MoveTowards(transform.position, target, newspd);
         transform.position = newPos;
-        sp.sortingOrder = -Mathf.RoundToInt(transform.position.y * 10) + 2;
-        ButtonCheck(newPos);
-    }    
+        sp.sortingOrder = -Mathf.RoundToInt(transform.position.y * 10);
+        CheckButton(newPos);
+    }  
+
+
+
+    
+    [SerializeField] float alphaDuration = 0.4f;
+    public void StartAlphaAnim(Vector3 next, bool state) => StartCoroutine(AlphaAnim(next, state));
+    WaitForFixedUpdate fix = new WaitForFixedUpdate();
+    IEnumerator AlphaAnim(Vector3 nextPoint, bool state)
+    {
+        memory.pl.SetNoInteractiv(true);
+        
+        float t = alphaDuration;
+        while (t > 0)
+        {
+            yield return fix;
+            t -= Time.fixedDeltaTime;
+            float n = t / alphaDuration;
+            
+            SetAlpha(n);
+        }
+        SetPos(nextPoint);
+        State(state);
+
+        t = 0;
+        while (t < alphaDuration * 0.65)
+        {
+            yield return fix;
+            t += Time.fixedDeltaTime;
+            float n = t / alphaDuration;
+            
+            SetAlpha(n);
+        }
+        memory.pl.SetNoInteractiv(false);
+    }  
+        public void SetAlpha(float a = 0)
+    {
+        sp.color = new Color(sp.color.r,sp.color.g,sp.color.b, a);
+    }
 
 
     /////////////////////////
@@ -182,7 +223,7 @@ public void UncontrolMove(Vector3 _point)
         else
         {
 
-            sp.sortingOrder = -Mathf.RoundToInt(transform.position.y * 10) + 2;
+            sp.sortingOrder = -Mathf.RoundToInt(transform.position.y * 10);
             gameObject.transform.localScale = new Vector3(1f,1f,0);
         }
         
@@ -234,7 +275,7 @@ public void UncontrolMove(Vector3 _point)
     private Collider2D prewColl;
     private Button curentButton;
 
-    public void ButtonCheck(Vector3 point)
+    public void CheckButton(Vector3 point)
     {
         Collider2D coll = Physics2D.OverlapPoint(point, LayerMask.GetMask("Button"));
         if(coll != null && prewColl != coll)

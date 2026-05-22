@@ -1,17 +1,15 @@
 
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Newtonsoft.Json;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class SaveSystem : MonoBehaviour 
 {
     public bool inMeny;
     private const string STATE = nameof(STATE);
-    private const string pathToDoor = "/Saves/Memory Of Door.json";
-    private const string pathToRock = "/Saves/Memory Of Rook.json";
+    private const string pathToDoor = "/Saves/4151518.json";
+    private const string pathToRock = "/Saves/18151511.json";
     private const string pathToCharacter = "/Saves/Player Memory.json";
 
     private GameState _gameState;
@@ -26,16 +24,17 @@ public class SaveSystem : MonoBehaviour
     }
     public void LoadAllData()
     {
+        _gameState = LoadState(pathToCharacter);
+        ReturnCharacterMemory();
+        _gameState.Entytys.Clear();
+        
         _gameState = LoadState(pathToDoor);
         ReturnMemoryAtDore();
         _gameState.Entytys.Clear();
 
         _gameState = LoadState(pathToRock);
         ReturnMemoryAtRock();
-        _gameState.Entytys.Clear();
 
-        _gameState = LoadState(pathToCharacter);
-        ReturnCharacterMemory();
         _gameState.Entytys.Clear();
     }
 
@@ -86,36 +85,7 @@ public class SaveSystem : MonoBehaviour
 
         pl.meny.SaveSceneIndex();
     }
-    public void SaveAllDoors()
-    {
-        _gameState.Entytys.Clear();
-        foreach (var door in dores)
-        {
-            JsonDoor d = door.Value.remember;
-            d.ID = _gameState.Entytys.Count;
-            _gameState.Entytys.Add(d);
-        }
-        SaveState(pathToDoor);
-    }
-    public void SaveAllRocks()
-    {
-        _gameState.Entytys.Clear();
-        foreach (var r in rocks)
-        {
-            JsonRock jr = new JsonRock(r.Value.ID, r.Value.transform.position);
-            jr.ID = _gameState.Entytys.Count;
-            _gameState.Entytys.Add(jr);
-        }
-        SaveState(pathToRock);
-    }
-    public void SaveCharacter()
-    {
-       _gameState.Entytys.Clear();
-       JsonCharacter i = pl.GetPersonalmemory();
-       _gameState.Entytys.Add(i);
-        SaveState(pathToCharacter);
-    }
-    
+
     public void RemoveAllMemory()
     {
         File.WriteAllText(Application.dataPath + "/" + pathToDoor, string.Empty);
@@ -123,36 +93,59 @@ public class SaveSystem : MonoBehaviour
         File.WriteAllText(Application.dataPath + "/" + pathToCharacter, string.Empty);
     }
 
+
+    public void SaveAllDoors()
+    {
+        _gameState.Entytys.Clear();
+        foreach (var door in dores) _gameState.Entytys.Add( door.Value.GetJson() );
+        SaveState(pathToDoor);
+    }
     private void ReturnMemoryAtDore()
     {
         foreach (JsonDoor i in _gameState.Entytys)
         {
             if(!dores.ContainsKey(i.name)) continue;
             Dore d = dores[i.name];
-            if(d.Prime) d.SetComplite(i.opened);
-
-            if(i.opened == true) d.OpenDore(true);
-            else d.RemoveDore();
-
-            d.remember.memory.Clear();
-            d.memoryAtRock.Clear();
+            d.LoadPreparation(i);
+            d.RemoveMemoryAtRook();
             foreach (var r in i.memory)
             {
                 Rock rock = rocks[r.name];
                 d.memoryAtRock.Add(new MemoriAtRock(rock, r.GetPos()));
-                d.remember.memory.Add(r);
             }
         }
+    }
+
+
+    public void SaveAllRocks()
+    {
+        _gameState.Entytys.Clear();
+        foreach (var r in rocks)
+        {
+            JsonRock jr = new JsonRock(r.Value.ID, r.Value.transform.position);
+            _gameState.Entytys.Add(jr);
+        }
+        SaveState(pathToRock);
     }
     private void ReturnMemoryAtRock()
     {
         foreach (JsonRock i in _gameState.Entytys)
         {
-            if(!dores.ContainsKey(i.name)) continue;
+            if(!rocks.ContainsKey(i.name)) continue;
             Rock r = rocks[i.name];
             r.SetPos(i.GetPos());
         }
     }    
+
+
+
+    public void SaveCharacter()
+    {
+       _gameState.Entytys.Clear();
+       JsonCharacter i = pl.GetPersonalmemory();
+       _gameState.Entytys.Add(i);
+        SaveState(pathToCharacter);
+    }
     private void ReturnCharacterMemory()
     {
         JsonCharacter pi = (JsonCharacter)_gameState.Entytys[0];
@@ -166,12 +159,16 @@ public class SaveSystem : MonoBehaviour
         }
         pl.preLavels.Clear();
         foreach (var di in pi.DoorIDs) pl.preLavels.Add(dores[di]);
-        pl.NextDoor(pl.preLavels[^1]);
-        
-        
-        pl.transform.position = pi.GetVector();
+        pl.curentDore = pl.preLavels[^1];
+        pl.StartPos = pl.curentDore.startPos.position;
+        pl.memory.NewDore(pl.preLavels[^1], true);
+
+        pl.SetPos(pi.GetVector());
+        pl.CentralizedCamera();
         pl.inLavel = pi.inLavel;
     } 
+
+
     private Dictionary<int,Dore> dores = new();
     private Dictionary<int,Rock> rocks = new();
     public Dictionary <int,Dore> GetDoorArr() => dores;

@@ -27,7 +27,7 @@ public class P_SoundAndPhoto : Sounds {
 
     void Update()
     {
-        if(mc.OptionsOpen) return;
+        if(mc.OptionsOpen || mc.noInteractive) return;
         
         if(notFromPhoto) {
 
@@ -99,7 +99,22 @@ public class P_SoundAndPhoto : Sounds {
             PhotoTime(true);
             ph.inInventory = true;
         }
+        coll = Physics2D.OverlapCircle(transform.position,0.3f,LayerMask.GetMask("Prise"));
+        if(coll != null)
+        { 
+            coll.GetComponent<PrizeSercher>().prize.StartPresentation();
+        }
     }
+    /*
+    57
+    4 - 58
+    3 - 42
+    12 - 107
+    13 - 90
+
+
+
+    */
 
 
 

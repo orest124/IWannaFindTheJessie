@@ -1,5 +1,3 @@
-
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -60,7 +58,6 @@ public class PhotoFrame : MonoBehaviour
         }
         else
         {
-            // front.SetActive(false);
             beck.SetActive(true);
             text.enabled = false;
         }

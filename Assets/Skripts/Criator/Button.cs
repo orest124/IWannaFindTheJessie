@@ -2,7 +2,6 @@ using UnityEngine.Events;
 using UnityEngine.Serialization;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 public class Button : MonoBehaviour
 {
@@ -21,7 +20,6 @@ public class Button : MonoBehaviour
     {
         curentArt = GetComponent<SpriteRenderer>();
         sound = FindAnyObjectByType<SoundControler>();
-        CheckPoint();
     }
     [Header("Special")]
     [SerializeField] private bool nideToPressed;
@@ -46,27 +44,31 @@ public class Button : MonoBehaviour
     [FormerlySerializedAs("Special Action")]
     [SerializeField] private PressedEvent SpecialAction = new PressedEvent();
 
+    public bool ExeptedState = false;
+
+
+
+
+
     public void ChengPresed(bool state, bool player = false)
     {
         if(!PlayerPressed && player) return;
+        ExeptedState = state;
         IsPressed = nideToPressed? state : true;
     
     }
-    public bool select;
-    public void CheckPoint() 
-    {
-        if(select)
-        {
-            select = true;
-        }
-        Collider2D c = Physics2D.OverlapPoint(transform.position, LayerMask.GetMask("Rook"));
-        if(c == null)
-        {
-            IsPressed = false;
-        }
-        else   c.GetComponent<Rock>().ButtonCheck(transform.position);
-            
-    }
+    public void NormalizedState() => IsPressed = ExeptedState;
+    public bool СheckState(bool s) => IsPressed == s;
+    
+
+
+
+
+
+
+
+
+
     private void Sound()
     {
         if(sound != null) sound.ButtonSound();
