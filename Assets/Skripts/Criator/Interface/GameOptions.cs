@@ -35,12 +35,14 @@ public class GameOptions : MonoBehaviour {
 
         _save = GetComponent<SaveSystem>();
 
-        pl = FindAnyObjectByType<Movement>(); pl.meny = this; pl.SetMusic(music); p_Sound = pl.s;
-        Preparation();
+        pl = FindAnyObjectByType<Movement>(); pl.meny = this; pl.SetMusic(music); 
     }
 
     void Start()
     {
+        p_Sound = pl.s;
+        Preparation();
+        
         if(inLavel) pl.inLavel = true;
         if(DontNidMeny) loadingTime = 0;
         
