@@ -10,6 +10,7 @@ using System.IO;
 public class GameOptions : MonoBehaviour {
     [SerializeField] bool DontNidMeny;
     [SerializeField] bool inLavel;
+    [SerializeField] bool _loadData;
     private MusicThemeControler music;
     private SoundControler sound;
     private P_SoundAndPhoto p_Sound;
@@ -26,6 +27,8 @@ public class GameOptions : MonoBehaviour {
     {
         music = FindAnyObjectByType<MusicThemeControler>();
         sound = FindAnyObjectByType<SoundControler>();
+        sound.SetOnline(false);
+        
 
         GetContext();
         LoadConfig();
@@ -180,7 +183,10 @@ public class GameOptions : MonoBehaviour {
                 yield return fixTime;
 
         }
-
+        if(_loadData)
+        {
+            SetContinueValue(true);
+        }
         if(config.Continue) Load();
         pl.memory.SetStats();
         yield return new WaitForSeconds(loadingTime); // очікуєм кінця загрузки
@@ -201,6 +207,9 @@ public class GameOptions : MonoBehaviour {
             GlobalFone.color = new Color(GlobalFone.color.r,GlobalFone.color.g,GlobalFone.color.b,t);
             yield return fixTime;
         }
+        sound.SetOnline();
+
+
     }
     IEnumerator SceneLoading(int scene) 
     {

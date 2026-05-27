@@ -2,6 +2,8 @@ using UnityEngine.Events;
 using UnityEngine.Serialization;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
+using System;
 
 public class Button : MonoBehaviour
 {
@@ -25,6 +27,7 @@ public class Button : MonoBehaviour
     [SerializeField] private bool nideToPressed;
     [SerializeField] private bool PlayerPressed;
     [SerializeField] private bool _isPressed;
+    [SerializeField] private bool _curentState;
 
     public bool IsPressed
     {
@@ -32,11 +35,35 @@ public class Button : MonoBehaviour
         set { 
             if(_isPressed == value) return;
             _isPressed = value;
-            foreach (var d in dore) d?.Check();
             Sound();
             Art().sprite = _isPressed? ClousedArt: OpenArt;
-            if(_isPressed == true)SpecialAction?.Invoke();
+            
+            StopAllCoroutines();
+            if(_isPressed == true) StartCoroutine(Timer(() => PressedEffect(), duration));
+            else StartCoroutine(Timer(() => UnPressedEffect(), duration * 0.6f)); 
         }
+    }
+
+
+    private void PressedEffect()
+    {
+        if(_curentState) return;
+
+        _curentState = true;
+        foreach (var d in dore) d?.Check();
+        Sound();
+
+        SpecialAction?.Invoke();
+    }
+    private void UnPressedEffect()
+    {
+        if(!_curentState) return;
+
+        _curentState = false;
+        foreach (var d in dore) d?.Check();
+        Sound();
+
+        
     }
     [System.Serializable]
     
@@ -59,8 +86,20 @@ public class Button : MonoBehaviour
     }
     public void NormalizedState() => IsPressed = ExeptedState;
     public bool СheckState(bool s) => IsPressed == s;
-    
+    [SerializeField] float duration;
+    private WaitForFixedUpdate fix = new WaitForFixedUpdate();
+    IEnumerator Timer(Action action, float time)
+    {
+        float t = 0;
+        while (t < duration)
+        {
+            yield return fix;
+            t += Time.fixedDeltaTime;
+        }
+        action.Invoke();
+        
 
+    }
 
 
 

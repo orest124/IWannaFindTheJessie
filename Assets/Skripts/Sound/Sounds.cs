@@ -21,6 +21,10 @@ public class Sounds : MonoBehaviour
     {
         audioSrc.volume = 1 * LovalModVolume * GlobalModVolume;
     }
+        public void SetVolume(float v)
+    {
+        audioSrc.volume = v;
+    }
     public void PlaySound(AudioClip clip, float volume = 1f, bool destroyed = false, float p1 = 0.85f, float p2 = 1.2f,bool pitch = true)
     {
         if(pitch)audioSrc.pitch = Random.Range(p1,p2);
