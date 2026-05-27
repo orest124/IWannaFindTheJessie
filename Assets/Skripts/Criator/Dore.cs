@@ -8,25 +8,27 @@ public class Dore : MonoBehaviour {
     [HideInInspector] public LavelInfo myLavel;
     public bool DontNidStatistic;
 
-    bool MoveTipe => memory.pl.MotionMod;
-    public int GetDifference() => (MoveTipe? StepCountToGold2 : StepCountToGold1) - StepCount -1;
-    public int GetCountToGold() => MoveTipe? StepCountToGold2 : StepCountToGold1;
+    private Movement pl => memory == null? null : memory.pl;
+    private bool _moveTipe => pl.MotionMod;
+
+    public int GetDifference() => (_moveTipe? StepCountToGold2 : StepCountToGold1) - StepCount -1;
+    public int GetCountToGold() => _moveTipe? StepCountToGold2 : StepCountToGold1;
     private Collider2D coll;
     private SpriteRenderer curentArt;
     [HideInInspector] public MovementMemory memory;
     [HideInInspector] public Dore PrimeDore;
     public Transform startPos;
-    [Space] [Space]
-    [Header("Cild Dores")]
-    public List<Dore> ChildDore = new();
-    [Space] [Space]
+    [Space]
 
     [Header("Buttons")]
     [Tooltip("Тут можна назначити кнопки")]
     [SerializeField] private ImportantButtonsCollection Buttons;
     [Tooltip("Тут можна назначити неважливі кнопки")]
+    [Space]
+    [Header("Cild Dores")]
+    public List<Dore> ChildDore = new();
 
-
+ [Space] [Space]
     public bool Prime;
     [Tooltip("Якщо забрати з кнопки камінь двері закриються. \n Навіть коли рівень пройдено")]
     [SerializeField] bool FlappyDore;
@@ -62,7 +64,7 @@ public class Dore : MonoBehaviour {
         coll = GetComponent<Collider2D>();
         curentArt = GetComponent<SpriteRenderer>();
         float y = curentArt.bounds.max.y;
-        int order = -Mathf.RoundToInt(y * 10) + 5;
+        int order = -(Mathf.RoundToInt(y * 10) + 1);
         curentArt.sortingOrder = order;
 
         Buttons.Preparation(this);
@@ -81,10 +83,6 @@ public class Dore : MonoBehaviour {
             PrimeDore = this;
             foreach (var b in ChildDore) 
             {
-                if(select)
-        {
-            
-        }
                 b.PrimeDore = this;
                 b.sound = sound;
                 b.memory = memory;
@@ -121,7 +119,7 @@ public bool select = false;
     }
     public void ReturnCount(int _count, bool tipe)
     {
-        if(tipe == MoveTipe)
+        if(tipe == _moveTipe)
         StepCount = _count;
         else
         {
@@ -210,11 +208,11 @@ public bool select = false;
                                                 /////////////////////////
     void Trigger()
     {
-        if(sp.pl.curentDore == PrimeDore || memory.stopAll) return;
+        if(pl == null || pl.curentDore == PrimeDore || memory.stopAll) return;
         
         if(Physics2D.OverlapBox(transform.position + offset, size, 0, LayerMask.GetMask("Player")))
         {
-            sp.pl.lavelMode(PrimeDore);
+            pl.lavelMode(PrimeDore, this);
             if(Prime && AllDone == false) 
             {
                 OpenDore(false);
@@ -254,11 +252,11 @@ public bool select = false;
     {
         if(remember == null || remember.name == 0)
         {
-            JsonDoor i = new JsonDoor(ID,AllDone,curentState,StepCount, MoveTipe);
+            JsonDoor i = new JsonDoor(ID,AllDone,curentState,StepCount, _moveTipe);
             foreach (var r in memoryAtRock) i.memory.Add(new JsonRock(r.rock.ID, r.pos));
             remember = i;
         }
-        else remember.UpdateJson(AllDone,curentState,StepCount,MoveTipe);
+        else remember.UpdateJson(AllDone,curentState,StepCount,_moveTipe);
         return remember;
     }
 
@@ -266,8 +264,8 @@ public bool select = false;
     [SerializeField] bool _gizmos = false;
     void OnDrawGizmos()
     {
-        if(!_gizmos) return;
-        if(sp.pl.curentDore == PrimeDore) return;
+        if(!_gizmos || pl == null) return;
+        if(pl.curentDore == PrimeDore) return;
 
         Gizmos.color = Color.blue;
         Gizmos.DrawWireCube(transform.position + offset, size);
@@ -313,7 +311,6 @@ public class ButtonState_State
 [System.Serializable]
 public class DooreSprites
 {
-    public Movement pl;
     public Sprite OpenArt_Hor;
     public Sprite ClousedArt_Hor;
     public Sprite OpenArt_Ver;

@@ -3,8 +3,6 @@ using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 using Random = UnityEngine.Random;
 using System.Collections;
-using Unity.Mathematics;
-using System;
 
 public class Movement : MonoBehaviour
 {
@@ -20,7 +18,7 @@ public class Movement : MonoBehaviour
     public bool OptionsOpen = false;
     [Header("Movement")] 
     [SerializeField] float spd;
-    private float curentSpd;
+    [SerializeField] float curentSpd;
     [Space]
 
     public Vector3 moveDir;
@@ -72,14 +70,17 @@ public class Movement : MonoBehaviour
         
         if(PhotoOpen || noInteractive) return;
 
-        if ( Input.GetKeyDown(Esc)) meny.InOptions(!OptionsOpen);
-        if ( Input.GetKeyDown(Restart)) meny.BlackFon(() => memory.RestartLavel());
-        
-        else if ( Input.GetKeyDown(Return)) memory.StepBihaind();
+        if ( Input.GetKeyDown(KeyCode.X)) memory.FlipCounter();
+        //зробити щоб немона було робити сейв в войді
         if ( Input.GetKeyDown(Save)) meny.Save();
         if ( Input.GetKeyDown(KeyCode.L)) meny.ReloadScene();
-        if ( Input.GetKeyDown(KeyCode.X)) memory.FlipCounter();
-
+        if(inLavel)
+        {
+            if ( Input.GetKeyDown(Esc)) meny.InOptions(!OptionsOpen);
+            if ( Input.GetKeyDown(Restart)) meny.BlackFon(() => memory.RestartLavel());
+            else if ( Input.GetKeyDown(Return)) memory.StepBihaind();
+        }
+            
         
         if(dirTimer > 0) { dirTimer -= Time.deltaTime; return; }
         if(isMove || StopGame) return;
@@ -221,7 +222,6 @@ public class Movement : MonoBehaviour
             else  isMove = CheckEmpty(targetPoint);
             
             if(isMove == false) return;   
-            memory.RegistPoint(this, transform.position, FollowMod && PushRock);
 
             int nomb = CheckFallen(targetPoint);
             if(nomb == 2) 
@@ -231,6 +231,8 @@ public class Movement : MonoBehaviour
             }
             else if(nomb == 1) {isMove = false; spr.ChengSprite(zero);return;}
             else curentSpd = spd;
+
+            memory.RegistPoint(this, transform.position, FollowMod && PushRock);
 
         }    
     }
@@ -265,9 +267,11 @@ public class Movement : MonoBehaviour
     {
         fall = false;
         int rockForvard = 0;
+        
         Random.InitState(Random.Range(0, 12545));
 
         targetPoint = IdealPos(mod: false) + dir;
+        if( CheckRockInMove(targetPoint) == 1) rockForvard++;
         while(true)
         {
             int tipe = CheckFallen(targetPoint);
@@ -322,7 +326,7 @@ public class Movement : MonoBehaviour
             return false;
         }
     }
-    public int CheckRockInMove(Vector3 _point)
+    private int CheckRockInMove(Vector3 _point)
     {
         var coll = CheckCollider(_point);
         if(coll == null) return 0;
@@ -400,16 +404,16 @@ public class Movement : MonoBehaviour
     // ------------------- //
     /////////////////////////
     public List<Dore> preLavels = new();
-    public void lavelMode(Dore _dore = null)
+    public void lavelMode(Dore _dore = null,Dore _callDore = null)
     {
-        if(_dore == curentDore || StopGame) return;
-        if(_dore == null)
+        if(_dore == curentDore || StopGame || _dore == null) return;
+        if(_dore == abuseDore)
         {
             
-            inLavel = false;
-            curentDore = abuseDore;
+            NextDoor(_dore);
+            preLavels.Clear();
             preLavels.Add(abuseDore);
-            StartPos = curentDore.startPos.position;
+            Idle(true, false);
 
         }
         else
@@ -419,18 +423,27 @@ public class Movement : MonoBehaviour
             
             if(!inLavel)
             {
-                int x = curentDore.Vertical? 1:0;
-                int y = !curentDore.Vertical? 1:0;
-                Vector3 cor = new Vector3(x,y) * (curentDore.Bihaend? -1:1);
-                
+                Vector3 cor = GetDoorDirect(_callDore);
                 inLavel = true;
-                targetPoint = IdealPos() + cor;
+                Vector3 newPos = IdealPos(_callDore.transform.position + cor);
+                float xv = _callDore.Vertical? newPos.x:transform.position.x;
+                float yv = !_callDore.Vertical? newPos.y:transform.position.y;
+
+                targetPoint = new Vector3(xv,yv);
                 isMove = true;
             }
         }
 
         AudioClip c = curentDore.sp.musicTheme;
         if(c != null) music.PlayTheme(c);
+    }
+
+    private Vector3 GetDoorDirect(Dore _dore = null)
+    {
+        Dore d = _dore == null? curentDore : _dore;
+        int x = d.Vertical? 1:0;
+        int y = !d.Vertical? 1:0;
+        return new Vector3(x,y) * (d.Bihaend? -1:1);
     }
 
 
@@ -451,12 +464,13 @@ public class Movement : MonoBehaviour
         isMove = false;
         StopGame = false;
         moveDir = Vector2.zero;
-        if(JustStp == false)
-        {
-            StartPos = curentDore.startPos.transform.position;
-            inLavel = FromLavel;
-            SetPos(StartPos);
-        }
+        inLavel = FromLavel;
+        StartPos = curentDore.startPos.transform.position;
+
+        if(JustStp) return;
+        
+        SetPos(StartPos);
+        spr.AlignedSprite(GetDoorDirect());
         CentralizedCamera();
         
     }
@@ -538,7 +552,7 @@ public class Movement : MonoBehaviour
     }
     public void SetMusic(MusicThemeControler m) => music = m;
     
-    public JsonCharacter GetPersonalmemory() 
+    public JsonCharacter GetPersonalMemory() 
     {
         JsonCharacter i = new JsonCharacter();
         i.inLavel = inLavel;

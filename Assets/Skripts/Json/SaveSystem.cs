@@ -24,9 +24,7 @@ public class SaveSystem : MonoBehaviour
     }
     public void LoadAllData()
     {
-        _gameState = LoadState(pathToCharacter);
         ReturnCharacterMemory();
-        _gameState.Entytys.Clear();
         
         _gameState = LoadState(pathToDoor);
         ReturnMemoryAtDore();
@@ -141,18 +139,38 @@ public class SaveSystem : MonoBehaviour
 
     public void SaveCharacter()
     {
-       _gameState.Entytys.Clear();
-       JsonCharacter i = pl.GetPersonalmemory();
-       _gameState.Entytys.Add(i);
-        SaveState(pathToCharacter);
+        JsonCharacter i = pl.GetPersonalMemory();
+        var stateJson = JsonConvert.SerializeObject(i);
+        
+        File.WriteAllText(Application.dataPath + "/" + pathToCharacter, string.Empty);
+        File.WriteAllText(Application.dataPath + "/" + pathToCharacter, stateJson);
+    }
+    public JsonCharacter LoadCharacterData()
+    {
+        JsonCharacter i;
+        if(!File.Exists(Application.dataPath + "/" + pathToCharacter)) 
+        return null;
+        var text = File.ReadAllText(Application.dataPath + "/" + pathToCharacter);
+        try
+        {
+            i = JsonConvert.DeserializeObject<JsonCharacter>(text);
+        }
+        catch (System.Exception)
+        {
+            RemoveAllMemory();
+            i = null;
+        }
+        return i;
     }
     private void ReturnCharacterMemory()
     {
-        JsonCharacter pi = (JsonCharacter)_gameState.Entytys[0];
+        JsonCharacter pi = LoadCharacterData();
         if(pi == null) return;
+
         pl.s.pc._photoColection.Clear();
         foreach (int i in pi.photoIDs) // PHOTO
         {
+            if(photos.ContainsKey(i) == false) continue;
             PhotoPictures p = photos[i];
             pl.s.pc.AddPhoto(p, true);
             p.gameObject.SetActive(false);

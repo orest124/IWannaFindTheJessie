@@ -51,9 +51,9 @@ public class PlayerSprite
         activeSpriteRender.idle = _dir == Vector3.zero;
         
     }
-    public void AlignedSprite(Vector3 dir)
+    public void AlignedSprite(Vector3 dir = new())
     {
-        ChengSprite(dir);
+        ChengSprite(dir == Vector3.zero? Vector3.down : dir);
         ChengSprite(Vector3.zero);
     }
     public AnimationSprite GetSprite(Vector3 _dir)

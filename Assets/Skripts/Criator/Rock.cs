@@ -18,6 +18,8 @@ public class Rock : MonoBehaviour
     [SerializeField] Collider2D Acoll;
 
     [SerializeField] float spd;
+    [SerializeField] float curentSpd;
+
     public Vector2 StartPos;
     public bool isMove;
     [SerializeField] bool PlatformState;
@@ -88,7 +90,7 @@ public class Rock : MonoBehaviour
             _rice = false;
             isMove = true;
 
-            memory.RegistPoint(this, transform.position, PlatformState);
+            memory.RegistPoint(this, transform.position, PlatformState,inToMove);
             FindLostPoint(moveDir);
             return true;
         }
@@ -100,6 +102,7 @@ public class Rock : MonoBehaviour
 
         int rockForvard = 0;
         targetPoint = transform.position + dir;
+        bool ice = false;
         while(true)
         {
             int tipe = CheckFallen(targetPoint);
@@ -107,6 +110,7 @@ public class Rock : MonoBehaviour
             
             else if(tipe == 2)
             {
+                ice = true;
                 int p = CheckRockInMove(targetPoint + dir);
                 if(p == 2) 
                 {
@@ -120,7 +124,7 @@ public class Rock : MonoBehaviour
             }
             else break;      
         }
-        if(_rice) curentSpd = spd * 1.5f;
+        if(ice) curentSpd = spd * 1.5f;
         else curentSpd = spd;
         targetPoint -= moveDir * rockForvard;
 
@@ -138,7 +142,6 @@ public void UncontrolMove(Vector3 _point)
             
     }
     private bool isPlace(Vector2 place) => place.x == transform.position.x && place.y == transform.position.y;
-    private float curentSpd;
     void Move(Vector3 target)
     {
         float newspd = Time.fixedDeltaTime * curentSpd;

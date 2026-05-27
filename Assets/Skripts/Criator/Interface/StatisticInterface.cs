@@ -4,6 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class StatisticInterface : MonoBehaviour {
+
+    // зробити більший розброс монеток
+
+
     public float spd = 1;
     [Header("Counter")]
     public LavelInfo[] lavels;
@@ -25,8 +29,11 @@ public class StatisticInterface : MonoBehaviour {
 
     [Header("Beck")]
     public GameObject Statistic;
+    public GameObject Statistic2;
     [SerializeField] Transform P1;
-    [SerializeField] Transform P2;
+    [SerializeField] Transform P2;    
+    [SerializeField] Transform P11;
+    [SerializeField] Transform P22;
     bool state = false;
     bool isMove = false;
     void Awake()
@@ -57,6 +64,8 @@ public class StatisticInterface : MonoBehaviour {
         {
             Vector3 newPos = Vector3.MoveTowards(t.position,st? P1.position : P2.position, Time.fixedDeltaTime * spd);
             t.position = newPos;
+            newPos = Vector3.MoveTowards(Statistic2.transform.position,st? P11.position : P22.position, Time.fixedDeltaTime * spd);
+            Statistic2.transform.position = newPos;
             yield return fix;
         }
         isMove = false;

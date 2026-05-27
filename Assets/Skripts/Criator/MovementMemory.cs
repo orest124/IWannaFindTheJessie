@@ -316,9 +316,9 @@ public bool stopAll = false;
     // REGISTRATION METHOD //
     // ------------------- //
     /////////////////////////
-    public void RegistPoint(Rock rock, Vector3 point, bool _state)
+    public void RegistPoint(Rock rock, Vector3 point, bool _state, bool DontNidIncrement = false)
     {
-        IncrementMove();
+        if(DontNidIncrement == false) IncrementMove();
         Steps.Add(new PersonStepInfo(stepCount, rock, point, _state));
 
     }
