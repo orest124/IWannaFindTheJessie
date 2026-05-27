@@ -32,7 +32,7 @@ public class MovementMemory : MonoBehaviour
 
     }
 
-    public Movement pl;
+    [HideInInspector]public Movement pl;
     public List<PersonStepInfo> Steps = new();
     public int stepCount = 0;
     [SerializeField] int maxStepMember;
