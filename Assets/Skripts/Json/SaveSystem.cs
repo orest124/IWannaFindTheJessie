@@ -176,7 +176,10 @@ public class SaveSystem : MonoBehaviour
             p.gameObject.SetActive(false);
         }
         pl.preLavels.Clear();
-        foreach (var di in pi.DoorIDs) pl.preLavels.Add(dores[di]);
+        foreach (var di in pi.DoorIDs) 
+        {
+            if(dores.ContainsKey(di)) pl.preLavels.Add(dores[di]);
+        }
         pl.curentDore = pl.preLavels[^1];
         pl.StartPos = pl.curentDore.startPos.position;
         pl.memory.NewDore(pl.preLavels[^1], true);
