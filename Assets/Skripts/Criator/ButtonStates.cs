@@ -12,7 +12,7 @@ public class ButtonStates : MonoBehaviour
     [SerializeField] Sprite[] stateImage;
     public int stateNomb;
     private int startNomb;
-    public bool isLost => stateNomb == stateImage.Length - 1;
+    public bool isLost => stateNomb == stateImage.Length - 2;
 
     void Awake()
     {

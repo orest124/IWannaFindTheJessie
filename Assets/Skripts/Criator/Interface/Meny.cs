@@ -72,7 +72,13 @@ public class Meny : MonoBehaviour
     {
         Buttons[4].SetActive(    tipe); 
         Buttons[5].SetActive(   !tipe); 
-        config.JoysticTipe     = tipe;
+        config.JoysticType     = tipe;
+    }    
+    public void MoveType(bool isSakaban) 
+    {
+        Buttons[6].SetActive(    isSakaban); 
+        Buttons[7].SetActive(   !isSakaban); 
+        config.MoveType        = isSakaban;
     }
 
     public void MusicState(bool state) {
@@ -211,8 +217,8 @@ public class Meny : MonoBehaviour
         //Нехай кнопка контінуе міняється залежно від сейва
         AllVolumeState(config.globalVolumeMod);
         MusicState(config.musicVolumeMod);
-        JoyType(config.JoysticTipe);
-
+        JoyType(config.JoysticType);
+        MoveType(config.MoveType);
 
         bool state = CheckEmpty();
         ContOn.SetActive(!state); ContOff.SetActive(state);
@@ -251,6 +257,11 @@ public class Meny : MonoBehaviour
     private void SetContinueValue(bool state)
     {
         config.Continue = state;
+        SaveConfig();
+    }
+        public void SetMoveTipe(bool isSakaban)
+    {
+        config.MoveType = isSakaban;
         SaveConfig();
     }
 

@@ -21,6 +21,43 @@ public class AnimationSprite : MonoBehaviour
     {
         sp = GetComponent<SpriteRenderer>();
     }
+    void FixedUpdate()
+    {
+        if (LoopTimer() == false) return;
+            
+        loopT = 0;
+        animationFrame++;
+        if (loop && animationFrame >= animationSprite.Length)
+            animationFrame = 0;
+
+        if(fall)
+        {
+            sp.sprite = FallAnimationSprite[animationFrameFall];
+            if(animationFrameFall < FallAnimationSprite.Length - 1) animationFrameFall++;
+        }
+        else if(!fall && !_redyToMove)
+        {
+            sp.sprite = FallAnimationSprite[animationFrameFall];
+            if(animationFrameFall > 0) animationFrameFall--;
+            if(animationFrameFall == 0) _redyToMove = true;
+        }
+        else if (idle) 
+            sp.sprite = idleSprite;
+
+        
+        else if (animationFrame >= 0 && animationFrame < animationSprite.Length)
+            sp.sprite = animationSprite[animationFrame];
+    }
+
+
+    float loopT = 0;
+    public bool LoopTimer()
+    {
+        loopT += Time.fixedDeltaTime;
+        if(loopT > (fall?fallAnimationTime:animationTime)) return true;
+        else return false;
+        
+    }
 
     void OnDisable()
     {
@@ -30,41 +67,12 @@ public class AnimationSprite : MonoBehaviour
     {
         sp.enabled = true;
     }
-    void Start()
+    
+    public void SetAlpha(float a = 0)
     {
-        StartCoroutine(NextFrame());
+        sp.color = new Color(sp.color.r,sp.color.g,sp.color.b, a);
     }
-    IEnumerator NextFrame()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(fall?fallAnimationTime:animationTime);
-            
-            animationFrame++;
-            if (loop && animationFrame >= animationSprite.Length)
-                animationFrame = 0;
-
-            if(fall)
-            {
-                sp.sprite = FallAnimationSprite[animationFrameFall];
-                if(animationFrameFall < FallAnimationSprite.Length - 1) animationFrameFall++;
-            }
-            else if(!fall && !_redyToMove)
-            {
-                sp.sprite = FallAnimationSprite[animationFrameFall];
-                if(animationFrameFall > 0) animationFrameFall--;
-                if(animationFrameFall == 0) _redyToMove = true;
-            }
-            else if (idle) 
-                sp.sprite = idleSprite;
-
-            
-            else if (animationFrame >= 0 && animationFrame < animationSprite.Length)
-                sp.sprite = animationSprite[animationFrame];
-
-            
-        }
-    }
+    
     int animationFrameFall = 0;
 
     public void Falling()

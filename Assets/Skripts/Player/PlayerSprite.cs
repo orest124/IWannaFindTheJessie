@@ -12,6 +12,8 @@ public class PlayerSprite
     [SerializeField] AnimationSprite spriteRenderLeft;
     [SerializeField] AnimationSprite spriteRenderRight;
     AnimationSprite activeSpriteRender;
+
+    public SpriteRenderer shedow;
     
     [SerializeField] GameObject lgt;
     [SerializeField] Tilemap DarkestZone;
@@ -49,6 +51,28 @@ public class PlayerSprite
         activeSpriteRender.idle = _dir == Vector3.zero;
         
     }
+    public void AlignedSprite(Vector3 dir = new())
+    {
+        ChengSprite(dir == Vector3.zero? Vector3.down : dir);
+        ChengSprite(Vector3.zero);
+    }
+    public AnimationSprite GetSprite(Vector3 _dir)
+    {
+        if(_dir == Vector3.up ) return spriteRenderUp;
+        if (_dir == Vector3.down) return spriteRenderDown;
+        if(_dir == Vector3.left || _dir == new Vector3(-1,1,0) || _dir == new Vector3(-1,-1,0)) 
+        return spriteRenderLeft;
+        if(_dir == Vector3.right || _dir == new Vector3(1,-1,0) || _dir == new Vector3(1,1,0)) 
+        return spriteRenderRight;
+
+        return spriteRenderDown;
+    }
+        public void SetShedowAlpha(float a = 0)
+    {
+        shedow.color = new Color(shedow.color.r,shedow.color.g,shedow.color.b, a);
+    }
+
+
     public void AnimSpd(bool _desh)
     {
         spriteRenderUp.animationTime = _desh? 0.06f: 0.1f;

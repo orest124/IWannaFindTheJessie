@@ -2,6 +2,7 @@ using UnityEngine.Events;
 using UnityEngine.Serialization;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 using System;
 
 public class Button : MonoBehaviour
@@ -21,12 +22,12 @@ public class Button : MonoBehaviour
     {
         curentArt = GetComponent<SpriteRenderer>();
         sound = FindAnyObjectByType<SoundControler>();
-        CheckPoint();
     }
     [Header("Special")]
     [SerializeField] private bool nideToPressed;
     [SerializeField] private bool PlayerPressed;
     [SerializeField] private bool _isPressed;
+    [SerializeField] private bool _curentState;
 
     public bool IsPressed
     {
@@ -34,11 +35,35 @@ public class Button : MonoBehaviour
         set { 
             if(_isPressed == value) return;
             _isPressed = value;
-            foreach (var d in dore) d?.Check();
             Sound();
             Art().sprite = _isPressed? ClousedArt: OpenArt;
-            if(_isPressed == true)SpecialAction?.Invoke();
+            
+            StopAllCoroutines();
+            if(_isPressed == true) StartCoroutine(Timer(() => PressedEffect(), duration));
+            else StartCoroutine(Timer(() => UnPressedEffect(), duration * 0.6f)); 
         }
+    }
+
+
+    private void PressedEffect()
+    {
+        if(_curentState) return;
+
+        _curentState = true;
+        foreach (var d in dore) d?.Check();
+        Sound();
+
+        SpecialAction?.Invoke();
+    }
+    private void UnPressedEffect()
+    {
+        if(!_curentState) return;
+
+        _curentState = false;
+        foreach (var d in dore) d?.Check();
+        Sound();
+
+        
     }
     [System.Serializable]
     
@@ -46,22 +71,43 @@ public class Button : MonoBehaviour
     [FormerlySerializedAs("Special Action")]
     [SerializeField] private PressedEvent SpecialAction = new PressedEvent();
 
+    public bool ExeptedState = false;
+
+
+
+
+
     public void ChengPresed(bool state, bool player = false)
     {
         if(!PlayerPressed && player) return;
+        ExeptedState = state;
         IsPressed = nideToPressed? state : true;
     
     }
-    public void CheckPoint() 
+    public void NormalizedState() => IsPressed = ExeptedState;
+    public bool СheckState(bool s) => IsPressed == s;
+    [SerializeField] float duration;
+    private WaitForFixedUpdate fix = new WaitForFixedUpdate();
+    IEnumerator Timer(Action action, float time)
     {
-        Collider2D c = Physics2D.OverlapPoint(transform.position, LayerMask.GetMask("Rook"));
-        if(c == null)
+        float t = 0;
+        while (t < duration)
         {
-            IsPressed = false;
+            yield return fix;
+            t += Time.fixedDeltaTime;
         }
-        else   c.GetComponent<Rock>().ButtonCheck(transform.position);
-            
+        action.Invoke();
+        
+
     }
+
+
+
+
+
+
+
+
     private void Sound()
     {
         if(sound != null) sound.ButtonSound();

@@ -8,6 +8,9 @@ using Newtonsoft.Json;
 using System.IO;
 
 public class GameOptions : MonoBehaviour {
+    [SerializeField] bool DontNidMeny;
+    [SerializeField] bool inLavel;
+    [SerializeField] bool _loadData;
     private MusicThemeControler music;
     private SoundControler sound;
     private P_SoundAndPhoto p_Sound;
@@ -22,38 +25,48 @@ public class GameOptions : MonoBehaviour {
 
     void Awake()
     {
-        GlobalFone.gameObject.SetActive(true);
         music = FindAnyObjectByType<MusicThemeControler>();
         sound = FindAnyObjectByType<SoundControler>();
+        sound.SetOnline(false);
+        
 
         GetContext();
         LoadConfig();
 
         _save = GetComponent<SaveSystem>();
 
+        pl = FindAnyObjectByType<Movement>(); pl.meny = this; pl.SetMusic(music); 
     }
 
     void Start()
     {
-        pl = FindAnyObjectByType<Movement>(); pl.meny = this; pl.SetMusic(music); p_Sound = pl.s;
-        pl.SetStop(true);
+        p_Sound = pl.s;
         Preparation();
-        if(config.Continue) Load();
-        else Play();
+        
+        if(inLavel) pl.inLavel = true;
+        if(DontNidMeny) loadingTime = 0;
+        
+        GlobalFone.gameObject.SetActive(true);
+        pl.SetStop(true);
+        Play();
          
     }
     private void Preparation()
     {
         AllVolumeState(config.globalVolumeMod);
         MusicState(config.musicVolumeMod);
-        JoyType(config.JoysticTipe);
+        JoyType(config.JoysticType);
+        MoveType(config.MoveType);
     }
-    
+    public void MoveType(bool isSakaban) 
+    {
+        pl.MotionMod = isSakaban;
+    }
     public void JoyType(bool tipe) 
     {
         Buttons[4].SetActive(    tipe); 
         Buttons[5].SetActive(   !tipe); 
-        config.JoysticTipe     = tipe;
+        config.JoysticType     = tipe;
         pl.JoysticMod          = tipe;
     }
     public void MusicState(bool state) {
@@ -93,7 +106,11 @@ public class GameOptions : MonoBehaviour {
     {
         SetContinueValue(false);
         _save.LoadAllData();
-        Play();
+    } 
+    public void ReloadScene()
+    {
+        SetContinueValue(true);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     } 
     
     public void Play() => StartCoroutine(Loading());
@@ -145,7 +162,7 @@ public class GameOptions : MonoBehaviour {
     {
         config.Continue = state;
         SaveConfig();
-    }
+    }    
     public void SaveSceneIndex()
     {
         config.L_I_N_T_P_B_A_C = SceneManager.GetActiveScene().buildIndex;
@@ -168,7 +185,12 @@ public class GameOptions : MonoBehaviour {
                 yield return fixTime;
 
         }
-
+        if(_loadData)
+        {
+            SetContinueValue(true);
+        }
+        if(config.Continue) Load();
+        pl.memory.SetStats();
         yield return new WaitForSeconds(loadingTime); // очікуєм кінця загрузки
 
         t = 0;
@@ -187,6 +209,9 @@ public class GameOptions : MonoBehaviour {
             GlobalFone.color = new Color(GlobalFone.color.r,GlobalFone.color.g,GlobalFone.color.b,t);
             yield return fixTime;
         }
+        sound.SetOnline();
+
+
     }
     IEnumerator SceneLoading(int scene) 
     {
@@ -197,6 +222,28 @@ public class GameOptions : MonoBehaviour {
                 yield return fixTime;
         }
         SceneManager.LoadScene(scene);
+    }
+    public void BlackFon(Action a) => StartCoroutine(BlackFonProces(a));
+    [SerializeField] float BlackSpd;
+    [SerializeField] float BlackPause;
+    IEnumerator BlackFonProces(Action action)
+    {
+        float t = 0;
+        while (t < 1) {
+            t += Time.fixedDeltaTime * BlackSpd;
+            GlobalFone.color = new Color(GlobalFone.color.r,GlobalFone.color.g,GlobalFone.color.b,t);
+                yield return fixTime;
+        }
+        action.Invoke();
+        yield return new WaitForSeconds(BlackPause);
+        t = 1;
+        while (t > 0)
+        {
+            t -= Time.fixedDeltaTime * BlackSpd;
+            GlobalFone.color = new Color(GlobalFone.color.r,GlobalFone.color.g,GlobalFone.color.b,t);
+                yield return fixTime;
+
+        }
     }
 
     [SerializeField] float spd;
