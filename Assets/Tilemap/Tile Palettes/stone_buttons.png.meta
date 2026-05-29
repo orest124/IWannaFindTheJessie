@@ -1,10 +1,19 @@
 fileFormatVersion: 2
-guid: b90e30d8c6a216e48872194eec73abab
+guid: a012c46e95688e74286f28121246bacf
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1032240985466756665
-    second: wall_4.1+_0
+      213: 402868579759076879
+    second: stone_buttons_0
+  - first:
+      213: -8818368008097161404
+    second: stone_buttons_1
+  - first:
+      213: 8277168998547283439
+    second: stone_buttons_2
+  - first:
+      213: 1843231459865067688
+    second: stone_buttons_3
   externalObjects: {}
   serializedVersion: 12
   mipmaps:
@@ -98,7 +107,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: wall_4.1+_0
+      name: stone_buttons_0
       rect:
         serializedVersion: 2
         x: 0
@@ -112,14 +121,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7c1a7a2fa4ebca1f0800000000000000
-      internalID: -1032240985466756665
+      spriteID: f06b4bbb6d6479500800000000000000
+      internalID: 402868579759076879
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: wall_4.1+_1
+      name: stone_buttons_1
       rect:
         serializedVersion: 2
         x: 32
@@ -131,58 +140,16 @@ TextureImporter:
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 12916bb8ae505e24f9f14590fb4ae8e0
-      internalID: 607310987
+      spriteID: 44f13b2b40dde9580800000000000000
+      internalID: -8818368008097161404
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: wall_4.1+_2
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2a3f39afdc886d244be1fc738bb456ce
-      internalID: 500768907
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: wall_4.1+_3
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 80c4fb8e00fbb9545a6b55a9732b6cf6
-      internalID: 1659687870
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: wall_4.1+_4
+      name: stone_buttons_2
       rect:
         serializedVersion: 2
         x: 0
@@ -196,14 +163,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5a147a86b94fd4d4fb300fa12246703f
-      internalID: -1971446645
+      spriteID: ecfdcdb18b5d81c4fbb6148123864b4b
+      internalID: 8277168998547283439
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: wall_4.1+_5
+      name: stone_buttons_3
       rect:
         serializedVersion: 2
         x: 32
@@ -217,50 +184,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 100242959556fc64e8d551d4e240b78d
-      internalID: 448781292
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: wall_4.1+_6
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 55611648602bd5441b163f73463da27a
-      internalID: 531292278
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: wall_4.1+_7
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: fa8ea6e63068aeb43a4c5a0983963093
-      internalID: -730320417
+      spriteID: 7c39b1499aa9622448d9659814a03355
+      internalID: 1843231459865067688
       vertices: []
       indices: 
       edges: []
@@ -268,7 +193,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 566717dcb16d06f449be4b6044555048
+    spriteID: 23e507fac9ebf0443908a23ea6d82471
     internalID: 0
     vertices: []
     indices: 
@@ -276,14 +201,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      wall_4.1+_0: -1032240985466756665
-      wall_4.1+_1: 607310987
-      wall_4.1+_2: 500768907
-      wall_4.1+_3: 1659687870
-      wall_4.1+_4: -1971446645
-      wall_4.1+_5: 448781292
-      wall_4.1+_6: 531292278
-      wall_4.1+_7: -730320417
+      stone_buttons_0: 402868579759076879
+      stone_buttons_1: -8818368008097161404
+      stone_buttons_2: 8277168998547283439
+      stone_buttons_3: 1843231459865067688
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

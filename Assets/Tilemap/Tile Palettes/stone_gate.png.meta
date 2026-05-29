@@ -1,16 +1,10 @@
 fileFormatVersion: 2
-guid: ac56eab6e31dda344948a2abbb4269e0
+guid: 2c530febd3030944d8749a1baceba9a5
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5781564520035527000
-    second: numb_0
-  - first:
-      213: 6305126540265091891
-    second: numb_1
-  - first:
-      213: -4664979539777839160
-    second: numb_2
+      213: 74946334864226635
+    second: stone_gate_0
   externalObjects: {}
   serializedVersion: 12
   mipmaps:
@@ -43,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -104,64 +98,85 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: numb_0
+      name: stone_gate_1
       rect:
         serializedVersion: 2
         x: 0
         y: 64
-        width: 32
+        width: 96
         height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 8a6d74973b1c3cfa0800000000000000
-      internalID: -5781564520035527000
+      spriteID: adb331c887d22f947ae0777a685445d3
+      internalID: 729797127
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: numb_1
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 3337360be2f408750800000000000000
-      internalID: 6305126540265091891
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: numb_2
+      name: stone_gate_11
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 32
-        height: 32
+        width: 96
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 8cf931f13d9a24fb0800000000000000
-      internalID: -4664979539777839160
+      spriteID: 5a81e0f9493a6ea4ca96334bc9a11367
+      internalID: 987593765
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: stone_gate_14
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b953db0c5562b1a49a9ed331be01634c
+      internalID: -1464141500
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: stone_gate_15
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 32
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c9c73498222119d49842b03d82febe2d
+      internalID: 1874146907
       vertices: []
       indices: 
       edges: []
@@ -169,7 +184,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: f6630a27b1b8a8d4ab521e5ea09a2026
+    spriteID: 67b84db5d617f7d438017a87239b6a44
     internalID: 0
     vertices: []
     indices: 
@@ -177,9 +192,22 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      numb_0: -5781564520035527000
-      numb_1: 6305126540265091891
-      numb_2: -4664979539777839160
+      stone_gate_0: 74946334864226635
+      stone_gate_1: 729797127
+      stone_gate_10: 1396197604
+      stone_gate_11: 987593765
+      stone_gate_12: 114236390
+      stone_gate_13: -317452749
+      stone_gate_14: -1464141500
+      stone_gate_15: 1874146907
+      stone_gate_2: 342148587
+      stone_gate_3: 159460718
+      stone_gate_4: 915005287
+      stone_gate_5: -1534344530
+      stone_gate_6: 1985786263
+      stone_gate_7: 1999538329
+      stone_gate_8: 8059277
+      stone_gate_9: 1463452748
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
