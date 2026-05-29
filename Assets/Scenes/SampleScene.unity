@@ -3275,7 +3275,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1000
+  m_SortingOrder: 32549
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -33293,9 +33293,13 @@ MonoBehaviour:
   _sounds2: []
   LovalModVolume: 1
   GlobalModVolume: 1
-  doreSound: {fileID: 8300000, guid: 55b1bc1d2de989c4bbb22cc4bd23ab5b, type: 3}
-  buttonSound: {fileID: 8300000, guid: d4ab08b2f0b09a34d8ca90c63e32e3a5, type: 3}
-  buttonVolume: 20
+  doreSound: {fileID: 8300000, guid: 5820a8e50dd592543a5355a383b71468, type: 3}
+  buttonSound:
+  - {fileID: 8300000, guid: 5fa295c1595459a4099ada1965520fad, type: 3}
+  - {fileID: 8300000, guid: 80b0f174c1abd2942857ddb4ed91bdba, type: 3}
+  - {fileID: 8300000, guid: 3afa7f1f188542b46b4332f69e0be44b, type: 3}
+  - {fileID: 8300000, guid: 422204fbf11e28741b4975b654a9511a, type: 3}
+  buttonVolume: 1
   doorVolume: 0.05
 --- !u!4 &593230351
 Transform:
@@ -88331,7 +88335,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 88
+  m_SortingOrder: -30027
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -118189,7 +118193,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1002
+  m_SortingOrder: 32767
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 2, y: 2, z: 0}
   m_MaxChunkCount: 16

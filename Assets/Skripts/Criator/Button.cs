@@ -35,23 +35,33 @@ public class Button : MonoBehaviour
         set { 
             if(_isPressed == value) return;
             _isPressed = value;
-            Sound();
             Art().sprite = _isPressed? ClousedArt: OpenArt;
-            
-            StopAllCoroutines();
-            if(_isPressed == true) StartCoroutine(Timer(() => PressedEffect(), duration));
-            else StartCoroutine(Timer(() => UnPressedEffect(), duration * 0.6f)); 
+            if(DontNeedTimer)
+            {
+                if(value == true ) PressedEffect(); 
+                else UnPressedEffect(); 
+            }
+            else
+            {
+                StopAllCoroutines();
+                Sound(value? 1: silentMod, value? 0: 2);
+
+                if(_isPressed == true) StartCoroutine(Timer(() => PressedEffect()));
+                else StartCoroutine(Timer(() => UnPressedEffect())); 
+                
+            }
         }
     }
 
-
+    [SerializeField] float silentMod;
+    [SerializeField] float effectorMod;
     private void PressedEffect()
     {
         if(_curentState) return;
 
         _curentState = true;
         foreach (var d in dore) d?.Check();
-        Sound();
+        Sound(effectorMod, 1);
 
         SpecialAction?.Invoke();
     }
@@ -61,7 +71,6 @@ public class Button : MonoBehaviour
 
         _curentState = false;
         foreach (var d in dore) d?.Check();
-        Sound();
 
         
     }
@@ -71,11 +80,13 @@ public class Button : MonoBehaviour
     [FormerlySerializedAs("Special Action")]
     [SerializeField] private PressedEvent SpecialAction = new PressedEvent();
 
-    public bool ExeptedState = false;
 
 
 
 
+
+    //Потрібне квадратним кнопкам щоб ті знали що їх вже ніщо не тримає
+    private bool ExeptedState = false;
 
     public void ChengPresed(bool state, bool player = false)
     {
@@ -87,11 +98,13 @@ public class Button : MonoBehaviour
     public void NormalizedState() => IsPressed = ExeptedState;
     public bool СheckState(bool s) => IsPressed == s;
     [SerializeField] float duration;
+    [SerializeField] bool DontNeedTimer;
     private WaitForFixedUpdate fix = new WaitForFixedUpdate();
-    IEnumerator Timer(Action action, float time)
+    IEnumerator Timer(Action action)
     {
         float t = 0;
-        while (t < duration)
+        float curentDuration = IsPressed? duration : duration * 0.6f;
+        while (t < curentDuration)
         {
             yield return fix;
             t += Time.fixedDeltaTime;
@@ -108,13 +121,13 @@ public class Button : MonoBehaviour
 
 
 
-    private void Sound()
+    private void Sound(float mod = 1, int tipeButtons = 0)
     {
-        if(sound != null) sound.ButtonSound();
+        if(sound != null) sound.ButtonSound(mod, tipe: tipeButtons);
         else
         {
             sound = FindAnyObjectByType<SoundControler>();
-            sound.ButtonSound();
+            sound.ButtonSound(tipe: tipeButtons);
         }
     }
     private SpriteRenderer Art()

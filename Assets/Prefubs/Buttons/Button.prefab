@@ -53,11 +53,14 @@ MonoBehaviour:
   nideToPressed: 1
   PlayerPressed: 0
   _isPressed: 0
+  _curentState: 0
+  silentMod: 1
+  effectorMod: 1
   SpecialAction:
     m_PersistentCalls:
       m_Calls: []
-  ExeptedState: 0
   duration: 0.8
+  DontNeedTimer: 0
 --- !u!212 &8343845996015857234
 SpriteRenderer:
   m_ObjectHideFlags: 0
