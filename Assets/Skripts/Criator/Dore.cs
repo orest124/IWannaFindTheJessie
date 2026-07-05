@@ -9,7 +9,7 @@ public class Dore : MonoBehaviour {
     public bool DontNidStatistic;
 
     private Movement pl => memory == null? null : memory.pl;
-    private bool _moveTipe => pl.MotionMod;
+    private bool _moveTipe => pl == null? false:pl.MotionMod;
 
     public int GetDifference() => (_moveTipe? StepCountToGold2 : StepCountToGold1) - StepCount -1;
     public int GetCountToGold() => _moveTipe? StepCountToGold2 : StepCountToGold1;
@@ -44,7 +44,7 @@ public class Dore : MonoBehaviour {
     {
         AllDone = state;
         if(DontNidStatistic || Load) return; 
-        if(Prime && AllDone)myLavel.GetRating();
+        if(Prime && AllDone && !myLavel.isNull)myLavel.GetRating();
     }
 
     public int StepCount = 0;
@@ -59,23 +59,32 @@ public class Dore : MonoBehaviour {
     private Vector3 size;
     private Vector3 offset;
     private SoundControler sound;
-    private void Awake() 
+
+    private void BasePreparation()
     {
+        myLavel.isNull = true;
         coll = GetComponent<Collider2D>();
         curentArt = GetComponent<SpriteRenderer>();
         float y = curentArt.bounds.max.y;
         int order = -(Mathf.RoundToInt(y * 10) + 1);
         curentArt.sortingOrder = order;
-
-        Buttons.Preparation(this);
         
+        size = Vertical? new Vector2(0.1f,3): new Vector2(3,0.1f);
+        offset = ChengedColliderOffset();
+        
+        Buttons.Preparation(this);
+    }
+    public void Awake_door(SoundControler s, MovementMemory m) 
+    {
+        BasePreparation();
 
         if(Prime || FlappyDore)
         {
-            sound = FindAnyObjectByType<SoundControler>();
-            memory = FindAnyObjectByType<MovementMemory>();
-            GetName();
-            memory.IsSaveReady(this);
+            sound = s;
+            memory = m;
+            ID = Methods.GetName(transform.position);
+            gameObject.name = $"Door {ID}";
+
         }    
             
         if(Prime)
@@ -84,18 +93,15 @@ public class Dore : MonoBehaviour {
             foreach (var b in ChildDore) 
             {
                 b.PrimeDore = this;
-                b.sound = sound;
                 b.memory = memory;
-                b.GetName();
-                memory.IsSaveReady(b);
+                b.sound = sound;
+                b.ID = Methods.GetName(b.transform.position);
+                b.gameObject.name = $"Door {b.ID}";
             }
         }
-        size = Vertical? new Vector2(0.1f,3): new Vector2(3,0.1f);
-        offset = ChengedColliderOffset();
         if(!AllDone) NewPreparation();
         
     }
-
     void Update() {
         if(curentState == true) Trigger();
     }
@@ -179,7 +185,6 @@ public bool select = false;
     {
         PutAllRock(newGame);
         RemoveLavels(newGame);
-        ButtonsRemove();
     }
 
     private void RemoveLavels(bool newGame = false)
@@ -206,34 +211,25 @@ public bool select = false;
                                                 //  Допоміжні  Методи  //
                                                 // ------------------- //
                                                 /////////////////////////
+    [SerializeField] bool DontNidMemory;
     void Trigger()
     {
         if(pl == null || pl.curentDore == PrimeDore || memory.stopAll) return;
         
         if(Physics2D.OverlapBox(transform.position + offset, size, 0, LayerMask.GetMask("Player")))
         {
+            if (pl.isThisLavel(PrimeDore.myLavel) == false) 
+                PrimeDore.myLavel.ShowLavelName();
+            
             pl.lavelMode(PrimeDore, this);
-            if(Prime && AllDone == false) 
+            if(Prime && AllDone == false && Buttons.count != 0) 
             {
                 OpenDore(false);
-                if(memoryAtRock.Count == 0) memory.ReturnAllRockInLavel(inMemory: true);
+                if(memoryAtRock.Count == 0 && DontNidMemory == false) memory.ReturnAllRockInLavel(inMemory: true);
             }
         }
     }
     public void RemoveMemoryAtRook() => memoryAtRock.Clear();
-    private void GetName()
-    {
-        Vector3 pos = transform.position;
-        int x = Mathf.RoundToInt(Mathf.Abs(pos.x));
-        int y = Mathf.RoundToInt(Mathf.Abs(pos.y));
-        int z = 0;
-        if(pos.x < 0 && pos.y >=0) z = 1;
-        else if(pos.x >= 0 && pos.y < 0) z = 2;
-        else if(pos.x < 0 && pos.y < 0) z = 3;
-        ID = int.Parse(x + "" +y +"" +z);
-
-        gameObject.name = $"Door {ID}";;
-    }
     private Sprite ChengedSprite(bool open)
     {
         if(open) return Vertical? sp.OpenArt_Ver: sp.OpenArt_Hor;
@@ -371,9 +367,9 @@ public class ImportantButtonsCollection
 [Serializable]
 public class MemoriAtRock
 {
-    public Rock rock;
+    public RockModern rock;
     public Vector3 pos;
-    public MemoriAtRock(Rock _rock, Vector3 _pos)
+    public MemoriAtRock(RockModern _rock, Vector3 _pos)
     {
         rock = _rock;
         pos = _pos;

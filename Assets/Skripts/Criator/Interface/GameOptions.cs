@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Newtonsoft.Json;
 using System.IO;
+using UnityEditor.Experimental.GraphView;
 
 public class GameOptions : MonoBehaviour {
     [SerializeField] bool DontNidMeny;
@@ -23,24 +24,24 @@ public class GameOptions : MonoBehaviour {
     private const string pathToUAContext = "UAContext.json";
     private const string pathToCharacter = "/Saves/Player Memory.json";
 
-    void Awake()
+    public void Awake_many (Movement _pl, SaveSystem s, MusicThemeControler _music, SoundControler _sound)
     {
-        music = FindAnyObjectByType<MusicThemeControler>();
-        sound = FindAnyObjectByType<SoundControler>();
-        sound.SetOnline(false);
         
-
         GetContext();
         LoadConfig();
 
-        _save = GetComponent<SaveSystem>();
 
-        pl = FindAnyObjectByType<Movement>(); pl.meny = this; pl.SetMusic(music); 
+        music = _music;
+        sound = _sound;
+        _save = s;
+        pl = _pl; 
+
+        sound.SetOnline(false);
+        p_Sound = pl.s;
     }
 
     void Start()
     {
-        p_Sound = pl.s;
         Preparation();
         
         if(inLavel) pl.inLavel = true;
@@ -104,7 +105,7 @@ public class GameOptions : MonoBehaviour {
     }
     public void Load()
     {
-        SetContinueValue(false);
+       SetContinueValue(false);
         _save.LoadAllData();
     } 
     public void ReloadScene()
@@ -161,6 +162,7 @@ public class GameOptions : MonoBehaviour {
     private void SetContinueValue(bool state)
     {
         config.Continue = state;
+        CatsceneInStart = false; 
         SaveConfig();
     }    
     public void SaveSceneIndex()
@@ -170,6 +172,8 @@ public class GameOptions : MonoBehaviour {
     }
     [Header("Volume Page")]
     [SerializeField] GameObject[] Buttons;
+    [SerializeField] bool CatsceneInStart;
+    [SerializeField] StartTimeLine CatsceneControler;
 
         IEnumerator Loading() {
 
@@ -201,7 +205,11 @@ public class GameOptions : MonoBehaviour {
         }
         LoadingThem?.SetActive(false);
         yield return time05;
-        pl.SetStop(false);
+
+        CatsceneControler?.StartCatScene(CatsceneInStart);
+        if(!CatsceneInStart)  pl.SetStop(false);
+        
+
         t = 1;
         while (t > 0.02)
         {
@@ -210,6 +218,8 @@ public class GameOptions : MonoBehaviour {
             yield return fixTime;
         }
         sound.SetOnline();
+        pl.isThisLavel(pl.curentLavel);
+        pl.curentDore.myLavel.ShowLavelName();
 
 
     }

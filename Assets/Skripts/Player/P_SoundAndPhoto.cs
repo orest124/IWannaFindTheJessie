@@ -1,4 +1,5 @@
 
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class P_SoundAndPhoto : Sounds {
@@ -6,7 +7,6 @@ public class P_SoundAndPhoto : Sounds {
 
     [Header("Photo Value")]
     public PhotoColection pc;
-    public bool notFromPhoto = true;
 
     [Header("Sound Value")]
     float curentTimerTime;
@@ -29,17 +29,18 @@ public class P_SoundAndPhoto : Sounds {
     {
         if(mc.OptionsOpen || mc.noInteractive) return;
         
-        if(notFromPhoto) {
+        if(UIEmpty()) {
 
             PhotoAudit(); 
 
-            if(Input.GetKeyDown(KeyCode.Tab)  && pc.PhotoCount() > 0) PhotoTime(notFromPhoto);
+            if(Input.GetKeyDown(KeyCode.Tab)  && pc.PhotoCount() > 0) PhotoTime( true );
+            else if(Input.GetKeyDown(KeyCode.E)) ReadPlate();
             
             return;   
         }
         else {
 
-            if(Input.GetKeyDown(KeyCode.Tab) || Input.GetKeyDown(KeyCode.Escape)) PhotoTime(notFromPhoto);
+            if(Input.GetKeyDown(KeyCode.Tab) || Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.E)) ClousedUI();
              
 
             if(Input.GetKey(KeyCode.Space) && Input.GetKeyDown(KeyCode.A)) pc.PrewPhoto();
@@ -48,15 +49,24 @@ public class P_SoundAndPhoto : Sounds {
         }
         
     }
+    public bool UIEmpty() => State == UIState.Empty;
     public void PhotoTime(bool state)
     {
-        notFromPhoto = !state;    
+        State = state? UIState.Photo : UIState.Empty;   
         mc.SetStop(state);  
         if(state) pc.OpenPhoto(); else pc.ClousedPhoto();
 
     }
+    UIState State;
+    private void ClousedUI()
+    {
+        if(State == UIState.Photo)PhotoTime(false);
+        else if(State == UIState.Plate) ClousedPlate();
+        State = UIState.Empty;
+        mc.SetStop(false);  
 
 
+    }
     
     float t = 0;
     public void MoveSoundTimer()
@@ -87,7 +97,25 @@ public class P_SoundAndPhoto : Sounds {
 
 
 
+    [SerializeField] private Collider2D curentPlateColl;
+    [SerializeField] private PlateView curentPlate;
+    public void ReadPlate()
+    {
+        //Память, коли колл == нулл то відобразити курент палет но з іншим дизайном
+        bool notHavePlate = false;
+        if( curentPlate == null && curentPlateColl == null) return;
+        else if(curentPlate == null && curentPlateColl != null) notHavePlate = true;
+        else if(curentPlate != null && curentPlateColl != null && curentPlate.gameObject != curentPlateColl.gameObject) notHavePlate = true;
+        
+        if(notHavePlate) curentPlate = curentPlateColl.GetComponent<PlateView>();
+       
+        curentPlate.OpenPlate(true, curentPlateColl != null);
+        State = UIState.Plate;
+        mc.SetStop(true);  
 
+    }
+    public void ClousedPlate() => curentPlate.OpenPlate(false, curentPlateColl != null);
+    
     private void PhotoAudit()
     {
         Collider2D coll = Physics2D.OverlapCircle(transform.position,0.3f,LayerMask.GetMask("Photo"));
@@ -95,26 +123,21 @@ public class P_SoundAndPhoto : Sounds {
         if(coll != null && coll.TryGetComponent<PhotoPictures>(out ph))
         { 
             ph.gameObject.SetActive(false);
+            
             pc.AddPhoto(ph);
             PhotoTime(true);
-            ph.inInventory = true;
+            ph.ShowBeckSide = false;
         }
         coll = Physics2D.OverlapCircle(transform.position,0.3f,LayerMask.GetMask("Prise"));
         if(coll != null)
         { 
             coll.GetComponent<PrizeSercher>().prize.StartPresentation();
         }
+        if(mc.moveDir == Vector3.zero) return;
+        coll = Physics2D.OverlapCircle(transform.position + mc.moveDir,0.3f,LayerMask.GetMask("Info"));
+        curentPlateColl = coll;
+        
     }
-    /*
-    57
-    4 - 58
-    3 - 42
-    12 - 107
-    13 - 90
-
-
-
-    */
 
 
 
@@ -125,4 +148,12 @@ public class P_SoundAndPhoto : Sounds {
     public LayerMask BaricadeArea;
     public LayerMask EndArea;
     public LayerMask FishTrigger;
+}
+public enum UIState
+{
+    Empty,
+    Photo,
+    Meny,
+    Plate,
+
 }

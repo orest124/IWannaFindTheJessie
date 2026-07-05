@@ -4,15 +4,21 @@ using UnityEngine.Search;
 
 public class PhotoPictures : MonoBehaviour
 {
+    private MovementMemory memory;
     [SerializeField] PhotoFrame Photo;
     [SerializeField] Sprite image;
-    [SerializeField] bool blecText;
-    private MovementMemory memory;
     [TextArea]
-    public string massag;
+    public string massag;    
+    [TextArea]
+    public string HideMassag;
 
-    // [SerializeField] GameObject Mybutton;
-    public bool inInventory;
+
+
+    [Space]
+    [Header("Propertys")]
+    [SerializeField] bool TextInBeckSide;
+    public bool ShowBeckSide = false;
+    public int ID;
     void Awake()
     {
         GetName();
@@ -22,12 +28,11 @@ public class PhotoPictures : MonoBehaviour
 
     public void OpenFhoto()
     {
-        Photo.SetImagine(image, blecText, massag, inInventory);
+        Photo.SetImagine( image, massag, HideMassag, ShowBeckSide);
         Photo.gameObject.SetActive(true);
     }
     public void ClousedPhoto() => Photo.ClousedPhoto();
-        public int ID;
-
+    
     private void GetName()
     {
         Vector3 pos = transform.position;

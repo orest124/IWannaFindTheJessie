@@ -28,13 +28,13 @@ public class PhotoColection {
     public void OpenPhoto() => _photoColection[curentIndex].OpenFhoto();
     public void ClousedPhoto() => _photoColection[curentIndex].ClousedPhoto();
     
-    public void AddPhoto(PhotoPictures newPhoto, bool inInvent = false)
+    public void AddPhoto(PhotoPictures newPhoto, bool ShowBeck = false)
     {
         if(!_photoColection.Contains(newPhoto))
         {
             curentIndex = PhotoCount();
             _photoColection.Add(newPhoto); 
-            if(inInvent) newPhoto.inInventory = true;
+            if(ShowBeck) newPhoto.ShowBeckSide = false;
         }
 
     }

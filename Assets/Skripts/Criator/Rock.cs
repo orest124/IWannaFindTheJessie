@@ -13,6 +13,7 @@ public class Rock : MonoBehaviour
     void U() => CheckEmpty(new());
     void T() => CheckCollider(new());
 
+    [SerializeField] bool NOAlpfa;
     SpriteRenderer sp;
     [SerializeField] Collider2D Hcoll;
     [SerializeField] Collider2D Acoll;
@@ -24,10 +25,13 @@ public class Rock : MonoBehaviour
     public bool isMove;
     [SerializeField] bool PlatformState;
     [SerializeField] Sprite PlatformArt;
+    [SerializeField] Sprite ActiveArt;
     [SerializeField] Sprite RockArt;
+
 
     [HideInInspector] public MovementMemory memory;
     public LayerMask PlatformLayer;
+    private SoundControler sound;
 
 
     private void Awake()
@@ -37,7 +41,8 @@ public class Rock : MonoBehaviour
         GetName();
         StartPos = transform.position;
         memory = FindAnyObjectByType<MovementMemory>();
-        memory.IsSaveReady(this);
+        // memory.IsSaveReady(this);
+        // memory.GetSoundControler += () => {sound = memory.sound;};
         curentSpd = spd;
     }
     void Start()
@@ -67,13 +72,15 @@ public class Rock : MonoBehaviour
     //   Movement METHOD   //
     // ------------------- //
     /////////////////////////
-    public void SetPos(Vector3 point = new())
+    public void SetPos(Vector3 point = new(), bool noTimer = false)
     {
+        if(transform.position == point) return;
         isMove = false;
         point = point == Vector3.zero? StartPos : point;
         transform.position = point;
+        bool state = CheckFallen(transform.position) == 1;
+        if(sp.sprite == PlatformArt && !state || sp.sprite != PlatformArt && state) State(state);
         CheckButton(transform.position);
-        State(CheckFallen(transform.position) == 1);
     }
 
 
@@ -90,11 +97,12 @@ public class Rock : MonoBehaviour
             _rice = false;
             isMove = true;
 
-            memory.RegistPoint(this, transform.position, PlatformState,inToMove);
+            // memory.RegistPoint(this, transform.position, PlatformState,inToMove);
             FindLostPoint(moveDir);
             return true;
         }
         return false;
+
     }
     private bool _rice;
     public void FindLostPoint(Vector3 dir)
@@ -103,30 +111,49 @@ public class Rock : MonoBehaviour
         int rockForvard = 0;
         targetPoint = transform.position + dir;
         bool ice = false;
+        bool dipth = false;
+        // _bonck = false;
+        if( CheckRockInMove(targetPoint) == 1) rockForvard++;
         while(true)
         {
             int tipe = CheckFallen(targetPoint);
-            if(tipe == 1) break;
+
+            if(tipe == 1) {
+                if(rockForvard > 0)
+                {
+                    rockForvard--;
+                    targetPoint += dir;
+                    continue;
+                } 
+                else {
+                    dipth = true; break; 
+                }
+            }
             
             else if(tipe == 2)
             {
                 ice = true;
-                int p = CheckRockInMove(targetPoint + dir);
+                int p = CheckRockInMove(targetPoint + dir); // на випередження. зберігаючи попередній таргет як перевірений
+                // якщо сканувати поточний то всі куби зіллються в один
                 if(p == 2) 
                 {
-                    _rice = true;
+                    // _bonck = true; _rice = true;
                     break;
                 }
                 else if(p == 1) rockForvard++;
 
                 targetPoint += dir;
                 continue;
-            }
+            } 
             else break;      
         }
+        // перерахунок якщо глибина
         if(ice) curentSpd = spd * 1.5f;
         else curentSpd = spd;
-        targetPoint -= moveDir * rockForvard;
+
+        if(dipth) return;
+        else targetPoint -= moveDir * rockForvard;
+        // if(rockForvard > 0) _bonck = false;
 
     }
 public void UncontrolMove(Vector3 _point)
@@ -156,11 +183,24 @@ public void UncontrolMove(Vector3 _point)
     
     [SerializeField] float alphaDuration = 0.4f;
     public void StartAlphaAnim(Vector3 next, bool state) => StartCoroutine(AlphaAnim(next, state));
+    private bool curentActiveState = false;
+    public void StartActivateAnim(bool state)
+    {
+        if(state == curentActiveState) return;
+        curentActiveState = state;
+
+        bool newt = true;
+        
+        if(activate != null) {StopCoroutine(activate); newt = false;}
+        activate = StartCoroutine(ActiveAnim(state, newt));
+    }
     WaitForFixedUpdate fix = new WaitForFixedUpdate();
+    private bool noInteractive;
     IEnumerator AlphaAnim(Vector3 nextPoint, bool state)
     {
         memory.pl.SetNoInteractiv(true);
-        
+        noInteractive = true;
+
         float t = alphaDuration;
         while (t > 0)
         {
@@ -168,26 +208,78 @@ public void UncontrolMove(Vector3 _point)
             t -= Time.fixedDeltaTime;
             float n = t / alphaDuration;
             
-            SetAlpha(n);
+            SetAlpha(a:n);
         }
         SetPos(nextPoint);
-        State(state);
 
         t = 0;
-        while (t < alphaDuration * 0.65)
+        float alphaMod = NOAlpfa? 1 : 0.65f;
+        while (t < alphaDuration * alphaMod)
         {
             yield return fix;
             t += Time.fixedDeltaTime;
             float n = t / alphaDuration;
             
-            SetAlpha(n);
+            SetAlpha(a:n);
         }
+        noInteractive = false;
         memory.pl.SetNoInteractiv(false);
     }  
-        public void SetAlpha(float a = 0)
+        public void SetAlpha(SpriteRenderer obj = null, float a = 0)
     {
-        sp.color = new Color(sp.color.r,sp.color.g,sp.color.b, a);
+        if(obj == null) obj = sp;
+        obj.color = new Color(obj.color.r,obj.color.g,obj.color.b, a);
     }
+
+
+    [SerializeField] SpriteRenderer activeObj;
+    [SerializeField] float activeTime;
+    [SerializeField] float act_t = 0;
+    IEnumerator ActiveAnim(bool state, bool newt = true)
+    {
+        if(noInteractive == false)
+        {
+            activeObj.sortingOrder = sp.sortingOrder + 1;
+            SetAlpha(activeObj, state? 0 : 1);
+            activeObj.enabled = true;
+        }
+            
+        if(state == true)
+        {
+            if(newt) act_t = 0;
+            if(noInteractive == false)
+            {
+                while (act_t < activeTime)
+                {
+                    yield return fix;
+                    act_t += Time.fixedDeltaTime;
+                    float n = act_t / activeTime;
+                    
+                    SetAlpha(activeObj, n);
+                }
+            }
+            sp.sprite = ActiveArt;
+
+        }
+        else if(state == false)
+        {
+            if(newt) act_t = activeTime;
+
+            sp.sprite = RockArt;
+            if(noInteractive == false)
+            {
+                while (act_t > 0)
+                {
+                    yield return fix;
+                    act_t -= Time.fixedDeltaTime;
+                    float n = act_t / activeTime;
+                    
+                    SetAlpha(activeObj, n);
+                }
+            }   
+        }
+        activeObj.enabled = false;
+    }  
 
 
     /////////////////////////
@@ -207,8 +299,10 @@ public void UncontrolMove(Vector3 _point)
 
     public void PlaceControle()
     {
-        State(CheckFallen(transform.position) == 1);
+        bool state = CheckFallen(transform.position) == 1;
+        if(sp.sprite == PlatformArt && !state || sp.sprite != PlatformArt && state) State(state);
         isMove = false;
+        MoveTo(moveDir, true);
 
     }
     public void State(bool _plane)
@@ -231,6 +325,7 @@ public void UncontrolMove(Vector3 _point)
         }
         
     }
+
     public bool CheckEmpty(Vector3 _point, bool JustCheck = false)
     {
         var coll = CheckCollider(_point);
@@ -238,9 +333,11 @@ public void UncontrolMove(Vector3 _point)
             else if (JustCheck) return false;
             else
             {
+                sound.RockSound(1);
+
                 Rock r;
                 if(coll.TryGetComponent<Rock>(out r))
-                {
+                { 
                     r.MoveTo(moveDir, true);
                     return false;
                 }
@@ -258,7 +355,6 @@ public void UncontrolMove(Vector3 _point)
             {
                 if (r.isMove) return 1;
                 else return 2;
-
             }
             
             return 2;
@@ -275,25 +371,38 @@ public void UncontrolMove(Vector3 _point)
         return null;
         
     } 
-    private Collider2D prewColl;
+    Coroutine activate;
     private Button curentButton;
-
     public void CheckButton(Vector3 point)
     {
         Collider2D coll = Physics2D.OverlapPoint(point, LayerMask.GetMask("Button"));
-        if(coll != null && prewColl != coll)
+        if(CompareButton(coll))
         {
-            curentButton?.ChengPresed(false);
-            prewColl = coll;
+            curentButton?.ChengPresed(false, null);
             curentButton = coll.GetComponent<Button>();
-            curentButton.ChengPresed(true);
+            curentButton.ChengPresed(true, this);
+
         }
-        else if(coll == null && prewColl != null)
+        else if(coll == null && curentButton != null)
         {
-            curentButton.ChengPresed(false);
+            StartActivateAnim(false);
+
+            curentButton.ChengPresed(false, null);
             curentButton = null;
-            prewColl = null;
         }
+    }
+    public void ForgiveMyRock(Button b)
+    {
+        if(curentButton != b) return;
+        curentButton = null;
+        sp.sprite = RockArt;
+    }
+    private bool CompareButton(Collider2D c)
+    {
+        if(c == null) return false;
+        else if(curentButton == null) return true;
+        else if(c.name == curentButton.name) return false;
+        else return true;
     }
 
     

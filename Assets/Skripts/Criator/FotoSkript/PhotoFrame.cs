@@ -6,22 +6,27 @@ public class PhotoFrame : MonoBehaviour
 {
     [SerializeField] GameObject beck;
     [SerializeField] GameObject front;
-    [SerializeField] TextMeshProUGUI text;
+    [SerializeField] TextMeshProUGUI Text;
+    [SerializeField] TextMeshProUGUI TextBeck;
+    private TextMeshProUGUI text;
     [SerializeField] Transform Rotation_Object;
     public Image Photo;
     [SerializeField] float swapSpd;
     public Vector3 lokalSkale;
     void Start()
     {
-        lokalSkale = text.gameObject.transform.localScale;
+        lokalSkale = Text.gameObject.transform.localScale;
     }
-    public void SetImagine(Sprite _image, bool blecText, string massag, bool inInventory = false) 
+    public void SetImagine(Sprite _image, string massag, string hideMassag, bool ShowBeck = false) 
     {
-        if (!inInventory) Rotation_Object.eulerAngles += new Vector3(0,180,0);
+        if (ShowBeck) Rotation_Object.eulerAngles += new Vector3(0,180,0);
         Photo.sprite = _image;
-        text.color = blecText? Color.black:Color.white;
-        text.text = massag;
+
+        Text.text = massag;
+        TextBeck.text = hideMassag;
         Vector3 a = Rotation_Object.eulerAngles;
+        
+
         AngleControl(a);
         
         
@@ -31,9 +36,9 @@ public class PhotoFrame : MonoBehaviour
     {
         Vector3 a = Rotation_Object.eulerAngles;
         AngleControl(a);
-        if(Input.GetKey(KeyCode.A)) Rotation_Object.eulerAngles += new Vector3(0, Time.deltaTime * swapSpd);
-        if(Input.GetKey(KeyCode.D)) Rotation_Object.eulerAngles += new Vector3(0, -Time.deltaTime * swapSpd);
-        if(Input.GetKey(KeyCode.S)) Rotation_Object.eulerAngles = new Vector3(a.x, 0,a.z);
+        if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) Rotation_Object.eulerAngles += new Vector3(0, Time.deltaTime * swapSpd);
+        if(Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) Rotation_Object.eulerAngles += new Vector3(0, -Time.deltaTime * swapSpd);
+        if(Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) Rotation_Object.eulerAngles = new Vector3(a.x, 0,a.z);
         
     }
     public void ClousedPhoto()
@@ -47,20 +52,12 @@ public class PhotoFrame : MonoBehaviour
         if (a.y < -180) a.y = 180 + (a.y + 180);
         if (a.y > 180)  a.y = -180 + (a.y - 180); 
 
-        bool isBeack;
-        isBeack = a.y > -90 && a.y < 90;
-        if(isBeack) 
-        {
-            beck.SetActive(false);
-            front.SetActive(true);
-            text.enabled = true;
+        bool isBeack = a.y > -90 && a.y < 90;
 
-        }
-        else
-        {
-            beck.SetActive(true);
-            text.enabled = false;
-        }
+        front.SetActive(isBeack);
+        Text.enabled = isBeack;
+        beck.SetActive(!isBeack);
+        TextBeck.enabled = !isBeack;
     }
 
 }

@@ -1,4 +1,5 @@
 
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class FollowCamera : MonoBehaviour{
@@ -8,6 +9,9 @@ public class FollowCamera : MonoBehaviour{
     [SerializeField] private float dist;
     [SerializeField] float corSpd;
 
+    [Header("Catscen")]
+    public bool CatsceneMod;
+    [SerializeField] private Transform cat;
 
     const float fix = 0.02f;
     
@@ -18,16 +22,23 @@ public class FollowCamera : MonoBehaviour{
     [SerializeField] float IntensiwShake;
 
 
-    private void Awake() {
-        pl = FindAnyObjectByType<Movement>();
+    public void Awake_Camera(Movement _pl) {
+        pl = _pl;
     }
 
 
     private void FixedUpdate() {
-
+        
         if(shake) ShakeTimer();
+
+        if(CatsceneMod) 
+        {
+            return;
+        }
+
         FollowC(pl.transform.position);
     }
+    public void CentralizedCamera() => transform.position = new Vector3(pl.transform.position.x,pl.transform.position.y, transform.position.z);
 
     
     public void FollowC(Vector3 point)
@@ -43,21 +54,15 @@ public class FollowCamera : MonoBehaviour{
         transform.position = newpoint;
     }
 
-    private float tempspd = 1;
     private float GetSpd(float _dist)
     {
-        // if(tempspd >= minSpd) return minSpd;
-        // else
-        // {
-        //     tempspd += minSpd * 0.05f;
-        //     return tempspd;
-        // }
         float dist = _dist / corSpd;
         return Time.fixedDeltaTime * (dist > 0.01? dist : 0.01f);
 
     }
     private Vector3 GetPoint()
     {
+
         return pl.transform.position; 
     }
 

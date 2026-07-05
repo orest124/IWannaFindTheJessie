@@ -18,16 +18,17 @@ public class Button : MonoBehaviour
 
 
 
-    void Awake()
+    public void Awake_buttons(SoundControler _sound)
     {
         curentArt = GetComponent<SpriteRenderer>();
-        sound = FindAnyObjectByType<SoundControler>();
+        sound = _sound;
     }
     [Header("Special")]
     [SerializeField] private bool nideToPressed;
     [SerializeField] private bool PlayerPressed;
     [SerializeField] private bool _isPressed;
     [SerializeField] private bool _curentState;
+    public Action AfterTimer;
 
     public bool IsPressed
     {
@@ -63,12 +64,12 @@ public class Button : MonoBehaviour
         foreach (var d in dore) d?.Check();
         Sound(effectorMod, 1);
 
+        curentRock?.StartActivateAnim(true);
         SpecialAction?.Invoke();
     }
     private void UnPressedEffect()
     {
         if(!_curentState) return;
-
         _curentState = false;
         foreach (var d in dore) d?.Check();
 
@@ -93,13 +94,20 @@ public class Button : MonoBehaviour
         if(!PlayerPressed && player) return;
         ExeptedState = state;
         IsPressed = nideToPressed? state : true;
-    
+    }
+    public void ChengPresed(bool state, RockModern r = null)
+    {
+        curentRock?.ForgiveMyRock(this);
+        curentRock = r;
+        ChengPresed(state, false);
     }
     public void NormalizedState() => IsPressed = ExeptedState;
     public bool СheckState(bool s) => IsPressed == s;
     [SerializeField] float duration;
     [SerializeField] bool DontNeedTimer;
     private WaitForFixedUpdate fix = new WaitForFixedUpdate();
+    private RockModern curentRock;
+    public void SetRock(RockModern r) => curentRock = r;
     IEnumerator Timer(Action action)
     {
         float t = 0;
@@ -110,8 +118,6 @@ public class Button : MonoBehaviour
             t += Time.fixedDeltaTime;
         }
         action.Invoke();
-        
-
     }
 
 

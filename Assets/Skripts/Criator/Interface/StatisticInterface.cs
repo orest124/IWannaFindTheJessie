@@ -34,6 +34,14 @@ public class StatisticInterface : MonoBehaviour {
     [SerializeField] Transform P2;    
     [SerializeField] Transform P11;
     [SerializeField] Transform P22;
+
+
+    [Header("Presentation")]
+    [SerializeField] TextMeshProUGUI LavelText;
+    [SerializeField] Image LavelPresFon;
+    [SerializeField] float LavelPressDuration;
+    [SerializeField] float LavelPressPause;
+
     bool state = false;
     bool isMove = false;
     void Awake()
@@ -153,6 +161,14 @@ public class StatisticInterface : MonoBehaviour {
         
 
     }
+
+
+    public void ShowLavelName(string text)
+    {
+        LevelPresentation p = new LevelPresentation(this, LavelText,LavelPresFon);
+        LavelText.text = text;
+        p.StartPresentation(LavelPressDuration,LavelPressPause);
+    }
 }
 
 
@@ -160,6 +176,7 @@ public class StatisticInterface : MonoBehaviour {
 public class LavelInfo
 {
     public Dore[] dores;
+    [HideInInspector]public bool isNull;
     private StatisticInterface stats;
     public void ClousedScore() => stats.Flip(1);
     [Space]
@@ -168,6 +185,8 @@ public class LavelInfo
     public Prize prize;
 
     public int profit = 404;
+    [TextArea]
+    [SerializeField]string lavelText;
     [Space]
     [Space]
     [SerializeField] private Button.PressedEvent SpecialAction = new Button.PressedEvent();
@@ -199,4 +218,5 @@ public class LavelInfo
         prize.myLavel = this;
     }
     public void Activatemetod() => SpecialAction.Invoke(); 
+    public void ShowLavelName() => stats.ShowLavelName(lavelText);
 }

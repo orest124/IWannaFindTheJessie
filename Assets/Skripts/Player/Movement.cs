@@ -3,6 +3,7 @@ using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 using Random = UnityEngine.Random;
 using System.Collections;
+using NUnit.Framework;
 
 public class Movement : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class Movement : MonoBehaviour
     public bool StopGame = false;
     public bool inLavel;
     public bool isMove;
-    public bool PhotoOpen => !s.notFromPhoto;
+    public bool PhotoOpen => !s.UIEmpty();
     public bool noInteractive;
     public bool OptionsOpen = false;
     [Header("Movement")] 
@@ -26,43 +27,57 @@ public class Movement : MonoBehaviour
 
     [Header("Components")] 
     [SerializeField] PlayerSprite spr = new PlayerSprite();
-    [SerializeField] Camera Cra;
+    [SerializeField] FollowCamera Cra;
     [HideInInspector] public P_SoundAndPhoto s;
     [HideInInspector] public MovementMemory memory;
+    [HideInInspector] public LavelInfo curentLavel;
     private MusicThemeControler music;
-    private FollowCamera cMove;
     [HideInInspector] public GameOptions meny;
-    private Collider2D coll;
 
-
-    [Header("Abuse")] 
-    public Dore abuseDore;
 
     [Header("LavelStates")] 
     public Dore curentDore;
+    [HideInInspector] public Dore abuseDore;
     [HideInInspector] public Vector3 StartPos;
-
+    
+    private readonly Vector3 zero = Vector3.zero;
     public void SetStop(bool _stop) => StopGame = _stop;
     public void SetNoInteractiv(bool noInter) => noInteractive = noInter;
-
+    public bool isThisLavel(LavelInfo l)
+    {
+        if(curentLavel != l) {curentLavel = l; return false;}
+        return true;
+    }
     public bool _inSnow => spr.inSnow;
 
 
-
-    void Awake()
+    public void CentralizedCamera() => Cra.CentralizedCamera();
+    public void Awake_movement(FollowCamera _c)
     {
         s = GetComponent<P_SoundAndPhoto>();
-        coll = GetComponent<Collider2D>();
-        cMove = FindAnyObjectByType<FollowCamera>();
-        StartPos = curentDore.startPos.position;
-        CentralizedCamera();
+        Cra = _c;
+        Cra.CentralizedCamera();
         curentSpd = spd;
         preLavels.Add(curentDore);
     }
+    public void Awake_servis(MovementMemory _memory, GameOptions _meny, 
+        Dore _curentDoor, Dore _abuseDoor, MusicThemeControler _music)
+    {
+        memory = _memory;
+
+        abuseDore = _abuseDoor;
+        curentDore = _curentDoor == null? curentDore : _curentDoor;
+        
+        StartPos = curentDore.startPos.position;
+        memory.NewDore(curentDore);
+        
+        meny = _meny;
+        music = _music;
+    }
+    
     void Start()
     {
         spr.LStart();
-        CheckButton(transform.position);
     }
     private bool Run => Input.GetKey(KeyCode.LeftShift);
     public bool MotionMod;
@@ -72,111 +87,88 @@ public class Movement : MonoBehaviour
 
         if ( Input.GetKeyDown(KeyCode.X)) memory.FlipCounter();
         //зробити щоб немона було робити сейв в войді
-        if ( Input.GetKeyDown(Save)) meny.Save();
+        if ( Input.GetKeyDown(KeyCode.Y)) meny.Save();
         if ( Input.GetKeyDown(KeyCode.L)) meny.ReloadScene();
         if(inLavel)
         {
-            if ( Input.GetKeyDown(Esc)) meny.InOptions(!OptionsOpen);
-            if ( Input.GetKeyDown(Restart)) meny.BlackFon(() => memory.RestartLavel());
-            else if ( Input.GetKeyDown(Return)) memory.StepBihaind();
+            if ( Input.GetKeyDown(KeyCode.Escape)) meny.InOptions(!OptionsOpen);
+            if ( Input.GetKeyDown(KeyCode.Q)) meny.BlackFon(() => memory.RestartLavel());
+            else if ( Input.GetKeyDown(KeyCode.R)) memory.StepBihaind();
         }
+        if ( Input.GetKeyDown(KeyCode.P)) SetStop(!StopGame);
+        if ( Input.GetKeyDown(KeyCode.Space)) spr.ChengSprite(GetDirect());
+        
             
         
         if(dirTimer > 0) { dirTimer -= Time.deltaTime; return; }
         if(isMove || StopGame) return;
         NewDirection();
     }
+    public void SetMoveDir(Vector3 dir) => spr.ChengSprite(dir);
     
 
     private void FixedUpdate() {
         
         if(isMove)  UncontrolMove(targetPoint, curentSpd); 
-        if(!inLavel && !CinemaMod) Move(transform.position + moveDir,curentSpd);
+        if(!inLavel) Move(transform.position + moveDir,curentSpd);
     }
 
 
     public void UncontrolMove(Vector3 _point, float _spd)
     {
         Move(_point, _spd);
-        if(isPlace(_point))
-        {
-            if(CinemaMod) {
-                
-                coll.enabled = true; 
-                curentSpd = spd;
-                moveDir = zero;
-                spr.StendUp();
-                CinemaMod = false;
-            }
-            else
-            {
-                
+        if(Methods.isPlace(_point, transform.position))
+        {   
             PlaceControle(moveDir);
             memory.stopAll = false;
-            }
         }
     }
-  
+    public void PlaceControle(Vector3 dir)
+    {
+        isMove = false;
+        int tipe = Methods.CheckFallen(transform.position);
+        if(tipe != 2) toTheMove = false;
 
-    private Vector3 prePos;
+        if (tipe == 1) {spr.Falling(); meny.BlackFon(() => memory.RestartLavel());}
+        else if (tipe == 2) 
+        {
+            ToMove(moveDir);
+            toTheMove = true;
+        }
+    }
     void Move(Vector3 target, float _spd)
     {
-        if(StopGame) return;
-        if(inLavel)
-        {
-            if(fall)
-            {
-                if(IdealPos() == FallPos)
-                {
-                    spr.Falling();
-                }
-            }
-            if(prePos == transform.position )
-            {
-                targetPoint = IdealPos();
-            }
-            prePos = transform.position;
-            prePos.z = 0;
-        }
+        if( DiferentSituationInMove() ) return;
+
         float newspd = Time.fixedDeltaTime * _spd;
         Vector3 newPos = Vector2.MoveTowards(transform.position, target, newspd);
         
         spr.ChengSprite(moveDir);
         SetPos(newPos);
+        
     }   
 
-    private void CheckButton(Vector3 point)
+
+    public bool DiferentSituationInMove()
     {
-        Collider2D coll = Physics2D.OverlapPoint(point, LayerMask.GetMask("Button"));
-        if(coll != null && prewColl != coll)
+        if(StopGame) {  spr.ChengSprite(zero); return true;   }
+        if(inLavel)
         {
-            prewColl = coll;
-            curentButton?.ChengPresed(false, true);
-            curentButton = coll.GetComponent<Button>();
-            curentButton.ChengPresed(true, true);
+            if(fall) {      if(Methods.IdealPos(transform.position) == FallPos)spr.Falling();      }
+            if(prePos == transform.position )   targetPoint = targetPoint - moveDir;
+
+            prePos = transform.position; prePos.z = 0;
         }
-        else if(coll == null && prewColl != null)
-        {
-            curentButton.ChengPresed(false, true);
-            curentButton = null;
-            prewColl = null;
-        }
+        return false;
     }
-    
-    private Collider2D prewColl;
+    private Vector3 prePos;
+
+
+    public void CheckButton(Vector3 point) => curentButton = Methods.CheckButton(point, curentButton, isPlayer:true);
     private Button curentButton;
 
-    private readonly Vector3 zero = Vector3.zero;
+
     
-    public void ReturnToaMap(Vector3 target)
-    {
-        CinemaMod = true;
-        curentSpd = 10;
-        coll.enabled = false;
-        spr.Falling();
-        targetPoint = target;
-        isMove = true;
-    }
 
     /////////////////////////
     // ------------------- //
@@ -184,7 +176,6 @@ public class Movement : MonoBehaviour
     // ------------------- //
     /////////////////////////
 
-    bool CinemaMod = false;
     bool PushRock = false;
 
     private float dirTimer;
@@ -197,7 +188,8 @@ public class Movement : MonoBehaviour
         bool FollowMod = MotionMod? !Run : Run;
         PushRock = false;
         moveDir = GetDirect();
-        spr.ChengSprite(isMove?moveDir : zero);
+        spr.ChengSprite(moveDir);
+        spr.ChengSprite(isMove? moveDir : zero);
 
         if(moveDir != zero )
         {
@@ -211,30 +203,63 @@ public class Movement : MonoBehaviour
 
             if(!inLavel) return;
 
-            targetPoint = IdealPos(mod: false) + moveDir;
+            ToMove(moveDir);
 
-            if(FollowMod) {
-                Vector3 pos = GetTargetRockInMove(targetPoint);
-                if(pos.z == 1) return;
-                else if(pos.z == -1) isMove = true;
-                else isMove = targetPoint != pos; 
-            }
-            else  isMove = CheckEmpty(targetPoint);
-            
             if(isMove == false) return;   
-
-            int nomb = CheckFallen(targetPoint);
-            if(nomb == 2) 
-            {
-                curentSpd = spd * 1.5f;
-                FindLostPoint(moveDir);
-            }
-            else if(nomb == 1) {isMove = false; spr.ChengSprite(zero);return;}
+            
+            int nomb = Methods.CheckFallen(targetPoint);
+            if(nomb == 2) curentSpd = spd * 1.4f;
+            else if(nomb == 1) {    isMove = false; return;     }
             else curentSpd = spd;
-
-            memory.RegistPoint(this, transform.position, FollowMod && PushRock);
-
         }    
+    }
+    //Перевірити падіння вводу
+
+    private bool toTheMove;
+    private RockModern rockForward;
+    public void ToMove(Vector3 dir)
+    {
+        if(isMove) return;
+        moveDir = dir;  
+        Vector3 myPos = Methods.IdealPos(transform.position);
+        targetPoint = myPos + dir;
+
+        bool FollowMod = MotionMod? !Run : Run;
+
+        int n = CheckRockInMove(targetPoint);
+        if((n == 3 && toTheMove) || n == 2) 
+        {
+            toTheMove = false;
+            isMove = false;
+            return;
+        }
+        if(n == 0) isMove = true;
+        else if(n == 3 || n == 1) 
+        {
+            if(n == 3 && !toTheMove) PushTheRock(); 
+            if(MotionMod)
+            {
+                n = CheckEmpty(myPos, dir);
+                isMove = n == 0;
+            }
+        }
+        if (isMove && !toTheMove) 
+        {
+            memory.RegistPoint(this, transform.position, false);
+        }
+    }
+    private int CheckEmpty(Vector3 myPos, Vector3 dir) => Methods.CheckEmpty(myPos, dir, rockForward);
+    private int CheckRockInMove(Vector3 targetPoint) => Methods.CheckRockInMove(targetPoint, rockForward, (RockModern rv) => {rockForward = rv;});
+
+    public bool PushTheRock(Collider2D rc = null)
+    {
+        RockModern r;
+        if(rc == null) rc = Methods.CheckCollider(targetPoint);
+        if(rc.TryGetComponent<RockModern>(out r)) 
+        { 
+            if(r.MoveTo(moveDir)) return true;
+        }
+        return false;
     }
     [HideInInspector] public bool JoysticMod;
     public Vector3 GetDirect()
@@ -249,114 +274,51 @@ public class Movement : MonoBehaviour
         else
         {
             float Bup = 0, Bdown = 0, Bleft = 0, Bright = 0;
-            if (Input.GetKey(up) || Input.GetKey(KeyCode.UpArrow)) Bup = 1;
-            if (Input.GetKey(down) || Input.GetKey(KeyCode.DownArrow)) Bdown = 1;
-            if (Input.GetKey(right) || Input.GetKey(KeyCode.RightArrow)) Bright = 1;
-            if (Input.GetKey(left) || Input.GetKey(KeyCode.LeftArrow)) Bleft = 1;
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) Bup = 1;
+            if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) Bdown = 1;
+            if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) Bright = 1;
+            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) Bleft = 1;
             x = Bright - Bleft;
             y = Bup - Bdown;
         }
         if(inLavel && x != 0) y = 0;
-        if(x != 0 || y != 0) oldDir = new Vector3(x,y);
+        if(x != 0 || y != 0) spr.oldDir = new Vector3(x,y);
         return new Vector3(x,y);
 
     }
+    private bool fall;
+    private Vector3 FallPos;
 
 
-    public void FindLostPoint(Vector3 dir)
-    {
-        fall = false;
-        int rockForvard = 0;
-        
-        Random.InitState(Random.Range(0, 12545));
 
-        targetPoint = IdealPos(mod: false) + dir;
-        if( CheckRockInMove(targetPoint) == 1) rockForvard++;
-        while(true)
-        {
-            int tipe = CheckFallen(targetPoint);
-            if(tipe == 1) break;
-            
-            else if(tipe == 2)
-            {
-                int p = CheckRockInMove(targetPoint + dir);
-                if(p == 2) break;
-                else if(p == 1) rockForvard++;
-            
-                if(!fall)
-                {
-                    int n = Random.Range(0, Run? 14:30);
-                    fall = n == 13;
-                    if(fall) FallPos = targetPoint;
-                }
-                targetPoint += dir;
-                continue;
-            }
-            else break;
-        }
-        targetPoint -= moveDir * rockForvard;
-    }
-                private bool fall;
-                private Vector3 FallPos;
-
-
-    public int CheckFallen(Vector3 _point)
-    {
-        if (Physics2D.OverlapCircle(_point, 0.2f, s.DipthArea) 
-        && !Physics2D.OverlapPoint(_point, s.PlatformMask)) return 1;
-        if (Physics2D.OverlapCircle(_point,0.2f, s.IceArea)) return 2;
-        else return 0; 
-    }
     public bool CheckEmpty(Vector3 _point, bool JustCheck = false)
     {
-        var coll = CheckCollider(_point);
+        var coll = Methods.CheckCollider(_point);
         if(coll == null) return true;
         else if (JustCheck) return false;
         else
         {
-            Rock r;
-            if(coll.TryGetComponent<Rock>(out r))
+            RockModern r;
+            if(coll.TryGetComponent<RockModern>(out r))
             {
                 spr.AlignedSprite(moveDir);
                 r.MoveTo(moveDir);
-                cMove.shake = true;
                 return false;
             }
             
             return false;
         }
     }
-    private int CheckRockInMove(Vector3 _point)
-    {
-        var coll = CheckCollider(_point);
-        if(coll == null) return 0;
-        else
-        {
-            Rock r;
-            if(coll.TryGetComponent<Rock>(out r))
-            {
-                
-                if (r.isMove) 
-                {
-                    spr.AlignedSprite(moveDir);
-                    return 1;
-                }
-                else return 2;
-            }
-            return 2;
-        }
-    }
     public Vector3 GetTargetRockInMove(Vector3 _point)
     {
-        var coll = CheckCollider(_point);
+        var coll = Methods.CheckCollider(_point);
         if(coll == null) return new Vector3(0,0,-1);
-        Rock r;
-        if(coll.TryGetComponent<Rock>(out r))
+        RockModern r;
+        if(coll.TryGetComponent<RockModern>(out r))
         {
             if (r.isMove) return r.GetTarget();
             else if(r.MoveTo(moveDir))
             {
-                cMove.shake = true;
                 PushRock = true;
                 return r.GetTarget();
             }
@@ -365,38 +327,12 @@ public class Movement : MonoBehaviour
         return new Vector3(0,0,1);
         
     }
-    private Collider2D CheckCollider(Vector3 point)
-    {
-        Collider2D coll = Physics2D.OverlapPoint(point, LayerMask.GetMask("Wall"));
-        if(coll != null && !coll.isTrigger) return coll;
-        
-        coll = Physics2D.OverlapPoint(point, LayerMask.GetMask("Rook"));
-        if(coll != null && !coll.isTrigger) return coll;
-
-        return null;
-        
-    } 
     
 
-    public void PlaceControle(Vector3 dir)
-    {
-        int tipe = CheckFallen(transform.position);
-
-        if (tipe == 1) {meny.BlackFon(() => memory.RestartLavel());spr.Falling();}
-        else isMove = false;
-    }
 
 
-    private bool isPlace(Vector2 place) => place.x == transform.position.x && place.y == transform.position.y;
-    private Vector3 IdealPos(bool mod = true)
-    {
-        float _mod = mod? 0.5f : 0;
-        return new Vector2(Mathf.RoundToInt(transform.position.x + _mod), Mathf.RoundToInt(transform.position.y + _mod));
-    }
-        private Vector3 IdealPos(Vector3 pos)
-    {
-        return new Vector2(Mathf.RoundToInt(pos.x), Mathf.RoundToInt(pos.y));
-    }
+
+
 
     /////////////////////////
     // ------------------- //
@@ -425,7 +361,7 @@ public class Movement : MonoBehaviour
             {
                 Vector3 cor = GetDoorDirect(_callDore);
                 inLavel = true;
-                Vector3 newPos = IdealPos(_callDore.transform.position + cor);
+                Vector3 newPos = Methods.IdealPos(_callDore.transform.position + cor);
                 float xv = _callDore.Vertical? newPos.x:transform.position.x;
                 float yv = !_callDore.Vertical? newPos.y:transform.position.y;
 
@@ -474,73 +410,8 @@ public class Movement : MonoBehaviour
         CentralizedCamera();
         
     }
-    // public void FiendKey(int tipe)
-    // {
-    //     switch (tipe)
-    //     {
-    //         case 3:
-    //             up = KeyCode.I; 
-    //             left = KeyCode.J; 
-    //             down = KeyCode.K; 
-    //             right = KeyCode.L;
-    //             Return = KeyCode.U; 
-    //             Restart = KeyCode.Space; 
-    //             Esc = KeyCode.Escape;
-    //             Save = KeyCode.P;
-    //         break;
-    //     }
-    // }
-    [Header("Keyboard")] 
-    private KeyCode up = KeyCode.W; private KeyCode left = KeyCode.A; private KeyCode down = KeyCode.S; private KeyCode right = KeyCode.D;
-    private KeyCode Return = KeyCode.R; private KeyCode Restart = KeyCode.Q; private KeyCode Esc = KeyCode.Escape; private KeyCode Save = KeyCode.Y;
-    
 
-    private Vector3 oldDir;
-    [SerializeField] float alphaDuration = 2f;
-    public void StartAlphaAnim(Vector3 next) => StartCoroutine(AlphaAnim(next));
-    WaitForFixedUpdate fix = new WaitForFixedUpdate();
-    IEnumerator AlphaAnim(Vector3 nextPoint)
-    {
-        SetNoInteractiv(true);
-        AnimationSprite startSp = spr.GetSprite(oldDir);
-        nextPoint = IdealPos(nextPoint);
-        Vector3 myPoint = IdealPos(false);
-        Vector3 next = myPoint - nextPoint;
-        
-        AnimationSprite nextSp = spr.GetSprite(next);
-
-        
-
-        float t = alphaDuration;
-        while (t > 0)
-        {
-            yield return fix;
-            t -= Time.fixedDeltaTime;
-            float n = t / alphaDuration;
-            
-            spr.SetShedowAlpha(n * 0.35f);
-            startSp.SetAlpha(n);
-        }
-        SetPos(nextPoint);
-        spr.AlignedSprite(next);
-        startSp.SetAlpha(1);
-        nextSp.SetAlpha(0);
-
-        t = 0;
-        
-        while (t < alphaDuration)
-        {
-            yield return fix;
-            t += Time.fixedDeltaTime;
-            float n = t / alphaDuration;
-            
-            spr.SetShedowAlpha(n * 0.35f);
-            nextSp.SetAlpha(n);
-        }
-        SetNoInteractiv(false);
-    }
-
-    public void CentralizedCamera() => Cra.transform.position = new Vector3(transform.position.x,transform.position.y, Cra.transform.position.z);
+    public void StartAlphaAnim(Vector3 next) => StartCoroutine(spr.AlphaAnim(next));
     void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
@@ -567,12 +438,8 @@ public class Movement : MonoBehaviour
     void S() => Idle();
     void D() => OnDrawGizmos();
 
-
-    void E() => CheckButton(new());
     void F() => PlaceControle(new());
-    void Y() => CheckFallen(new());
     void U() => CheckEmpty(new());
-    void T() => CheckCollider(new());
 
     public void SetPos(Vector3 point, bool stop = false)
     {
@@ -582,29 +449,3 @@ public class Movement : MonoBehaviour
     }
 }
 
-public class JsonCharacter : Entyty
-{
-    public int x;
-    public int y;
-    public bool inLavel;
-    public List<int> photoIDs;
-    public List<int> DoorIDs;
-    public Vector3 GetVector() => new Vector3(x,y);
-    public void SetVector(Vector3 pos)
-    {
-        x = Mathf.RoundToInt(pos.x);
-        y = Mathf.RoundToInt(pos.y);
-    }
-    public JsonCharacter BuldNevMemory(List<PhotoPictures> pict, List<Dore> ds)
-    {
-        ID = 0;
-        Type = EntytyType.Character;
-        
-        photoIDs = new();
-        DoorIDs = new();
-        foreach (var f in pict) photoIDs.Add(f.ID);
-        foreach (var d in ds) DoorIDs.Add(d.ID);
-        return this;
-    }
-
-}

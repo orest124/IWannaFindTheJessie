@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -14,7 +15,6 @@ public class MovementMemory : MonoBehaviour
 
     private SaveSystem _save;
     
-    public Dictionary<int,Dore> dores;
     private Dore abusDore;
 
     private Dore curentDore;
@@ -41,22 +41,18 @@ public class MovementMemory : MonoBehaviour
     private StatisticInterface stats;
     public void FlipCounter() => stats.Flip(0);
     public void SetStats() => stats.SetStatistic(curentDore);
+    public Action GetSoundControler;
+    
 
     ContactFilter2D fl;
-    void Awake()
+    public void Awake_memory(Movement _pl,  Dore _abuseDore)
     {
         fl.SetLayerMask(LayerMask.GetMask("Rook"));
         fl.useTriggers = true;
-        
-        pl = FindAnyObjectByType<Movement>();
-        pl.memory = this;
-        curentDore = pl.curentDore;
-        stats = FindAnyObjectByType<StatisticInterface>();
-    }
-    private void Start() {
+        pl = _pl;
+        abusDore = _abuseDore;
 
-        dores = _save.GetDoorArr();
-        abusDore = pl.abuseDore;
+        stats = FindAnyObjectByType<StatisticInterface>();
     }
 
     
@@ -238,6 +234,7 @@ public bool stopAll = false;
     {
         OPEN.Clear();
         CLOUSED.Clear();
+        tempRock.Clear();
         OPEN.Add(curentDore.startPos.transform.position);
         Vector3 curentPoint;
 
@@ -271,7 +268,7 @@ public bool stopAll = false;
         { 
             foreach (var R in tempRock) 
             {
-                Rock r = R.GetComponent<Rock>();
+                RockModern r = R.GetComponent<RockModern>();
                 MemoriAtRock mr = new MemoriAtRock(r, R.transform.position);
                 curentDore.memoryAtRock.Add(mr); 
             }
@@ -283,14 +280,14 @@ public bool stopAll = false;
     private bool CheckWall(Vector3 point) => Physics2D.OverlapCircle(point,0.3f, LayerMask.GetMask("Wall"));
     private void ClearRock()
     {
-        Rock rc;
+        RockModern rc;
         int i = 0;
         while(tempRock.Count > 0)
         {
             i++;
             if(i > 1000) break;
             
-            if(tempRock[0].TryGetComponent<Rock>(out rc))
+            if(tempRock[0].TryGetComponent<RockModern>(out rc))
             {
                 CheckAllRock(rc.StartPos);
                 rc.SetPos();
@@ -316,7 +313,7 @@ public bool stopAll = false;
     // REGISTRATION METHOD //
     // ------------------- //
     /////////////////////////
-    public void RegistPoint(Rock rock, Vector3 point, bool _state, bool DontNidIncrement = false)
+    public void RegistPoint(RockModern rock, Vector3 point, bool _state, bool DontNidIncrement = false)
     {
         if(DontNidIncrement == false) IncrementMove();
         Steps.Add(new PersonStepInfo(stepCount, rock, point, _state));
@@ -332,7 +329,7 @@ public bool stopAll = false;
 
 
 
-    public void IsSaveReady(Rock r)
+    public void IsSaveReady(RockModern r)
     {
         if(_save == null) {_save = GetComponent<SaveSystem>();_save.AddRock(r);}
         else _save.AddRock(r);
@@ -355,7 +352,7 @@ public struct PersonStepInfo
 {
     public int step;
     private int tipe;
-    public Movement person; public Rock rock;
+    public Movement person; public RockModern rock;
     public Vector3 point;
     public bool state;
     public PersonStepInfo(int _s, Movement ps, Vector3 pos)
@@ -366,7 +363,7 @@ public struct PersonStepInfo
         point = pos;
         state = false; rock = null;
     }
-    public PersonStepInfo(int _s, Rock _r, Vector3 pos, bool _state)
+    public PersonStepInfo(int _s, RockModern _r, Vector3 pos, bool _state)
     {
         step = _s;
         tipe = 2;
@@ -383,7 +380,7 @@ public struct PersonStepInfo
         }
         else if(tipe == 2)
         {
-            rock.StartAlphaAnim(point, state);
+            rock.StartAlphaAnim(point);
         }
         
     } 

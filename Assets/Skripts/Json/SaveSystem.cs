@@ -6,25 +6,24 @@ using UnityEngine;
 
 public class SaveSystem : MonoBehaviour 
 {
-    public bool inMeny;
-    private const string STATE = nameof(STATE);
-    private const string pathToDoor = "/Saves/4151518.json";
-    private const string pathToRock = "/Saves/18151511.json";
-    private const string pathToCharacter = "/Saves/Player Memory.json";
+    [HideInInspector] public bool inMeny;
+    public static string STATE = nameof(STATE);
+    private string pathToDoor => Path.pathToDoor;
+    private string pathToRock => Path.pathToRock;
+    private string pathToCharacter => Path.pathToCharacter;
 
     private GameState _gameState;
     Movement pl;
-    void Awake()
+    public void Awake_saves(Movement _pl = null)
     {
         JsonProgectSeting.ApplayProgectSerializeationSeting();
         _gameState = new GameState { Entytys = new List<Entyty>() };
         
-        if(!inMeny)pl = FindAnyObjectByType<Movement>();
+        if(!inMeny)pl = _pl;
         
     }
     public void LoadAllData()
     {
-        ReturnCharacterMemory();
         
         _gameState = LoadState(pathToDoor);
         ReturnMemoryAtDore();
@@ -32,8 +31,11 @@ public class SaveSystem : MonoBehaviour
 
         _gameState = LoadState(pathToRock);
         ReturnMemoryAtRock();
-
         _gameState.Entytys.Clear();
+
+
+        // якщо на дверях помітка стейт доор то перезапускати рівень
+        ReturnCharacterMemory();
     }
 
 
@@ -105,10 +107,9 @@ public class SaveSystem : MonoBehaviour
             if(!dores.ContainsKey(i.name)) continue;
             Dore d = dores[i.name];
             d.LoadPreparation(i);
-            d.RemoveMemoryAtRook();
             foreach (var r in i.memory)
             {
-                Rock rock = rocks[r.name];
+                RockModern rock = rocks[r.name];
                 d.memoryAtRock.Add(new MemoriAtRock(rock, r.GetPos()));
             }
         }
@@ -130,7 +131,7 @@ public class SaveSystem : MonoBehaviour
         foreach (JsonRock i in _gameState.Entytys)
         {
             if(!rocks.ContainsKey(i.name)) continue;
-            Rock r = rocks[i.name];
+            RockModern r = rocks[i.name];
             r.SetPos(i.GetPos());
         }
     }    
@@ -182,7 +183,7 @@ public class SaveSystem : MonoBehaviour
         }
         pl.curentDore = pl.preLavels[^1];
         pl.StartPos = pl.curentDore.startPos.position;
-        pl.memory.NewDore(pl.preLavels[^1], true);
+        pl.memory.NewDore(pl.curentDore, true);
 
         pl.SetPos(pi.GetVector());
         pl.CentralizedCamera();
@@ -190,15 +191,20 @@ public class SaveSystem : MonoBehaviour
     } 
 
 
+
+
     private Dictionary<int,Dore> dores = new();
-    private Dictionary<int,Rock> rocks = new();
+    private Dictionary<int,RockModern> rocks = new();
     public Dictionary <int,Dore> GetDoorArr() => dores;
-    public void AddRock(Rock r) {
+
+    public void AddRock(RockModern r) {
         if( !rocks.ContainsKey(r.ID) )  rocks.Add(r.ID,r);
     }
+
     public void AddDoor(Dore d) {
         if( !dores.ContainsKey(d.ID) )  dores.Add(d.ID, d);
     }
+
     Dictionary<int, PhotoPictures> photos = new();
     internal void AddPict(PhotoPictures f)
     {

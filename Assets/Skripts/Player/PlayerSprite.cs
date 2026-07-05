@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -94,4 +95,47 @@ public class PlayerSprite
         }
     }
 
+
+    [SerializeField] float alphaDuration = 2f;
+    [HideInInspector]public Vector3 oldDir;
+
+    WaitForFixedUpdate fix = new WaitForFixedUpdate();
+    public IEnumerator AlphaAnim(Vector3 nextPoint)
+    {
+        mc.SetNoInteractiv(true);
+        AnimationSprite startSp = GetSprite(oldDir);
+        nextPoint = Methods.IdealPos(nextPoint);
+        Vector3 myPoint = Methods.IdealPos(mc.transform.position);
+        Vector3 next = myPoint - nextPoint;
+        
+        AnimationSprite nextSp = GetSprite(next);
+
+        float t = alphaDuration;
+        while (t > 0)
+        {
+            yield return fix;
+            t -= Time.deltaTime;
+            float n = t / alphaDuration;
+            
+            SetShedowAlpha(n * 0.35f);
+            startSp.SetAlpha(n);
+        }
+        mc.SetPos(nextPoint);
+        AlignedSprite(next);
+        startSp.SetAlpha(1);
+        nextSp.SetAlpha(0);
+
+        t = 0;
+        
+        while (t < alphaDuration)
+        {
+            yield return fix;
+            t += Time.deltaTime;
+            float n = t / alphaDuration;
+            
+            SetShedowAlpha(n * 0.35f);
+            nextSp.SetAlpha(n);
+        }
+        mc.SetNoInteractiv(false);
+    }
 }
